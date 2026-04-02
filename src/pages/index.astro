@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Chatbot from '../components/Chatbot.astro';
+import BlogPreview from '../components/BlogPreview.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Servicios Profesionales de IA"
+  description="NexusAI Studio: Agencia AI-Native especializada en agentes IA, automatización de procesos, chatbots inteligentes y webs con IA integrada. ROI promedio 340%."
+>
+  <Header />
+  <main id="main-content">
+    <Hero />
+    <Services />
+    <Chatbot />
+    <BlogPreview />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,82 @@
+---
+import JsonLd from '../components/JsonLd.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+
+const { title, description, canonical } = Astro.props;
+const siteUrl = 'https://nexusai.studio';
+const fullTitle = `${title} | NexusAI Studio`;
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "NexusAI Studio",
+  "url": siteUrl,
+  "logo": `${siteUrl}/logo.svg`,
+  "description": "Servicios profesionales de Inteligencia Artificial para empresas. Automatización, agentes IA y soluciones a medida.",
+  "sameAs": [
+    "https://github.com/nexusai-studio",
+    "https://linkedin.com/company/nexusai-studio"
+  ]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "NexusAI Studio",
+  "url": siteUrl,
+  "description": description
+};
+---
+
+<!doctype html>
+<html lang="es" class="bg-neutral-950 text-white antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonical || Astro.url.href} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:site_name" content="NexusAI Studio" />
+    <meta property="og:image" content={`${siteUrl}/og-image.png`} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{fullTitle}</title>
+
+    <!-- JSON-LD -->
+    <JsonLd data={orgSchema} />
+    <JsonLd data={websiteSchema} />
+  </head>
+  <body class="font-sans min-h-screen">
+    <!-- Skip Navigation -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-accent focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">
+      Saltar al contenido
+    </a>
+    <slot />
+  </body>
+</html>

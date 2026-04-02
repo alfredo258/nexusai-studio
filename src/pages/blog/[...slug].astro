@@ -1,0 +1,79 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import JsonLd from '../../components/JsonLd.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.date.toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": post.data.author
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NexusAI Studio",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://nexusai.studio/logo.svg"
+    }
+  }
+};
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <Header />
+  <JsonLd data={articleSchema} />
+
+  <main id="main-content" class="pt-24 pb-16">
+    <article class="max-w-3xl mx-auto px-6">
+      <!-- Back link -->
+      <a href="/#blog" class="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mb-8">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Volver al blog
+      </a>
+
+      <!-- Meta -->
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        {post.data.tags.map((tag: string) => (
+          <span class="text-xs font-medium text-violet-300 bg-violet-500/10 px-2.5 py-1 rounded-full">{tag}</span>
+        ))}
+      </div>
+
+      <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-4">{post.data.title}</h1>
+
+      <div class="flex items-center gap-4 text-sm text-neutral-500 mb-12 pb-8 border-b border-white/5">
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+        </time>
+        <span>&middot;</span>
+        <span>{post.data.readTime}</span>
+        <span>&middot;</span>
+        <span>{post.data.author}</span>
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-invert prose-violet max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-neutral-300 prose-a:text-violet-400 prose-strong:text-white prose-code:text-violet-300">
+        <Content />
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
