@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="50%" stop-color="#1a0a2e"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="150" r="300" fill="#8b5cf6" opacity="0.05"/>
+  <circle cx="1000" cy="500" r="250" fill="#7c3aed" opacity="0.05"/>
+  <rect x="80" y="260" width="60" height="60" rx="14" fill="url(#accent)"/>
+  <text x="110" y="300" font-family="system-ui, sans-serif" font-size="32" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">N</text>
+  <text x="160" y="300" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="white" dominant-baseline="middle">NexusAI Studio</text>
+  <text x="80" y="370" font-family="system-ui, sans-serif" font-size="48" font-weight="800" fill="white">Construimos el Futuro</text>
+  <text x="80" y="430" font-family="system-ui, sans-serif" font-size="48" font-weight="800" fill="url(#accent)">de tu Negocio con IA</text>
+  <text x="80" y="500" font-family="system-ui, sans-serif" font-size="20" fill="#a1a1aa">Agencia AI-Native · Agentes IA · Automatización · Chatbots</text>
+  <rect x="80" y="550" width="200" height="44" rx="10" fill="url(#accent)"/>
+  <text x="180" y="577" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">nexusai.studio</text>
+</svg>

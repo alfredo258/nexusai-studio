@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <rect width="48" height="48" rx="12" fill="url(#logo-g)"/>
+  <text x="24" y="30" dominant-baseline="middle" text-anchor="middle" font-family="system-ui" font-weight="800" font-size="24" fill="white">N</text>
+  <text x="60" y="32" font-family="system-ui, sans-serif" font-weight="700" font-size="24" fill="white">NexusAI</text>
+  <defs>
+    <linearGradient id="logo-g" x1="0" y1="0" x2="48" y2="48">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+</svg>
