@@ -36,14 +36,14 @@ const links = [
 
     <!-- Mobile menu toggle (CSS only) -->
     <label for="mobile-menu" class="md:hidden cursor-pointer p-2" aria-label="Abrir menu">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </label>
   </nav>
 
   <!-- Mobile menu (CSS only with checkbox hack) -->
-  <input type="checkbox" id="mobile-menu" class="hidden peer" />
+  <input type="checkbox" id="mobile-menu" class="hidden peer" aria-hidden="true" tabindex="-1" />
   <div class="md:hidden hidden peer-checked:block bg-neutral-950/95 backdrop-blur-xl border-b border-white/5 px-6 pb-6">
     <ul class="flex flex-col gap-4">
       {links.map(link => (

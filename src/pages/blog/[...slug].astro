@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const siteUrl = 'https://nexusai.studio';
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -22,6 +23,11 @@ const articleSchema = {
   "headline": post.data.title,
   "description": post.data.description,
   "datePublished": post.data.date.toISOString(),
+  "dateModified": post.data.date.toISOString(),
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${siteUrl}/blog/${post.id}`
+  },
   "author": {
     "@type": "Organization",
     "name": post.data.author
@@ -31,21 +37,48 @@ const articleSchema = {
     "name": "NexusAI Studio",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://nexusai.studio/logo.svg"
+      "url": `${siteUrl}/logo.svg`
     }
-  }
+  },
+  "image": `${siteUrl}/og-image.svg`
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": siteUrl
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": `${siteUrl}/#blog`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": post.data.title,
+      "item": `${siteUrl}/blog/${post.id}`
+    }
+  ]
 };
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={post.data.title} description={post.data.description} ogType="article">
   <Header />
   <JsonLd data={articleSchema} />
+  <JsonLd data={breadcrumbSchema} />
 
   <main id="main-content" class="pt-24 pb-16">
     <article class="max-w-3xl mx-auto px-6">
       <!-- Back link -->
       <a href="/#blog" class="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mb-8">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Volver al blog
       </a>
 

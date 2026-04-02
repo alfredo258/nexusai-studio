@@ -7,8 +7,6 @@ readTime: "6 min de lectura"
 author: "NexusAI Studio"
 ---
 
-# El ROI Real de la Automatización con IA: Datos de 50 Proyectos
-
 Después de entregar más de 50 proyectos de automatización con IA, tenemos datos suficientes para hablar con números. Aquí va la verdad sin filtros.
 
 ## Los Números
@@ -39,4 +37,4 @@ La fórmula es simple:
 
 Donde el ahorro incluye: horas de trabajo liberadas, errores eliminados, velocidad de respuesta mejorada y oportunidades capturadas.
 
-**¿Quieres calcular el ROI de IA para tu negocio?** [Solicita un análisis gratuito](#contacto).
+**¿Quieres calcular el ROI de IA para tu negocio?** [Solicita un análisis gratuito](/#contacto).

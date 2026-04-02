@@ -59,13 +59,6 @@ html {
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 
-/* Chatbot toggle - CSS only */
-.chatbot-toggle:checked ~ .chatbot-panel {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
 /* Pulse dot */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }

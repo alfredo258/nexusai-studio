@@ -7,8 +7,6 @@ readTime: "7 min de lectura"
 author: "NexusAI Studio"
 ---
 
-# GSO y AEO: Cómo Hacer que las IAs Citen tu Web
-
 En 2026, más del 40% de las búsquedas pasan por asistentes de IA. Si tu web no está optimizada para ser **citada por modelos de lenguaje**, estás perdiendo tráfico cualificado.
 
 ## ¿Qué es GSO?
@@ -42,4 +40,4 @@ En 2026, más del 40% de las búsquedas pasan por asistentes de IA. Si tu web no
 </script>
 ```
 
-**¿Necesitas optimizar tu web para IA?** [Hablemos](#contacto).
+**¿Necesitas optimizar tu web para IA?** [Hablemos](/#contacto).
