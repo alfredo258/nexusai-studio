@@ -400,13 +400,12 @@
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        color: var(--accent);
+        color: var(--v600);
         margin-bottom: 0.75rem;
       }
       .section-title {
-        /* Stripe: weight 500, compressed, near-black */
         font-family: var(--font-d);
-        font-weight: 500;
+        font-weight: 800;
         font-size: clamp(2rem, 3.5vw, 2.8rem);
         color: var(--text);
         letter-spacing: -1px;
@@ -725,19 +724,17 @@
       .t-card {
         width: 380px;
         background: var(--white);
-        border: none;
-        border-radius: 12px;
+        border: 1px solid rgba(109, 40, 217, 0.08);
+        border-radius: 18px;
         padding: 2rem;
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         transition: all 0.4s var(--ease);
-        /* Cal.com: shadow-as-border */
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
       }
       .t-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.08);
       }
       .t-stars {
         color: var(--v500);
@@ -759,7 +756,7 @@
         align-items: center;
         gap: 1rem;
         padding-top: 1.25rem;
-        border-top: 1px solid var(--card-border);
+        border-top: 1px solid rgba(109, 40, 217, 0.08);
       }
       .t-avatar {
         width: 52px;
@@ -784,7 +781,7 @@
       .clients {
         padding: 5rem 0;
         background: transparent;
-        border-top: 1px solid var(--card-border);
+        border-top: 1px solid rgba(109, 40, 217, 0.08);
       }
       .clients-header {
         text-align: center;
@@ -850,7 +847,7 @@
       }
       .calendar-text h2 {
         font-family: var(--font-d);
-        font-weight: 700;
+        font-weight: 800;
         font-size: clamp(1.8rem, 3.2vw, 2.6rem);
         color: var(--text);
         letter-spacing: -1.2px;
@@ -897,13 +894,11 @@
       .cal-visual {
         position:relative;
         background: var(--white);
-        border: none;
-        border-radius: 14px;
+        border: 1px solid rgba(109, 40, 217, 0.08);
+        border-radius: 20px;
         padding: 2.5rem;
         text-align: center;
         overflow: visible;
-        /* Cal.com: shadow-as-border for featured element */
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.04);
       }
       .cal-visual::before {
         content: "";
@@ -947,15 +942,14 @@
         margin-bottom: 1.5rem;
       }
       .time-slot {
-        /* Cal.com: clean pill */
         padding: 0.5rem 1rem;
-        background: var(--bg-warm);
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #f5f3ff;
+        border: 1px solid var(--v100);
         border-radius: 6px;
         font-family: var(--font-b);
         font-weight: 500;
         font-size: 0.82rem;
-        color: var(--text);
+        color: var(--accent);
         transition: all 0.15s;
         text-decoration: none;
         cursor: pointer;
@@ -2189,7 +2183,7 @@
 
       /* LIGHT SECTION: FAQ — clean white */
       .faq-section {
-        background: var(--bg);
+        background: transparent;
       }
 
       /* LIGHT SECTION: Calendar */
@@ -2216,24 +2210,14 @@
       }
       .faq-item {
         background: var(--white);
-        border: none;
-        border-radius: 14px;
-        /* Raycast: glass-depth */
-        box-shadow:
-          0 0 0 1px rgba(180,160,130,0.08),
-          0 2px 6px rgba(0,0,0,0.03),
-          inset 0 1px 0 rgba(255,255,255,0.8),
-          inset 0 -1px 0 rgba(0,0,0,0.02);
+        border: 1px solid rgba(109, 40, 217, 0.08);
+        border-radius: 18px;
         transition: all 0.4s var(--ease);
         overflow: hidden;
       }
       .faq-item[open] {
-        box-shadow:
-          0 0 0 1px rgba(180,160,130,0.15),
-          0 8px 24px rgba(127,99,21,0.04),
-          0 3px 6px rgba(0,0,0,0.03),
-          inset 0 1px 0 rgba(255,255,255,0.95),
-          inset 0 -1px 0 rgba(0,0,0,0.015);
+        border-color: rgba(109, 40, 217, 0.15);
+        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.06);
       }
       .faq-question {
         display: flex;
