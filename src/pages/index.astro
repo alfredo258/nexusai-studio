@@ -187,23 +187,48 @@ const serviceSchema = {
       var cards = document.querySelectorAll('.pipe-card');
       if (!hero || !cards.length) return;
 
-      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
-      hero.querySelector('.pipe-wrap').appendChild(svg);
-
+      // Find stats section to calculate extended height
+      var statsBar = document.querySelector('.stats-bar');
+      var statsRect = statsBar ? statsBar.getBoundingClientRect() : null;
       var heroRect = hero.getBoundingClientRect();
       var hw = heroRect.width, hh = heroRect.height;
+      // Extend SVG to cover hero + stats section
+      var extendH = statsRect ? (statsRect.bottom - heroRect.top) : hh;
 
-      // Dense anchor grid — edges, corners, header, mid-points
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.style.cssText = 'position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:0;';
+      svg.style.height = extendH + 'px';
+      hero.querySelector('.pipe-wrap').appendChild(svg);
+
+      // Dense anchor grid — edges, corners, header, below hero into stats
       var anchors = [];
-      // Top edge (header area) — many points
+      // Top edge (header area)
       for (var i = 0; i <= 8; i++) anchors.push({ x: i / 8 * hw, y: 0 });
-      // Bottom edge
+      // Hero bottom edge
       for (var i = 0; i <= 6; i++) anchors.push({ x: i / 6 * hw, y: hh });
       // Left edge
       for (var i = 1; i <= 4; i++) anchors.push({ x: 0, y: i / 5 * hh });
       // Right edge
       for (var i = 1; i <= 4; i++) anchors.push({ x: hw, y: i / 5 * hh });
+      // Below hero — into stats section (mother web center)
+      if (statsRect) {
+        var webCenterX = hw / 2;
+        var webCenterY = hh + (statsRect.height / 2);
+        // Mother web center anchor
+        anchors.push({ x: webCenterX, y: webCenterY });
+        // Additional anchors around the mother web
+        for (var i = 0; i < 8; i++) {
+          var angle = (i / 8) * Math.PI * 2;
+          anchors.push({ x: webCenterX + Math.cos(angle) * 200, y: webCenterY + Math.sin(angle) * 120 });
+        }
+        // Bottom of stats
+        for (var i = 0; i <= 4; i++) anchors.push({ x: i / 4 * hw, y: extendH });
+        // Stats left/right edges
+        anchors.push({ x: 0, y: hh + statsRect.height * 0.3 });
+        anchors.push({ x: hw, y: hh + statsRect.height * 0.3 });
+        anchors.push({ x: 0, y: hh + statsRect.height * 0.7 });
+        anchors.push({ x: hw, y: hh + statsRect.height * 0.7 });
+      }
 
       function makeLine(x1, y1, x2, y2, opacity, width, dash) {
         var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');

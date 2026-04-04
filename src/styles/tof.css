@@ -190,7 +190,7 @@
         display: flex;
         align-items: center;
         position: relative;
-        overflow: hidden;
+        overflow: visible;
         padding-top: 5rem;
         background: transparent;
         color: var(--text);
@@ -1293,7 +1293,7 @@
       }
 
       .pipe-wrap {
-        position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden;
+        position:absolute; inset:0; pointer-events:none; z-index:1; overflow:visible;
       }
 
       /* Blobs */
