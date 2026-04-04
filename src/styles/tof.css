@@ -26,13 +26,6 @@
         --accent-hover: #5b21b6;
         --accent-light: rgba(109, 40, 217, 0.08);
         --accent-glow: rgba(109, 40, 217, 0.15);
-        /* Violet scale */
-        --v100: #ede9fe;
-        --v200: #ddd6fe;
-        --v300: #c4b5fd;
-        --v400: #a78bfa;
-        --v500: #8b5cf6;
-        --v600: #7c3aed;
         /* Text: Notion warm near-blacks */
         --text: #1a1a1a;
         --text2: #4a4a4a;
@@ -49,7 +42,8 @@
       }
       body {
         font-family: var(--font-b);
-        background: linear-gradient(170deg, #fafafc 0%, #f5f1ff 35%, #f5f3ff 60%, #f5f1ff 80%, #fafafc 100%);
+        /* Clean white canvas — Notion/Cal.com approach */
+        background: var(--bg);
         color: var(--text2);
         line-height: 1.6;
         letter-spacing: -0.11px;
@@ -186,14 +180,15 @@
         transition: all 0.3s;
       }
       .hero {
+        /* Linear: dark canvas hero */
         min-height: 100vh;
         display: flex;
         align-items: center;
         position: relative;
-        overflow: visible;
+        overflow: hidden;
         padding-top: 5rem;
-        background: transparent;
-        color: var(--text);
+        background: var(--bg-dark);
+        color: var(--white);
       }
       .hero .g1 {
         width: 700px;
@@ -227,13 +222,14 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
-        border: 1px solid rgba(109, 40, 217, 0.15);
+        /* Linear: whisper badge on dark */
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 100px;
         font-family: var(--font-b);
         font-size: 0.78rem;
         font-weight: 500;
-        color: var(--text2);
-        background: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.05);
         animation: fadeUp 0.8s var(--ease) both;
         margin-bottom: 2rem;
       }
@@ -257,11 +253,12 @@
         }
       }
       .hero h1 {
+        /* Stripe: lighter weight, Framer: compressed tracking */
         font-family: var(--font-d);
-        font-weight: 900;
-        font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+        font-weight: 500;
+        font-size: clamp(2.6rem, 6vw, 4.5rem);
         line-height: 1.05;
-        color: var(--text);
+        color: #f0f0f0;
         letter-spacing: -2px;
         margin-bottom: 1.5rem;
         animation: fadeUp 0.8s 0.1s var(--ease) both;
@@ -277,7 +274,8 @@
         font-weight: 400;
         line-height: 1.6;
         letter-spacing: -0.1px;
-        color: var(--text2);
+        /* Linear: silver-gray on dark */
+        color: rgba(255, 255, 255, 0.5);
         max-width: 540px;
         margin-bottom: 2.5rem;
         animation: fadeUp 0.8s 0.2s var(--ease) both;
@@ -313,13 +311,14 @@
         transform: translateY(-1px);
       }
       .btn-ghost {
-        background: #fff;
-        color: var(--accent);
-        border: 1px solid rgba(109, 40, 217, 0.2);
+        /* Linear: ghost on dark */
+        background: transparent;
+        color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.15);
       }
       .btn-ghost:hover {
-        border-color: var(--accent);
-        background: rgba(109, 40, 217, 0.05);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: var(--white);
       }
       .float-el {
         position: absolute;
@@ -400,12 +399,13 @@
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        color: var(--v600);
+        color: var(--accent);
         margin-bottom: 0.75rem;
       }
       .section-title {
+        /* Stripe: weight 500, compressed, near-black */
         font-family: var(--font-d);
-        font-weight: 800;
+        font-weight: 500;
         font-size: clamp(2rem, 3.5vw, 2.8rem);
         color: var(--text);
         letter-spacing: -1px;
@@ -535,7 +535,6 @@
       }
       .process .section-title {
         color: var(--white);
-        font-weight: 800;
       }
       .process .section-desc {
         color: rgba(255, 255, 255, 0.5);
@@ -591,8 +590,8 @@
       .process-step-content {
         padding: 2rem;
         background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(139, 92, 246, 0.12);
-        border-radius: 18px;
+        border: none;
+        border-radius: 12px;
         transition: all 0.4s var(--ease);
         backdrop-filter: blur(10px);
         /* Raycast dark: ring + inset light/dark edges */
@@ -724,17 +723,19 @@
       .t-card {
         width: 380px;
         background: var(--white);
-        border: 1px solid rgba(109, 40, 217, 0.08);
-        border-radius: 18px;
+        border: none;
+        border-radius: 12px;
         padding: 2rem;
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         transition: all 0.4s var(--ease);
+        /* Cal.com: shadow-as-border */
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
       }
       .t-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.08);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.04);
       }
       .t-stars {
         color: var(--v500);
@@ -756,7 +757,7 @@
         align-items: center;
         gap: 1rem;
         padding-top: 1.25rem;
-        border-top: 1px solid rgba(109, 40, 217, 0.08);
+        border-top: 1px solid var(--card-border);
       }
       .t-avatar {
         width: 52px;
@@ -781,7 +782,7 @@
       .clients {
         padding: 5rem 0;
         background: transparent;
-        border-top: 1px solid rgba(109, 40, 217, 0.08);
+        border-top: 1px solid var(--card-border);
       }
       .clients-header {
         text-align: center;
@@ -847,7 +848,7 @@
       }
       .calendar-text h2 {
         font-family: var(--font-d);
-        font-weight: 800;
+        font-weight: 700;
         font-size: clamp(1.8rem, 3.2vw, 2.6rem);
         color: var(--text);
         letter-spacing: -1.2px;
@@ -894,11 +895,13 @@
       .cal-visual {
         position:relative;
         background: var(--white);
-        border: 1px solid rgba(109, 40, 217, 0.08);
-        border-radius: 20px;
+        border: none;
+        border-radius: 14px;
         padding: 2.5rem;
         text-align: center;
         overflow: visible;
+        /* Cal.com: shadow-as-border for featured element */
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.04);
       }
       .cal-visual::before {
         content: "";
@@ -942,14 +945,15 @@
         margin-bottom: 1.5rem;
       }
       .time-slot {
+        /* Cal.com: clean pill */
         padding: 0.5rem 1rem;
-        background: #f5f3ff;
-        border: 1px solid var(--v100);
+        background: var(--bg-warm);
+        border: 1px solid rgba(0, 0, 0, 0.08);
         border-radius: 6px;
         font-family: var(--font-b);
         font-weight: 500;
         font-size: 0.82rem;
-        color: var(--accent);
+        color: var(--text);
         transition: all 0.15s;
         text-decoration: none;
         cursor: pointer;
@@ -1293,7 +1297,7 @@
       }
 
       .pipe-wrap {
-        position:absolute; inset:0; pointer-events:none; z-index:1; overflow:visible;
+        position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden;
       }
 
       /* Blobs */
@@ -2106,8 +2110,9 @@
          3 dark sections evenly distributed, never two in a row
       ==================================================================== */
 
+      /* LIGHT SECTION: Stats Bar — Notion warm-white */
       .stats-bar {
-        background: transparent;
+        background: var(--bg-warm);
         position: relative;
         overflow: hidden;
       }
@@ -2168,18 +2173,21 @@
         }
       }
 
+      /* LIGHT SECTION: Testimonials — Notion warm-white */
       .testimonials {
-        background: transparent;
+        background: var(--bg);
       }
 
+      /* LIGHT SECTION: Clients — whisper borders */
       .clients {
-        background: transparent;
-        border-top: 1px solid rgba(109, 40, 217, 0.08);
+        background: var(--bg-warm);
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       }
 
       /* LIGHT SECTION: FAQ — clean white */
       .faq-section {
-        background: transparent;
+        background: var(--bg);
       }
 
       /* LIGHT SECTION: Calendar */
@@ -2206,14 +2214,24 @@
       }
       .faq-item {
         background: var(--white);
-        border: 1px solid rgba(109, 40, 217, 0.08);
-        border-radius: 18px;
+        border: none;
+        border-radius: 14px;
+        /* Raycast: glass-depth */
+        box-shadow:
+          0 0 0 1px rgba(180,160,130,0.08),
+          0 2px 6px rgba(0,0,0,0.03),
+          inset 0 1px 0 rgba(255,255,255,0.8),
+          inset 0 -1px 0 rgba(0,0,0,0.02);
         transition: all 0.4s var(--ease);
         overflow: hidden;
       }
       .faq-item[open] {
-        border-color: rgba(109, 40, 217, 0.15);
-        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.06);
+        box-shadow:
+          0 0 0 1px rgba(180,160,130,0.15),
+          0 8px 24px rgba(127,99,21,0.04),
+          0 3px 6px rgba(0,0,0,0.03),
+          inset 0 1px 0 rgba(255,255,255,0.95),
+          inset 0 -1px 0 rgba(0,0,0,0.015);
       }
       .faq-question {
         display: flex;

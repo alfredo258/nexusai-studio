@@ -178,73 +178,37 @@ const serviceSchema = {
     }
 
     // =============================================
-    // SPIDER-WEB CARDS — Dense web network + drag
+    // SPIDER-WEB CARDS — Draggable with web strands
     // =============================================
     (function() {
-      if (window.innerWidth < 768) return;
+      if (window.innerWidth < 768) return; // Skip on mobile
 
-      var hero = document.querySelector('.hero');
-      var cards = document.querySelectorAll('.pipe-card');
+      const hero = document.querySelector('.hero');
+      const cards = document.querySelectorAll('.pipe-card');
       if (!hero || !cards.length) return;
 
-      // Find stats section to calculate extended height
-      var statsBar = document.querySelector('.stats-bar');
-      var statsRect = statsBar ? statsBar.getBoundingClientRect() : null;
-      var heroRect = hero.getBoundingClientRect();
-      var hw = heroRect.width, hh = heroRect.height;
-      // Extend SVG to cover hero + stats section
-      var extendH = statsRect ? (statsRect.bottom - heroRect.top) : hh;
-
-      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.style.cssText = 'position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:0;';
-      svg.style.height = extendH + 'px';
+      // Create SVG overlay for web strands
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'web-svg');
+      svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
       hero.querySelector('.pipe-wrap').appendChild(svg);
 
-      // Dense anchor grid — edges, corners, header, below hero into stats
-      var anchors = [];
-      // Top edge (header area)
-      for (var i = 0; i <= 8; i++) anchors.push({ x: i / 8 * hw, y: 0 });
-      // Hero bottom edge
-      for (var i = 0; i <= 6; i++) anchors.push({ x: i / 6 * hw, y: hh });
-      // Left edge
-      for (var i = 1; i <= 4; i++) anchors.push({ x: 0, y: i / 5 * hh });
-      // Right edge
-      for (var i = 1; i <= 4; i++) anchors.push({ x: hw, y: i / 5 * hh });
-      // Below hero — into stats section (mother web center)
-      if (statsRect) {
-        var webCenterX = hw / 2;
-        var webCenterY = hh + (statsRect.height / 2);
-        // Mother web center anchor
-        anchors.push({ x: webCenterX, y: webCenterY });
-        // Additional anchors around the mother web
-        for (var i = 0; i < 8; i++) {
-          var angle = (i / 8) * Math.PI * 2;
-          anchors.push({ x: webCenterX + Math.cos(angle) * 200, y: webCenterY + Math.sin(angle) * 120 });
-        }
-        // Bottom of stats
-        for (var i = 0; i <= 4; i++) anchors.push({ x: i / 4 * hw, y: extendH });
-        // Stats left/right edges
-        anchors.push({ x: 0, y: hh + statsRect.height * 0.3 });
-        anchors.push({ x: hw, y: hh + statsRect.height * 0.3 });
-        anchors.push({ x: 0, y: hh + statsRect.height * 0.7 });
-        anchors.push({ x: hw, y: hh + statsRect.height * 0.7 });
-      }
+      // Anchor points at edges/corners of hero
+      const anchors = [
+        { x: 0, y: 0 },        // top-left
+        { x: 0.5, y: 0 },      // top-center
+        { x: 1, y: 0 },        // top-right
+        { x: 0, y: 0.5 },      // mid-left
+        { x: 1, y: 0.5 },      // mid-right
+        { x: 0, y: 1 },        // bottom-left
+        { x: 0.5, y: 1 },      // bottom-center
+        { x: 1, y: 1 },        // bottom-right
+      ];
 
-      function makeLine(x1, y1, x2, y2, opacity, width, dash) {
-        var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        l.setAttribute('x1', x1); l.setAttribute('y1', y1);
-        l.setAttribute('x2', x2); l.setAttribute('y2', y2);
-        l.setAttribute('stroke', 'rgba(109,40,217,' + opacity + ')');
-        l.setAttribute('stroke-width', width);
-        if (dash) l.setAttribute('stroke-dasharray', dash);
-        l.setAttribute('stroke-linecap', 'round');
-        svg.appendChild(l);
-        return l;
-      }
+      const webData = []; // Store card data
 
-      var webData = [];
-
-      cards.forEach(function(card) {
+      cards.forEach(function(card, i) {
+        // Stop float-drift animation so drag works
         card.style.animation = 'none';
         card.style.pointerEvents = 'auto';
         card.style.cursor = 'grab';
@@ -255,80 +219,69 @@ const serviceSchema = {
         card.style.opacity = '1';
         card.style.clipPath = 'none';
 
-        var rect = card.getBoundingClientRect();
-        var cx = rect.left + rect.width / 2 - heroRect.left;
-        var cy = rect.top + rect.height / 2 - heroRect.top;
+        const rect = card.getBoundingClientRect();
+        const heroRect = hero.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2 - heroRect.left;
+        const cy = rect.top + rect.height / 2 - heroRect.top;
+        const hw = heroRect.width;
+        const hh = heroRect.height;
 
-        // Sort anchors by distance, pick 5-7 nearest
-        var sorted = anchors.map(function(a) {
-          var d = Math.sqrt((a.x - cx) * (a.x - cx) + (a.y - cy) * (a.y - cy));
-          return { ax: a.x, ay: a.y, dist: d };
-        }).sort(function(a, b) { return a.dist - b.dist; });
+        // Pick 2-3 nearest anchors for each card
+        const anchorPts = anchors.map(function(a) {
+          var ax = a.x * hw, ay = a.y * hh;
+          var dist = Math.sqrt((ax - cx) * (ax - cx) + (ay - cy) * (ay - cy));
+          return { ax: ax, ay: ay, dist: dist };
+        });
+        anchorPts.sort(function(a, b) { return a.dist - b.dist; });
+        var myAnchors = anchorPts.slice(0, 3);
 
-        var count = 5 + Math.floor(Math.random() * 3); // 5-7 strands per card
-        var myAnchors = sorted.slice(0, count);
-
+        // Create web strand lines
         var lines = [];
-        myAnchors.forEach(function(a, idx) {
-          var op = (0.06 + Math.random() * 0.1).toFixed(2);
-          var w = (0.5 + Math.random() * 1).toFixed(1);
-          var dash = Math.random() > 0.4 ? (3 + Math.floor(Math.random() * 4)) + ',' + (2 + Math.floor(Math.random() * 3)) : '';
-          var el = makeLine(a.ax, a.ay, cx, cy, op, w, dash);
-          lines.push({ el: el, ax: a.ax, ay: a.ay, baseOp: parseFloat(op), baseW: parseFloat(w) });
+        myAnchors.forEach(function(anchor) {
+          var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', anchor.ax);
+          line.setAttribute('y1', anchor.ay);
+          line.setAttribute('x2', cx);
+          line.setAttribute('y2', cy);
+          line.setAttribute('stroke', 'rgba(109,40,217,0.12)');
+          line.setAttribute('stroke-width', '1');
+          line.setAttribute('stroke-dasharray', '4,3');
+          svg.appendChild(line);
+          lines.push({ el: line, ax: anchor.ax, ay: anchor.ay });
         });
 
-        webData.push({ card: card, origX: cx, origY: cy, curX: cx, curY: cy, lines: lines });
+        webData.push({
+          card: card,
+          origX: cx,
+          origY: cy,
+          curX: cx,
+          curY: cy,
+          lines: lines,
+          dragging: false,
+          velX: 0,
+          velY: 0,
+        });
       });
 
-      // Card-to-card connections (web between nearby cards)
-      for (var i = 0; i < webData.length; i++) {
-        for (var j = i + 1; j < webData.length; j++) {
-          var a = webData[i], b = webData[j];
-          var d = Math.sqrt(Math.pow(a.origX - b.origX, 2) + Math.pow(a.origY - b.origY, 2));
-          if (d < hw * 0.6) { // Connect cards within 60% of hero width
-            var op = (0.04 + Math.random() * 0.06).toFixed(2);
-            var el = makeLine(a.origX, a.origY, b.origX, b.origY, op, '0.6', '6,4');
-            a.lines.push({ el: el, ax: b.origX, ay: b.origY, baseOp: parseFloat(op), baseW: 0.6, linked: j });
-            b.lines.push({ el: el, ax: a.origX, ay: a.origY, baseOp: parseFloat(op), baseW: 0.6, linked: i, isEnd1: true });
-          }
-        }
-      }
-
-      // Update all lines for a card
-      function updateLines(d) {
-        d.lines.forEach(function(l) {
-          if (l.isEnd1) {
-            l.el.setAttribute('x1', d.curX);
-            l.el.setAttribute('y1', d.curY);
-          } else {
-            l.el.setAttribute('x2', d.curX);
-            l.el.setAttribute('y2', d.curY);
-          }
-          // Tension effect
-          var ex = l.isEnd1 ? parseFloat(l.el.getAttribute('x2')) : l.ax;
-          var ey = l.isEnd1 ? parseFloat(l.el.getAttribute('y2')) : l.ay;
-          var sDist = Math.sqrt(Math.pow(d.curX - ex, 2) + Math.pow(d.curY - ey, 2));
-          var oDist = Math.sqrt(Math.pow(d.origX - ex, 2) + Math.pow(d.origY - ey, 2));
-          var tension = Math.min(sDist / Math.max(oDist, 1), 2);
-          var newW = (l.baseW + tension * 0.8).toFixed(1);
-          var newOp = Math.min(l.baseOp + tension * 0.12, 0.35).toFixed(2);
-          l.el.setAttribute('stroke-width', newW);
-          l.el.setAttribute('stroke', 'rgba(109,40,217,' + newOp + ')');
-        });
-      }
-
-      // Drag
-      var active = null, smx = 0, smy = 0, scx = 0, scy = 0;
+      // Drag logic
+      var activeCard = null;
+      var startMX = 0, startMY = 0, startCX = 0, startCY = 0;
 
       function onDown(e) {
-        var t = e.touches ? e.touches[0] : e;
+        var touch = e.touches ? e.touches[0] : e;
+        var heroRect = hero.getBoundingClientRect();
         for (var i = 0; i < webData.length; i++) {
-          var r = webData[i].card.getBoundingClientRect();
-          if (t.clientX >= r.left && t.clientX <= r.right && t.clientY >= r.top && t.clientY <= r.bottom) {
-            active = webData[i];
-            active.card.style.cursor = 'grabbing';
-            smx = t.clientX; smy = t.clientY;
-            scx = active.curX; scy = active.curY;
+          var d = webData[i];
+          var cardRect = d.card.getBoundingClientRect();
+          if (touch.clientX >= cardRect.left && touch.clientX <= cardRect.right &&
+              touch.clientY >= cardRect.top && touch.clientY <= cardRect.bottom) {
+            activeCard = d;
+            d.dragging = true;
+            d.card.style.cursor = 'grabbing';
+            startMX = touch.clientX;
+            startMY = touch.clientY;
+            startCX = d.curX;
+            startCY = d.curY;
             e.preventDefault();
             break;
           }
@@ -336,38 +289,96 @@ const serviceSchema = {
       }
 
       function onMove(e) {
-        if (!active) return;
-        var t = e.touches ? e.touches[0] : e;
-        var dx = t.clientX - smx, dy = t.clientY - smy;
+        if (!activeCard) return;
+        var touch = e.touches ? e.touches[0] : e;
+        var dx = touch.clientX - startMX;
+        var dy = touch.clientY - startMY;
+
+        // Limit drag range (web tension)
+        var maxDist = 80;
         var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist > 80) { dx = dx * 80 / dist; dy = dy * 80 / dist; }
-        active.curX = scx + dx;
-        active.curY = scy + dy;
-        active.card.style.transform = 'translate(' + (active.curX - active.origX) + 'px,' + (active.curY - active.origY) + 'px)';
-        updateLines(active);
+        if (dist > maxDist) {
+          dx = dx * maxDist / dist;
+          dy = dy * maxDist / dist;
+        }
+
+        activeCard.curX = startCX + dx;
+        activeCard.curY = startCY + dy;
+
+        var offX = activeCard.curX - activeCard.origX;
+        var offY = activeCard.curY - activeCard.origY;
+        activeCard.card.style.transform = 'translate(' + offX + 'px,' + offY + 'px)';
+
+        // Update web strands
+        activeCard.lines.forEach(function(l) {
+          l.el.setAttribute('x2', activeCard.curX);
+          l.el.setAttribute('y2', activeCard.curY);
+          // Thicker when stretched
+          var sDist = Math.sqrt(Math.pow(activeCard.curX - l.ax, 2) + Math.pow(activeCard.curY - l.ay, 2));
+          var origDist = Math.sqrt(Math.pow(activeCard.origX - l.ax, 2) + Math.pow(activeCard.origY - l.ay, 2));
+          var tension = Math.min(sDist / origDist, 1.5);
+          l.el.setAttribute('stroke-width', (0.8 + tension * 0.8).toFixed(1));
+          l.el.setAttribute('stroke', 'rgba(109,40,217,' + (0.08 + tension * 0.15).toFixed(2) + ')');
+        });
+
         e.preventDefault();
       }
 
       function onUp() {
-        if (!active) return;
-        active.card.style.cursor = 'grab';
-        var c = active; active = null;
-        var vx = 0, vy = 0;
-        (function bounce() {
-          var dx = c.origX - c.curX, dy = c.origY - c.curY;
-          vx = (vx + dx * 0.15) * 0.75;
-          vy = (vy + dy * 0.15) * 0.75;
-          c.curX += vx; c.curY += vy;
-          c.card.style.transform = 'translate(' + (c.curX - c.origX) + 'px,' + (c.curY - c.origY) + 'px)';
-          updateLines(c);
-          if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3 || Math.abs(vx) > 0.3 || Math.abs(vy) > 0.3) {
-            requestAnimationFrame(bounce);
+        if (!activeCard) return;
+        activeCard.dragging = false;
+        activeCard.card.style.cursor = 'grab';
+
+        // Spring back animation
+        var card = activeCard;
+        activeCard = null;
+
+        var spring = 0.15;
+        var damping = 0.75;
+        var velX = 0, velY = 0;
+
+        function animate() {
+          var dx = card.origX - card.curX;
+          var dy = card.origY - card.curY;
+
+          velX += dx * spring;
+          velY += dy * spring;
+          velX *= damping;
+          velY *= damping;
+
+          card.curX += velX;
+          card.curY += velY;
+
+          var offX = card.curX - card.origX;
+          var offY = card.curY - card.origY;
+          card.card.style.transform = 'translate(' + offX + 'px,' + offY + 'px)';
+
+          // Update web strands
+          card.lines.forEach(function(l) {
+            l.el.setAttribute('x2', card.curX);
+            l.el.setAttribute('y2', card.curY);
+            var sDist = Math.sqrt(Math.pow(card.curX - l.ax, 2) + Math.pow(card.curY - l.ay, 2));
+            var origDist = Math.sqrt(Math.pow(card.origX - l.ax, 2) + Math.pow(card.origY - l.ay, 2));
+            var tension = Math.min(sDist / origDist, 1.5);
+            l.el.setAttribute('stroke-width', (0.8 + tension * 0.8).toFixed(1));
+            l.el.setAttribute('stroke', 'rgba(109,40,217,' + (0.08 + tension * 0.15).toFixed(2) + ')');
+          });
+
+          if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3 || Math.abs(velX) > 0.3 || Math.abs(velY) > 0.3) {
+            requestAnimationFrame(animate);
           } else {
-            c.curX = c.origX; c.curY = c.origY;
-            c.card.style.transform = 'translate(0,0)';
-            updateLines(c);
+            card.curX = card.origX;
+            card.curY = card.origY;
+            card.card.style.transform = 'translate(0,0)';
+            card.lines.forEach(function(l) {
+              l.el.setAttribute('x2', card.origX);
+              l.el.setAttribute('y2', card.origY);
+              l.el.setAttribute('stroke-width', '1');
+              l.el.setAttribute('stroke', 'rgba(109,40,217,0.12)');
+            });
           }
-        })();
+        }
+        requestAnimationFrame(animate);
       }
 
       hero.addEventListener('mousedown', onDown);
