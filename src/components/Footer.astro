@@ -1,59 +1,55 @@
 ---
-const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-white/5 py-12">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-      <!-- Brand -->
-      <div class="sm:col-span-2 lg:col-span-1">
-        <a href="/" class="flex items-center gap-2 mb-4">
-          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-sm font-bold">N</div>
-          <span class="font-semibold text-lg tracking-tight">NexusAI</span>
-        </a>
-        <p class="text-sm text-neutral-400 leading-relaxed">
-          Agencia AI-Native. Construimos soluciones de IA que generan impacto real en tu negocio.
-        </p>
-      </div>
-
-      <!-- Services -->
-      <div>
-        <h3 class="text-sm font-semibold mb-4">Servicios</h3>
-        <ul class="space-y-2 text-sm text-neutral-400">
-          <li><a href="#servicios" class="hover:text-white transition-colors">Agentes IA</a></li>
-          <li><a href="#servicios" class="hover:text-white transition-colors">Webs Inteligentes</a></li>
-          <li><a href="#servicios" class="hover:text-white transition-colors">Automatización</a></li>
-          <li><a href="#servicios" class="hover:text-white transition-colors">Consultoría IA</a></li>
-        </ul>
-      </div>
-
-      <!-- Company -->
-      <div>
-        <h3 class="text-sm font-semibold mb-4">Empresa</h3>
-        <ul class="space-y-2 text-sm text-neutral-400">
-          <li><a href="#" class="hover:text-white transition-colors">Sobre Nosotros</a></li>
-          <li><a href="#blog" class="hover:text-white transition-colors">Blog</a></li>
-          <li><a href="#contacto" class="hover:text-white transition-colors">Contacto</a></li>
-        </ul>
-      </div>
-
-      <!-- Contact -->
-      <div>
-        <h3 class="text-sm font-semibold mb-4">Contacto</h3>
-        <ul class="space-y-2 text-sm text-neutral-400">
-          <li><a href="mailto:hola@nexusai.studio" class="hover:text-white transition-colors">hola@nexusai.studio</a></li>
-          <li>Madrid, España</li>
-        </ul>
-      </div>
+    <!-- Floating CTA Badge -->
+    <div class="floating-badge-container">
+      <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="floating-badge" rel="noopener" target="_blank">
+        Agendar Reunión →
+      </a>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
-      <p>&copy; {year} NexusAI Studio. Todos los derechos reservados.</p>
-      <div class="flex items-center gap-6">
-        <a href="#" class="hover:text-white transition-colors">Privacidad</a>
-        <a href="#" class="hover:text-white transition-colors">Términos</a>
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="nav-logo">The <span>Outbound</span> Force</a>
+            <p>Implementamos un sistema de prospección B2B predecible que pone a tu cliente ideal frente a ti cada semana.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Servicios</h4>
+            <ul>
+              <li><a href="#servicios">LinkedIn Inbox</a></li>
+              <li><a href="#servicios">Email Marketing</a></li>
+              <li><a href="#servicios">Meta Ads</a></li>
+              <li><a href="#servicios">Google Ads</a></li>
+              <li><a href="#servicios">Landing Pages</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Empresa</h4>
+            <ul>
+              <li><a href="#proceso">Proceso</a></li>
+              <li><a href="#testimonios">Testimonios</a></li>
+              <li><a href="#agenda">Agendar Reunión</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <ul>
+              <li><a href="mailto:alfredo@theoutboundforce.com">alfredo@theoutboundforce.com</a></li>
+              <li><a href="https://www.linkedin.com/company/the-outbound-force" rel="noopener" target="_blank">LinkedIn</a></li>
+              <li><a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" rel="noopener" target="_blank">Agendar Llamada</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-inner">
+          <div class="footer-copy">
+            &copy; 2026 The Outbound Force. Todos los derechos reservados.
+          </div>
+          <div class="footer-links">
+            <a href="#">Privacidad</a>
+            <a href="#">Términos</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</footer>
+    </footer>

@@ -2,26 +2,169 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
 import Services from '../components/Services.astro';
 import Process from '../components/Process.astro';
-import Chatbot from '../components/Chatbot.astro';
-import BlogPreview from '../components/BlogPreview.astro';
-import Contact from '../components/Contact.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Clients from '../components/Clients.astro';
+import Calendar from '../components/Calendar.astro';
+import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "The Outbound Force",
+  "description": "Implementamos un sistema de prospección B2B predecible para empresas. LinkedIn, Email Marketing, Meta Ads y Google Ads. +500 reuniones agendadas.",
+  "url": "https://theoutboundforce.com",
+  "areaServed": ["Argentina", "LATAM", "España", "USA"],
+  "serviceType": ["Prospección B2B", "Generación de Leads", "Email Marketing", "LinkedIn Outreach", "Meta Ads", "Google Ads", "Landing Pages"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "5"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Rosario",
+    "addressRegion": "Santa Fe",
+    "addressCountry": "Argentina"
+  }
+};
 ---
 
 <Layout
-  title="Servicios Profesionales de IA"
-  description="NexusAI Studio: Agencia AI-Native especializada en agentes IA, automatización de procesos, chatbots inteligentes y webs con IA integrada. ROI promedio 340%."
+  title="The Outbound Force — Prospección B2B que llena tu agenda de reuniones"
+  description="Implementamos un sistema de prospección B2B predecible para empresas. LinkedIn, Email Marketing, Meta Ads y Google Ads. +500 reuniones agendadas. Agendá tu llamada gratis."
 >
+  <JsonLd data={serviceSchema} />
   <Header />
-  <main id="main-content">
+  <main>
     <Hero />
+    <Stats />
     <Services />
     <Process />
-    <Chatbot />
-    <BlogPreview />
-    <Contact />
+    <Testimonials />
+    <Clients />
+    <FAQ />
+    <Calendar />
   </main>
   <Footer />
+
+  <!-- Scripts -->
+  <script is:inline>
+    // Scroll reveal observer
+    const allR = document.querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale");
+    const rObs = new IntersectionObserver((e) => {
+      e.forEach((e) => { e.isIntersecting && e.target.classList.add("active"); });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    allR.forEach((e) => rObs.observe(e));
+
+    // Nav scroll effect
+    window.addEventListener("scroll", () => {
+      document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 50);
+    });
+
+    // Mobile menu
+    document.getElementById("menuToggle").addEventListener("click", () => {
+      document.getElementById("navLinks").classList.toggle("open");
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((e) => {
+      e.addEventListener("click", (t) => {
+        t.preventDefault();
+        const n = document.querySelector(e.getAttribute("href"));
+        n && (n.scrollIntoView({ behavior: "smooth", block: "start" }),
+          document.getElementById("navLinks").classList.remove("open"));
+      });
+    });
+
+    // Slot counter animation
+    const slotCounters = document.querySelectorAll(".slot-counter");
+    const slotObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const prefix = el.dataset.prefix || "";
+        const fps = 1000 / 60;
+        const totalFrames = Math.round(2000 / fps);
+        let frame = 0;
+        const timer = setInterval(() => {
+          frame++;
+          const progress = 1 - Math.pow(1 - frame / totalFrames, 4);
+          el.textContent = prefix + Math.round(target * progress);
+          if (frame === totalFrames) clearInterval(timer);
+        }, fps);
+        slotObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    slotCounters.forEach((e) => slotObs.observe(e));
+
+    // Active nav indicator on scroll
+    const navSections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    const navObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.toggle('nav-active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+    navSections.forEach(s => navObs.observe(s));
+
+    // Parallax floating elements
+    document.addEventListener("mousemove", (e) => {
+      const els = document.querySelectorAll(".float-el");
+      const mx = 20 * (e.clientX / window.innerWidth - 0.5);
+      const my = 20 * (e.clientY / window.innerHeight - 0.5);
+      els.forEach((el, i) => {
+        const factor = 0.4 * (i + 1);
+        el.style.transform = `translate(${mx * factor}px,${my * factor}px)`;
+      });
+    });
+
+    // Mascot interactions
+    document.querySelectorAll('.time-slot').forEach(function(s){
+      s.addEventListener('click', function(){
+        var c = document.querySelector('.mascot-toggle');
+        if(c){ c.checked = true; setTimeout(function(){ c.checked = false }, 3000) }
+      });
+    });
+    var bubbleLink = document.querySelector('.bubble-link');
+    if(bubbleLink) {
+      bubbleLink.addEventListener('click', function(e){
+        var toggle = document.querySelector('.mascot-toggle');
+        if(toggle && toggle.checked){
+          window.open('https://calendar.app.google/Jxg7er6LkiL6tGEw6','_blank');
+        }
+        e.stopPropagation();
+      });
+    }
+    var mascotToggle = document.querySelector('.mascot-toggle');
+    if(mascotToggle){
+      mascotToggle.addEventListener('change', function(){
+        if(this.checked){ setTimeout(function(){ mascotToggle.checked = false }, 3000) }
+      });
+    }
+    // Mobile mascot viewBox
+    if(window.innerWidth < 768){
+      var catSvg = document.querySelector('.mascot-wrap svg');
+      if(catSvg) catSvg.setAttribute('viewBox','20 70 360 240');
+    }
+  </script>
+
+  <!-- Google Analytics -->
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-V0C9DB2TVB"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-V0C9DB2TVB");
+  </script>
 </Layout>

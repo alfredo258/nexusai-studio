@@ -5,101 +5,88 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
-  canonical?: string;
-  ogType?: string;
 }
 
-const { title, description, canonical, ogType = 'website' } = Astro.props;
-const siteUrl = 'https://nexusai.studio';
-const fullTitle = `${title} | NexusAI Studio`;
+const { title, description } = Astro.props;
+const siteUrl = 'https://theoutboundforce.com';
 
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "NexusAI Studio",
+  "name": "The Outbound Force",
   "url": siteUrl,
-  "logo": `${siteUrl}/logo.svg`,
-  "description": "Servicios profesionales de Inteligencia Artificial para empresas. Automatización, agentes IA y soluciones a medida.",
-  "email": "hola@nexusai.studio",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Madrid",
-    "addressCountry": "ES"
-  },
+  "logo": `${siteUrl}/og-image.png`,
+  "description": "Implementamos un sistema de prospección B2B predecible para empresas. LinkedIn, Email Marketing, Meta Ads y Google Ads.",
+  "email": "alfredo@theoutboundforce.com",
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "hola@nexusai.studio",
+    "email": "alfredo@theoutboundforce.com",
     "contactType": "sales",
     "availableLanguage": ["Spanish", "English"]
   },
   "sameAs": [
-    "https://github.com/nexusai-studio",
-    "https://linkedin.com/company/nexusai-studio"
+    "https://www.linkedin.com/company/the-outbound-force"
   ]
 };
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "NexusAI Studio",
+  "name": "The Outbound Force",
   "url": siteUrl,
   "description": description,
   "inLanguage": "es",
-  "publisher": { "@type": "Organization", "name": "NexusAI Studio" },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": `${siteUrl}/blog?q={search_term_string}`,
-    "query-input": "required name=search_term_string"
-  }
+  "publisher": { "@type": "Organization", "name": "The Outbound Force" }
 };
 ---
 
 <!doctype html>
-<html lang="es" class="bg-neutral-950 text-white antialiased">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta name="theme-color" content="#6d28d9" />
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content="prospección B2B, generación de leads, agencia outbound, reuniones calificadas, cold email, LinkedIn outreach, Meta Ads, Google Ads, landing pages, Argentina, LATAM" />
     <meta name="robots" content="index, follow" />
-    <meta name="generator" content={Astro.generator} />
-
-    <!-- Canonical -->
-    <link rel="canonical" href={canonical || Astro.url.href} />
+    <link rel="canonical" href={siteUrl + "/"} />
+    <meta name="author" content="The Outbound Force" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content={ogType} />
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={Astro.url.href} />
-    <meta property="og:site_name" content="NexusAI Studio" />
-    <meta property="og:image" content={`${siteUrl}/og-image.svg`} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content={siteUrl + "/"} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Outbound Force" />
+    <meta property="og:image" content={`${siteUrl}/og-image.png`} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${siteUrl}/og-image.svg`} />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Fonts (async) -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
+    </noscript>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <title>{fullTitle}</title>
+    <meta name="generator" content={Astro.generator} />
 
     <!-- JSON-LD -->
     <JsonLd data={orgSchema} />
     <JsonLd data={websiteSchema} />
   </head>
-  <body class="font-sans min-h-screen">
-    <!-- Skip Navigation -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-violet-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">
-      Saltar al contenido
-    </a>
+  <body style="touch-action:pan-y;">
+    <a href="#servicios" class="skip-to-content">Saltar al contenido</a>
     <slot />
   </body>
 </html>

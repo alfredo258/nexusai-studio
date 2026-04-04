@@ -4,7 +4,7 @@ description: "Los agentes de IA han evolucionado de simples chatbots a sistemas 
 date: 2026-03-25
 tags: ["Agentes IA", "Automatización"]
 readTime: "5 min de lectura"
-author: "NexusAI Studio"
+author: "The Outbound Force"
 ---
 
 Los agentes de IA han dejado de ser ciencia ficción. En 2026, empresas de todos los tamaños están desplegando sistemas autónomos que no solo responden preguntas, sino que **toman decisiones, ejecutan acciones y aprenden de los resultados**.

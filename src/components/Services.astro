@@ -1,98 +1,150 @@
 ---
-import JsonLd from './JsonLd.astro';
-
-const services = [
-  {
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
-    title: 'Agentes IA Autónomos',
-    description: 'Libera a tu equipo de tareas repetitivas. Agentes que atienden clientes, analizan datos y ejecutan acciones 24/7 — sin supervisión.',
-  },
-  {
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>`,
-    title: 'Webs Inteligentes',
-    description: 'Webs que convierten y que los buscadores de IA recomiendan. Lighthouse 100, diseño premium y optimizadas para GSO/AEO.',
-  },
-  {
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`,
-    title: 'Automatización de Procesos',
-    description: 'Conectamos tus herramientas existentes con flujos de IA que eliminan trabajo manual y reducen errores un 95%.',
-  },
-  {
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>`,
-    title: 'Consultoría Estratégica IA',
-    description: 'Sabes exactamente dónde invertir en IA. Recibe un roadmap con las oportunidades de mayor ROI para tu operación.',
-  },
-  {
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>`,
-    title: 'Chatbots & Asistentes',
-    description: 'Chatbots que realmente entienden a tus clientes. Resuelven el 60% de consultas sin intervención humana, integrados con tus sistemas.',
-  },
-  {
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>`,
-    title: 'RAG & Knowledge Bases',
-    description: 'Tu equipo encuentra cualquier dato en segundos. Una pregunta en lenguaje natural, una respuesta precisa desde toda tu documentación.',
-  },
-];
-
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "provider": {
-    "@type": "Organization",
-    "name": "NexusAI Studio"
-  },
-  "serviceType": "Artificial Intelligence Consulting",
-  "areaServed": "Global",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Servicios de IA",
-    "itemListElement": services.map((s, i) => ({
-      "@type": "Offer",
-      "itemOffered": {
-        "@type": "Service",
-        "name": s.title,
-        "description": s.description
-      }
-    }))
-  }
-};
 ---
 
-<section id="servicios" class="py-24 md:py-32 relative">
-  <JsonLd data={serviceSchema} />
-
-  <div class="max-w-6xl mx-auto px-6">
-    <!-- Section header -->
-    <div class="text-center mb-16">
-      <span class="text-violet-400 text-sm font-medium tracking-wider uppercase">Servicios</span>
-      <h2 class="mt-3 text-3xl md:text-5xl font-bold tracking-tight">
-        Soluciones de IA que
-        <span class="text-violet-400">Generan Impacto</span>
-      </h2>
-      <p class="mt-4 text-neutral-400 max-w-2xl mx-auto text-lg">
-        No vendemos tecnología por vender. Cada proyecto se diseña para resolver un problema real y generar retorno medible.
-      </p>
-    </div>
-
-    <!-- Services grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {services.map((service) => (
-        <article class="group p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-violet-500/20 transition-all duration-300">
-          <div class="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center text-violet-400 mb-4 group-hover:bg-violet-500/20 transition-colors">
-            <Fragment set:html={service.icon} />
+    <section class="services" id="servicios">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-label">Qué hacemos</div>
+          <h2 class="section-title">
+            Campañas multicanal para<br />escalar tu pipeline de ventas.
+          </h2>
+          <p class="section-desc">
+            Combinamos estrategia, tecnología e IA para conectarte con los
+            decisores correctos en el momento justo.
+          </p>
+        </div>
+        <div class="services-list">
+          <div class="reveal service-row st1">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="#0A66C2">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                />
+              </svg>
+            </div>
+            <div class="service-body">
+              <h3>LinkedIn Inbox</h3>
+              <p>
+                Campañas automatizadas a bases de datos personalizadas. Nuestras
+                técnicas de prospección hacen la diferencia, conectándote con
+                leads calificados con intención de compra.
+              </p>
+              <div class="service-tags">
+                <span class="service-tag">Segmentación ICP</span
+                ><span class="service-tag">Secuencias A/B</span
+                ><span class="service-tag">Conexión directa</span>
+              </div>
+            </div>
           </div>
-          <h3 class="text-lg font-semibold mb-2">{service.title}</h3>
-          <p class="text-neutral-400 text-sm leading-relaxed">{service.description}</p>
-        </article>
-      ))}
-    </div>
-
-    <!-- CTA -->
-    <div class="text-center mt-12">
-      <a href="#contacto" class="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 font-medium transition-colors">
-        ¿Qué servicio encaja con tu caso? Agenda 15 min y te lo decimos
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
+          <div class="reveal service-row st2">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"
+                  fill="#EA4335"
+                />
+              </svg>
+            </div>
+            <div class="service-body">
+              <h3>Email Marketing</h3>
+              <p>
+                Campañas masivas personalizadas con inteligencia artificial.
+                Conectamos con decisores a través de correos que generan
+                conversaciones reales, no spam.
+              </p>
+              <div class="service-tags">
+                <span class="service-tag">IA personalización</span
+                ><span class="service-tag">Deliverability</span
+                ><span class="service-tag">Secuencias auto</span>
+              </div>
+            </div>
+          </div>
+          <div class="reveal service-row st3">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="#1877F2">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                />
+              </svg>
+            </div>
+            <div class="service-body">
+              <h3>Campañas de Meta Ads</h3>
+              <p>
+                Publicidad en Facebook e Instagram optimizada para generar leads
+                calificados. Creativos estratégicos, segmentación avanzada y
+                testing continuo.
+              </p>
+              <div class="service-tags">
+                <span class="service-tag">Facebook</span
+                ><span class="service-tag">Instagram</span
+                ><span class="service-tag">Testing A/B</span>
+              </div>
+            </div>
+          </div>
+          <div class="reveal service-row st4">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  fill="#34A853"
+                />
+                <path
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  fill="#EA4335"
+                />
+              </svg>
+            </div>
+            <div class="service-body">
+              <h3>Campañas de Google Ads</h3>
+              <p>
+                Captamos demanda activa con campañas de búsqueda, display y
+                remarketing. Tu negocio aparece justo cuando tu cliente ideal te
+                está buscando.
+              </p>
+              <div class="service-tags">
+                <span class="service-tag">Search</span
+                ><span class="service-tag">Display</span
+                ><span class="service-tag">Remarketing</span>
+              </div>
+            </div>
+          </div>
+          <div class="reveal service-row st5">
+            <div class="service-icon-wrap">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#7C3AED"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              >
+                <rect height="18" rx="2" width="18" x="3" y="3" />
+                <path d="M3 9h18" />
+                <path d="M9 21V9" />
+              </svg>
+            </div>
+            <div class="service-body">
+              <h3>Landing Pages Personalizadas</h3>
+              <p>
+                Diseñamos y desarrollamos páginas de aterrizaje optimizadas para
+                convertir tráfico en reuniones agendadas. Cada landing se adapta
+                a tu campaña.
+              </p>
+              <div class="service-tags">
+                <span class="service-tag">Diseño UX</span
+                ><span class="service-tag">Conversión</span
+                ><span class="service-tag">A/B testing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

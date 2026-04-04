@@ -1,0 +1,66 @@
+---
+import JsonLd from './JsonLd.astro';
+
+const faqs = [
+  {
+    question: "¿Cuánto tiempo tarda en verse resultados?",
+    answer: "La mayoría de nuestros clientes empiezan a ver respuestas en la primera semana de campaña. Las reuniones calificadas generalmente comienzan a agendarse entre la semana 2 y 3, a medida que las secuencias se calientan y optimizamos la mensajería."
+  },
+  {
+    question: "¿Qué incluye el servicio de prospección?",
+    answer: "Incluimos todo: investigación de mercado, construcción de bases de datos, redacción de mensajes con IA, configuración de infraestructura técnica (dominios, casillas, CRM), lanzamiento de campañas multicanal (email + LinkedIn), optimización continua y reportes semanales."
+  },
+  {
+    question: "¿Trabajan con empresas de mi industria?",
+    answer: "Trabajamos con empresas B2B de cualquier industria: SaaS, consultoría, servicios profesionales, tecnología, manufactura y más. Si vendés a otras empresas, podemos llenar tu pipeline."
+  },
+  {
+    question: "¿Cuántas reuniones puedo esperar por mes?",
+    answer: "Depende de tu mercado y oferta, pero nuestros clientes típicamente consiguen entre 10 y 30 reuniones calificadas por mes. Algunas empresas con mercados amplios superan las 40 reuniones mensuales."
+  },
+  {
+    question: "¿Qué diferencia a The Outbound Force de otras agencias?",
+    answer: "Combinamos IA para personalización a escala con frameworks de prospección probados. Cada mensaje suena como si un humano investigó al prospecto — porque nuestra IA realmente lo hizo. Además, no cobramos por lead, sino por sistema implementado y funcionando."
+  },
+  {
+    question: "¿Necesito tener un equipo de ventas?",
+    answer: "No necesariamente. Solo necesitás a alguien que pueda tomar las reuniones que agendamos. Puede ser el founder, un vendedor, o incluso nosotros podemos ayudarte a estructurar ese proceso."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": f.answer
+    }
+  }))
+};
+---
+
+<section class="faq-section" id="faq">
+  <JsonLd data={faqSchema} />
+  <div class="container">
+    <div class="reveal faq-header">
+      <div class="section-label">Preguntas Frecuentes</div>
+      <h2 class="section-title">
+        Todo lo que necesitás saber<br />antes de empezar.
+      </h2>
+    </div>
+    <div class="faq-grid">
+      {faqs.map((faq, i) => (
+        <details class={`reveal faq-item st${i + 1}`}>
+          <summary class="faq-question">
+            {faq.question}
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="faq-answer">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

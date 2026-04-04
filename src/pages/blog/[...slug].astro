@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-const siteUrl = 'https://nexusai.studio';
+const siteUrl = 'https://theoutboundforce.com';
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -34,7 +34,7 @@ const articleSchema = {
   },
   "publisher": {
     "@type": "Organization",
-    "name": "NexusAI Studio",
+    "name": "The Outbound Force",
     "logo": {
       "@type": "ImageObject",
       "url": `${siteUrl}/logo.svg`
@@ -50,7 +50,7 @@ const breadcrumbSchema = {
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "Inicio",
+      "name": "Home",
       "item": siteUrl
     },
     {
@@ -79,7 +79,7 @@ const breadcrumbSchema = {
       <!-- Back link -->
       <a href="/#blog" class="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mb-8">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        Volver al blog
+        Back to blog
       </a>
 
       <!-- Meta -->
@@ -93,7 +93,7 @@ const breadcrumbSchema = {
 
       <div class="flex items-center gap-4 text-sm text-neutral-500 mb-12 pb-8 border-b border-white/5">
         <time datetime={post.data.date.toISOString()}>
-          {post.data.date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+          {post.data.date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
         </time>
         <span>&middot;</span>
         <span>{post.data.readTime}</span>

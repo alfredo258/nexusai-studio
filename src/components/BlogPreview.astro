@@ -12,11 +12,11 @@ const posts = (await getCollection('blog'))
     <div class="text-center mb-16">
       <span class="text-violet-400 text-sm font-medium tracking-wider uppercase">Blog</span>
       <h2 class="mt-3 text-3xl md:text-5xl font-bold tracking-tight">
-        IA Aplicada:
-        <span class="text-violet-400">Lo que Funciona</span>
+        Outbound Sales:
+        <span class="text-violet-400">What Actually Works</span>
       </h2>
       <p class="mt-4 text-neutral-400 max-w-2xl mx-auto text-lg">
-        Análisis, guías prácticas y tendencias sobre IA aplicada al negocio.
+        Tactics, strategies, and insights on AI-powered outbound sales that drive real pipeline.
       </p>
     </div>
 
@@ -45,7 +45,7 @@ const posts = (await getCollection('blog'))
 
             <div class="flex items-center justify-between text-xs text-neutral-400">
               <time datetime={post.data.date.toISOString()}>
-                {post.data.date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                {post.data.date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
               </time>
               <span>{post.data.readTime}</span>
             </div>

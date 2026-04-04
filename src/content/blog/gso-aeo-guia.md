@@ -4,7 +4,7 @@ description: "El SEO tradicional ya no basta. Aprende las técnicas de Generativ
 date: 2026-03-18
 tags: ["GSO", "AEO", "SEO"]
 readTime: "7 min de lectura"
-author: "NexusAI Studio"
+author: "The Outbound Force"
 ---
 
 En 2026, más del 40% de las búsquedas pasan por asistentes de IA. Si tu web no está optimizada para ser **citada por modelos de lenguaje**, estás perdiendo tráfico cualificado.

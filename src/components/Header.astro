@@ -1,65 +1,28 @@
 ---
-const links = [
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#proceso', label: 'Proceso' },
-  { href: '#chatbot', label: 'AI Assistant' },
-  { href: '#blog', label: 'Blog' },
-  { href: '#contacto', label: 'Contacto' },
-];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-neutral-950/80 border-b border-white/5">
-  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Navegacion principal">
-    <!-- Logo -->
-    <a href="/" class="flex items-center gap-2 group">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-sm font-bold transition-transform group-hover:scale-110">
-        N
+    <nav id="navbar">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">The Outbound <span>Force</span></a>
+        <div class="nav-links" id="navLinks">
+          <a href="#servicios">Servicios</a> <a href="#proceso">Proceso</a>
+          <a href="#testimonios">Testimonios</a> <a href="#faq">FAQ</a>
+          <a
+            href="https://calendar.app.google/Jxg7er6LkiL6tGEw6"
+            onclick="
+              gtag('event', 'agendar_reunion', {
+                event_category: 'conversion',
+                event_label: 'click_boton_agendar',
+              })
+            "
+            class="nav-cta"
+            rel="noopener"
+            target="_blank"
+            >Agendar Reunión</a
+          >
+        </div>
+        <button aria-label="Menú" class="menu-toggle" id="menuToggle">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <span class="font-semibold text-lg tracking-tight">NexusAI</span>
-    </a>
-
-    <!-- Desktop Nav -->
-    <ul class="hidden md:flex items-center gap-8">
-      {links.map(link => (
-        <li>
-          <a href={link.href} class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-
-    <!-- CTA -->
-    <a href="#contacto" class="hidden md:inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-violet-600 hover:bg-violet-500 rounded-lg transition-colors">
-      Empezar Proyecto
-    </a>
-
-    <!-- Mobile menu toggle (CSS only) -->
-    <label for="mobile-menu" class="md:hidden cursor-pointer p-2" aria-label="Abrir menu">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </label>
-  </nav>
-
-  <!-- Mobile menu (CSS only with checkbox hack) -->
-  <input type="checkbox" id="mobile-menu" class="hidden peer" aria-hidden="true" tabindex="-1" />
-  <div class="md:hidden hidden peer-checked:block bg-neutral-950/95 backdrop-blur-xl border-b border-white/5 px-6 pb-6">
-    <ul class="flex flex-col gap-4">
-      {links.map(link => (
-        <li>
-          <label for="mobile-menu">
-            <a href={link.href} class="block text-neutral-400 hover:text-white transition-colors py-2">
-              {link.label}
-            </a>
-          </label>
-        </li>
-      ))}
-      <li>
-        <a href="#contacto" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-violet-600 hover:bg-violet-500 rounded-lg transition-colors">
-          Empezar Proyecto
-        </a>
-      </li>
-    </ul>
-  </div>
-</header>
+    </nav>

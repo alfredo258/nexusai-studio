@@ -1,54 +1,72 @@
 ---
-const steps = [
-  {
-    number: '01',
-    title: 'Diagnóstico',
-    description: 'Analizamos tu operación, identificamos oportunidades de IA y definimos objetivos claros con métricas de éxito.',
-  },
-  {
-    number: '02',
-    title: 'Diseño & Prototipo',
-    description: 'Creamos la arquitectura de la solución y un prototipo funcional en 5 días para validar el enfoque.',
-  },
-  {
-    number: '03',
-    title: 'Desarrollo',
-    description: 'Implementamos la solución con sprints semanales, demos en vivo y feedback continuo de tu equipo.',
-  },
-  {
-    number: '04',
-    title: 'Lanzamiento & Soporte',
-    description: 'Desplegamos en producción, capacitamos a tu equipo y monitorizamos el rendimiento para optimizar resultados.',
-  },
-];
 ---
 
-<section id="proceso" class="py-24 md:py-32 relative">
-  <div class="max-w-6xl mx-auto px-6">
-    <!-- Section header -->
-    <div class="text-center mb-16">
-      <span class="text-violet-400 text-sm font-medium tracking-wider uppercase">Proceso</span>
-      <h2 class="mt-3 text-3xl md:text-5xl font-bold tracking-tight">
-        De la Idea al
-        <span class="text-violet-400">Impacto Real</span>
-      </h2>
-      <p class="mt-4 text-neutral-400 max-w-2xl mx-auto text-lg">
-        Un proceso probado que minimiza riesgo y maximiza velocidad. Resultados tangibles desde la primera semana.
-      </p>
-    </div>
-
-    <!-- Steps -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      {steps.map((step, i) => (
-        <div class="relative">
-          {i < steps.length - 1 && (
-            <div class="hidden lg:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-violet-500/30 to-transparent" aria-hidden="true"></div>
-          )}
-          <div class="text-5xl font-black text-violet-500/10 mb-2">{step.number}</div>
-          <h3 class="text-lg font-semibold mb-2">{step.title}</h3>
-          <p class="text-sm text-neutral-400 leading-relaxed">{step.description}</p>
+    <section class="process" id="proceso">
+      <div class="glow gp"></div>
+      <div class="container">
+        <div class="reveal process-header">
+          <div class="section-label">Nuestro Proceso</div>
+          <h2 class="section-title">
+            Un sistema probado para<br />llenar tu agenda cada semana.
+          </h2>
+          <p class="section-desc">
+            Cada empresa es diferente, pero todas necesitan un sistema
+            predecible. Así trabajamos para garantizar resultados.
+          </p>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+        <div class="process-timeline">
+          <div class="process-step reveal-left">
+            <div class="process-step-content">
+              <div class="process-step-tag">Semana 1</div>
+              <h3>Diagnóstico & Estrategia</h3>
+              <p>
+                Arrancamos con una inmersión profunda en tu negocio. Analizamos
+                tu mercado, competencia, cliente ideal y oportunidades.
+                Definimos un plan con objetivos comerciales claros y medibles.
+              </p>
+            </div>
+            <div class="process-step-number">01</div>
+            <div class="process-step-spacer"></div>
+          </div>
+          <div class="process-step reveal-right">
+            <div class="process-step-spacer"></div>
+            <div class="process-step-number">02</div>
+            <div class="process-step-content">
+              <div class="process-step-tag">Semana 2</div>
+              <h3>Infraestructura & Setup</h3>
+              <p>
+                Montamos toda la infraestructura técnica: dominios, casillas de
+                email, herramientas de scraping, CRM y secuencias. Todo
+                configurado para maximizar la entregabilidad.
+              </p>
+            </div>
+          </div>
+          <div class="process-step reveal-left">
+            <div class="process-step-content">
+              <div class="process-step-tag">Semana 3</div>
+              <h3>Lanzamiento de Campañas</h3>
+              <p>
+                Activamos las campañas multicanal: cold email, LinkedIn y ads.
+                Cada mensaje está personalizado para tu cliente ideal. Empezás a
+                ver reuniones en tu calendario.
+              </p>
+            </div>
+            <div class="process-step-number">03</div>
+            <div class="process-step-spacer"></div>
+          </div>
+          <div class="process-step reveal-right">
+            <div class="process-step-spacer"></div>
+            <div class="process-step-number">04</div>
+            <div class="process-step-content">
+              <div class="process-step-tag">Continuo</div>
+              <h3>Optimización & Escala</h3>
+              <p>
+                Medimos cada paso con datos reales. Ajustamos mensajes,
+                segmentos y canales de forma continua para maximizar resultados
+                y escalar las reuniones calificadas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

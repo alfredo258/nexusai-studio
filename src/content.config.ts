@@ -9,7 +9,7 @@ const blog = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()),
     readTime: z.string(),
-    author: z.string().default('NexusAI Studio'),
+    author: z.string().default('The Outbound Force'),
   }),
 });
 

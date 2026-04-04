@@ -4,7 +4,7 @@ description: "Analizamos los resultados de 50 proyectos de automatización con I
 date: 2026-03-10
 tags: ["ROI", "Automatización", "Casos de Éxito"]
 readTime: "6 min de lectura"
-author: "NexusAI Studio"
+author: "The Outbound Force"
 ---
 
 Después de entregar más de 50 proyectos de automatización con IA, tenemos datos suficientes para hablar con números. Aquí va la verdad sin filtros.
