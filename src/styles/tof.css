@@ -42,8 +42,7 @@
       }
       body {
         font-family: var(--font-b);
-        /* Clean white canvas — Notion/Cal.com approach */
-        background: var(--bg);
+        background: linear-gradient(170deg, #fafafc 0%, #f5f1ff 35%, #f5f3ff 60%, #f5f1ff 80%, #fafafc 100%);
         color: var(--text2);
         line-height: 1.6;
         letter-spacing: -0.11px;
@@ -180,15 +179,14 @@
         transition: all 0.3s;
       }
       .hero {
-        /* Linear: dark canvas hero */
         min-height: 100vh;
         display: flex;
         align-items: center;
         position: relative;
         overflow: hidden;
         padding-top: 5rem;
-        background: var(--bg-dark);
-        color: var(--white);
+        background: transparent;
+        color: var(--text);
       }
       .hero .g1 {
         width: 700px;
@@ -222,14 +220,13 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
-        /* Linear: whisper badge on dark */
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(109, 40, 217, 0.15);
         border-radius: 100px;
         font-family: var(--font-b);
         font-size: 0.78rem;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.6);
-        background: rgba(255, 255, 255, 0.05);
+        color: var(--text2);
+        background: rgba(255, 255, 255, 0.6);
         animation: fadeUp 0.8s var(--ease) both;
         margin-bottom: 2rem;
       }
@@ -253,12 +250,11 @@
         }
       }
       .hero h1 {
-        /* Stripe: lighter weight, Framer: compressed tracking */
         font-family: var(--font-d);
-        font-weight: 500;
+        font-weight: 900;
         font-size: clamp(2.6rem, 6vw, 4.5rem);
         line-height: 1.05;
-        color: #f0f0f0;
+        color: var(--text);
         letter-spacing: -2px;
         margin-bottom: 1.5rem;
         animation: fadeUp 0.8s 0.1s var(--ease) both;
@@ -274,8 +270,7 @@
         font-weight: 400;
         line-height: 1.6;
         letter-spacing: -0.1px;
-        /* Linear: silver-gray on dark */
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--text2);
         max-width: 540px;
         margin-bottom: 2.5rem;
         animation: fadeUp 0.8s 0.2s var(--ease) both;
@@ -311,14 +306,13 @@
         transform: translateY(-1px);
       }
       .btn-ghost {
-        /* Linear: ghost on dark */
-        background: transparent;
-        color: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #fff;
+        color: var(--accent);
+        border: 1px solid rgba(109, 40, 217, 0.2);
       }
       .btn-ghost:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        color: var(--white);
+        border-color: var(--accent);
+        background: rgba(109, 40, 217, 0.05);
       }
       .float-el {
         position: absolute;
