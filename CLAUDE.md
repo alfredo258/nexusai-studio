@@ -1,81 +1,76 @@
-# CLAUDE.md
+# CLAUDE.md — The Outbound Force
 
-## Project Overview
+## Identidad
+Agencia de outbound sales B2B. Llenamos la agenda de reuniones de nuestros clientes con prospectos calificados usando LinkedIn, Email, Meta Ads y Google Ads.
 
-**The Outbound Force (TOF)** — AI-Powered Outbound Sales Automation. We build the pipeline, you close the deals. Landing page built with Astro + Tailwind CSS v4. Premium minimalist design inspired by Apple/Vercel/Linear.
+**URL:** https://theoutboundforce.com
+**Stack:** Astro 5 + CSS puro (sin Tailwind) + Cloudflare Pages
+**Contenido:** Español (mercado Argentina/LATAM)
 
-## Tech Stack
+## Reglas de Diseño
 
-- **Framework**: Astro 5 (latest stable) with SSG
-- **Styling**: Tailwind CSS v4 (CSS-first config)
-- **Deploy**: Cloudflare Pages
-- **Content**: Astro Content Collections for blog
-- **Zero JS**: Pure Astro components, no client-side frameworks
+### Estética
+- Diseño premium B2B inspirado en Clay, Linear, Stripe (VoltAgent design-md como referencia)
+- Fondo warm cream (#faf9f7) como Clay
+- Un solo color acento: violet (#6d28d9) — solo en CTAs e interacciones
+- Tipografía: DM Sans (body) + Space Mono (labels)
+- Zero JavaScript excepto: scroll reveals, counters, mobile menu, magnetic buttons
+- Mobile-first, Lighthouse 100
 
-## Golden Rules
+### Reglas Estrictas
+- NUNCA cambiar CSS sin ver el resultado en el browser primero (usar --chrome)
+- NUNCA agregar decoración sin justificación (blobs, gradients, shimmer = NO)
+- SIEMPRE planificar antes de ejecutar (usar /plan)
+- SIEMPRE commitear antes de cambios grandes
+- Imágenes en WebP con lazy-loading
+- Animaciones máx 300ms, easing cubic-bezier(0.16, 1, 0.3, 1)
 
-### 1. Vibe Coding & Extreme Speed
-- Small, reusable, self-documenting components
-- Semantic names that speak for themselves
-- Fast iteration: ship > perfect
+### Componentes Visuales
+- Buscar referencia en Aceternity UI o Magic UI antes de crear componentes "wow"
+- Cards con border oat (#dad4c8), radius 20px, sin sombras pesadas
+- Botones con hover rotation Clay (-3deg + hard shadow)
+- Shadow-as-border: box-shadow 0 0 0 1px en vez de CSS border
 
-### 2. Premium Minimalist Design
-- Palette: Black, white, violet-500 accent
-- Typography: Inter for body, system mono for code
-- Generous spacing, clear visual hierarchy
-- Subtle CSS animations (no JS)
-- Mobile-first always
-
-### 3. GSO/AEO Optimization (AI Search)
-- JSON-LD on every page (Organization, WebSite, Service, FAQPage, Article)
-- Meta descriptions optimized for AI citation
-- Structured content with semantic headers (h1 > h2 > h3)
-- FAQ sections with schema markup
-- Complete Open Graph + Twitter Cards
-
-### 4. Zero JavaScript = Lighthouse 100
-- Only Astro components (`.astro`), no React/Vue/Svelte
-- CSS-only animations and interactions
-- Interactivity with `<details>`, `:target`, checkbox hacks
-- Chatbot: CSS-only toggle + external form action
-- Optimized images with `<picture>` and modern formats
-
-### 5. Accessibility WCAG AA
-- Minimum contrast 4.5:1
-- Visible focus on all interactive elements
-- Skip navigation link
-- aria-labels on non-text elements
-- HTML5 semantics (nav, main, article, section, aside)
-
-## Project Structure
-
+## Estructura del Proyecto
 ```
 src/
-├── layouts/
-│   └── Layout.astro          # Base layout with SEO
-├── components/
+├── layouts/Layout.astro      — Base con meta tags, JSON-LD, fonts
+├── components/               — Un componente por sección
 │   ├── Header.astro
 │   ├── Hero.astro
+│   ├── Stats.astro
 │   ├── Services.astro
-│   ├── Chatbot.astro
-│   ├── BlogPreview.astro
-│   ├── Footer.astro
-│   └── JsonLd.astro
-├── pages/
-│   ├── index.astro
-│   └── blog/
-│       └── [...slug].astro
-├── content/
-│   └── blog/
-│       └── *.md
-└── styles/
-    └── global.css            # Tailwind v4 imports
+│   ├── Process.astro
+│   ├── Testimonials.astro
+│   ├── Clients.astro
+│   ├── FAQ.astro
+│   ├── Calendar.astro
+│   └── Footer.astro
+├── pages/index.astro         — Ensamblaje + scripts
+├── styles/
+│   ├── global.css            — Import del CSS activo
+│   └── tof-v2.css            — Design system actual (Clay-based)
+└── content/blog/             — Blog posts (pendiente actualizar)
 ```
 
-## Commands
-
+## Comandos
 ```bash
-npm run dev      # Dev server
-npm run build    # Production build
-npm run preview  # Preview production build
+npm run dev      # Dev server (localhost:4321)
+npm run build    # Build producción
+npm run preview  # Preview build
 ```
+
+## Assets
+- Avatares: public/assets/images/avatar-*.png
+- Logos clientes: public/assets/images/gallery01/
+- Referencia visual: design-md/ (54 design systems de VoltAgent)
+
+## Datos Reales de TOF
+- +500 reuniones agendadas
+- +30 empresas confían
+- x10 leads calificados
+- +8 mercados alcanzados
+- Google Calendar: https://calendar.app.google/Jxg7er6LkiL6tGEw6
+- Email: alfredo@theoutboundforce.com
+- LinkedIn: https://www.linkedin.com/company/the-outbound-force
+- GA4: G-V0C9DB2TVB
