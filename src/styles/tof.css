@@ -2106,9 +2106,8 @@
          3 dark sections evenly distributed, never two in a row
       ==================================================================== */
 
-      /* LIGHT SECTION: Stats Bar — Notion warm-white */
       .stats-bar {
-        background: var(--bg-warm);
+        background: transparent;
         position: relative;
         overflow: hidden;
       }
@@ -2169,16 +2168,13 @@
         }
       }
 
-      /* LIGHT SECTION: Testimonials — Notion warm-white */
       .testimonials {
-        background: var(--bg);
+        background: transparent;
       }
 
-      /* LIGHT SECTION: Clients — whisper borders */
       .clients {
-        background: var(--bg-warm);
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        background: transparent;
+        border-top: 1px solid rgba(109, 40, 217, 0.08);
       }
 
       /* LIGHT SECTION: FAQ — clean white */
