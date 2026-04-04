@@ -82,63 +82,7 @@ const fullSvg = `<svg class="starburst-svg" viewBox="0 0 800 800" xmlns="http://
 
 <section class="stats-bar">
   <div class="starburst-wrap" aria-hidden="true">
-    <svg class="starburst-svg spider-mother" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="wmg" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.15"/>
-          <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.06"/>
-          <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <!-- Central glow -->
-      <circle cx="400" cy="400" r="200" fill="url(#wmg)"/>
-      <circle cx="400" cy="400" r="4" fill="#a78bfa" opacity="0.6"/>
-      <!-- Concentric web rings -->
-      <circle cx="400" cy="400" r="40" fill="none" stroke="#8b5cf6" stroke-width="0.4" opacity="0.15"/>
-      <circle cx="400" cy="400" r="90" fill="none" stroke="#8b5cf6" stroke-width="0.4" opacity="0.12"/>
-      <circle cx="400" cy="400" r="150" fill="none" stroke="#8b5cf6" stroke-width="0.3" opacity="0.10"/>
-      <circle cx="400" cy="400" r="220" fill="none" stroke="#8b5cf6" stroke-width="0.3" opacity="0.08"/>
-      <circle cx="400" cy="400" r="300" fill="none" stroke="#8b5cf6" stroke-width="0.3" opacity="0.06"/>
-      <circle cx="400" cy="400" r="380" fill="none" stroke="#8b5cf6" stroke-width="0.2" opacity="0.04"/>
-      <!-- Radial spokes — 24 lines from center to edges -->
-      <g stroke="#8b5cf6" stroke-linecap="round">
-        <line x1="400" y1="400" x2="400" y2="10" stroke-width="0.5" opacity="0.12"/>
-        <line x1="400" y1="400" x2="400" y2="790" stroke-width="0.5" opacity="0.12"/>
-        <line x1="400" y1="400" x2="10" y2="400" stroke-width="0.5" opacity="0.12"/>
-        <line x1="400" y1="400" x2="790" y2="400" stroke-width="0.5" opacity="0.12"/>
-        <line x1="400" y1="400" x2="120" y2="120" stroke-width="0.4" opacity="0.10"/>
-        <line x1="400" y1="400" x2="680" y2="120" stroke-width="0.4" opacity="0.10"/>
-        <line x1="400" y1="400" x2="120" y2="680" stroke-width="0.4" opacity="0.10"/>
-        <line x1="400" y1="400" x2="680" y2="680" stroke-width="0.4" opacity="0.10"/>
-        <line x1="400" y1="400" x2="200" y2="50" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="600" y2="50" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="200" y2="750" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="600" y2="750" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="50" y2="200" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="750" y2="200" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="50" y2="600" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="750" y2="600" stroke-width="0.3" opacity="0.08"/>
-        <line x1="400" y1="400" x2="30" y2="300" stroke-width="0.3" opacity="0.06"/>
-        <line x1="400" y1="400" x2="770" y2="300" stroke-width="0.3" opacity="0.06"/>
-        <line x1="400" y1="400" x2="30" y2="500" stroke-width="0.3" opacity="0.06"/>
-        <line x1="400" y1="400" x2="770" y2="500" stroke-width="0.3" opacity="0.06"/>
-        <line x1="400" y1="400" x2="300" y2="20" stroke-width="0.3" opacity="0.06"/>
-        <line x1="400" y1="400" x2="500" y2="20" stroke-width="0.3" opacity="0.06"/>
-        <line x1="400" y1="400" x2="300" y2="780" stroke-width="0.3" opacity="0.06"/>
-        <line x1="400" y1="400" x2="500" y2="780" stroke-width="0.3" opacity="0.06"/>
-      </g>
-      <!-- Decorative web intersections -->
-      <g fill="#a78bfa">
-        <circle cx="400" cy="310" r="1.5" opacity="0.2"/>
-        <circle cx="400" cy="490" r="1.5" opacity="0.2"/>
-        <circle cx="310" cy="400" r="1.5" opacity="0.2"/>
-        <circle cx="490" cy="400" r="1.5" opacity="0.2"/>
-        <circle cx="340" cy="340" r="1.2" opacity="0.15"/>
-        <circle cx="460" cy="340" r="1.2" opacity="0.15"/>
-        <circle cx="340" cy="460" r="1.2" opacity="0.15"/>
-        <circle cx="460" cy="460" r="1.2" opacity="0.15"/>
-      </g>
-    </svg>
+    <Fragment set:html={fullSvg} />
   </div>
 
   <div class="container">

@@ -190,7 +190,7 @@
         display: flex;
         align-items: center;
         position: relative;
-        overflow: visible;
+        overflow: hidden;
         padding-top: 5rem;
         background: transparent;
         color: var(--text);
@@ -259,7 +259,7 @@
       .hero h1 {
         font-family: var(--font-d);
         font-weight: 900;
-        font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+        font-size: clamp(2.6rem, 6vw, 4.5rem);
         line-height: 1.05;
         color: var(--text);
         letter-spacing: -2px;
@@ -1293,7 +1293,7 @@
       }
 
       .pipe-wrap {
-        position:absolute; inset:0; pointer-events:none; z-index:1; overflow:visible;
+        position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden;
       }
 
       /* Blobs */
