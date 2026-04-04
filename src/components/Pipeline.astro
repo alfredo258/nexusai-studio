@@ -1,0 +1,41 @@
+---
+/**
+ * Scroll-Driven Pipeline Counter
+ * As user scrolls, a horizontal pipeline fills showing:
+ * Emails Sent → Opens → Replies → Meetings Booked
+ * Creates narrative: "watch your pipeline fill"
+ */
+const stages = [
+  { label: 'Emails Enviados', value: '13,000', icon: '✉️', color: '#8b5cf6' },
+  { label: 'Abiertos', value: '5,200', icon: '👁️', color: '#a78bfa' },
+  { label: 'Respuestas', value: '780', icon: '💬', color: '#e0a860' },
+  { label: 'Reuniones', value: '142', icon: '📅', color: '#28ca41' },
+];
+---
+
+<section class="pipeline-section" aria-label="Pipeline de resultados">
+  <div class="container">
+    <div class="pipeline-track">
+      <div class="pipeline-progress" id="pipeline-bar"></div>
+    </div>
+    <div class="pipeline-stages">
+      {stages.map((stage, i) => (
+        <div class="pipeline-stage" data-index={i}>
+          <div class="pipeline-icon" style={`--stage-color: ${stage.color}`}>{stage.icon}</div>
+          <div class="pipeline-value" style={`color: ${stage.color}`}>{stage.value}</div>
+          <div class="pipeline-label">{stage.label}</div>
+        </div>
+      ))}
+    </div>
+    <div class="pipeline-connectors" aria-hidden="true">
+      <svg class="pipeline-arrows" viewBox="0 0 900 30" preserveAspectRatio="none">
+        <path d="M0 15 L200 15" stroke="rgba(139,92,246,0.15)" stroke-width="2" fill="none" stroke-dasharray="6 4"/>
+        <path d="M225 15 L425 15" stroke="rgba(139,92,246,0.15)" stroke-width="2" fill="none" stroke-dasharray="6 4"/>
+        <path d="M450 15 L650 15" stroke="rgba(139,92,246,0.15)" stroke-width="2" fill="none" stroke-dasharray="6 4"/>
+        <polygon points="215,10 225,15 215,20" fill="rgba(139,92,246,0.2)"/>
+        <polygon points="440,10 450,15 440,20" fill="rgba(224,168,96,0.2)"/>
+        <polygon points="665,10 675,15 665,20" fill="rgba(40,202,65,0.2)"/>
+      </svg>
+    </div>
+  </div>
+</section>

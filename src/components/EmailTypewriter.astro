@@ -1,0 +1,31 @@
+---
+/**
+ * Live AI Email Typewriter
+ * Shows TOF's AI composing personalized cold emails in real-time.
+ * Cycles through different email drafts to demonstrate the product.
+ * Inspired by Superhuman's cinematic product demos.
+ */
+---
+
+<div class="typewriter-card" aria-label="Simulación de email de prospección generado por IA">
+  <div class="tw-header">
+    <div class="tw-dots">
+      <span class="tw-dot tw-dot-r"></span>
+      <span class="tw-dot tw-dot-y"></span>
+      <span class="tw-dot tw-dot-g"></span>
+    </div>
+    <span class="tw-title">Nuevo Email — AI Composer</span>
+    <span class="tw-badge">IA</span>
+  </div>
+  <div class="tw-fields">
+    <div class="tw-field"><span class="tw-label">Para:</span> <span class="tw-to" id="tw-to"></span></div>
+    <div class="tw-field"><span class="tw-label">Asunto:</span> <span class="tw-subject" id="tw-subject"></span></div>
+  </div>
+  <div class="tw-body" id="tw-body">
+    <span class="tw-cursor">|</span>
+  </div>
+  <div class="tw-footer">
+    <span class="tw-status" id="tw-status">● AI escribiendo...</span>
+    <span class="tw-counter" id="tw-counter">0/3</span>
+  </div>
+</div>
