@@ -26,6 +26,13 @@
         --accent-hover: #5b21b6;
         --accent-light: rgba(109, 40, 217, 0.08);
         --accent-glow: rgba(109, 40, 217, 0.15);
+        /* Violet scale */
+        --v100: #ede9fe;
+        --v200: #ddd6fe;
+        --v300: #c4b5fd;
+        --v400: #a78bfa;
+        --v500: #8b5cf6;
+        --v600: #7c3aed;
         /* Text: Notion warm near-blacks */
         --text: #1a1a1a;
         --text2: #4a4a4a;
@@ -529,6 +536,7 @@
       }
       .process .section-title {
         color: var(--white);
+        font-weight: 800;
       }
       .process .section-desc {
         color: rgba(255, 255, 255, 0.5);
@@ -584,8 +592,8 @@
       .process-step-content {
         padding: 2rem;
         background: rgba(255, 255, 255, 0.04);
-        border: none;
-        border-radius: 12px;
+        border: 1px solid rgba(139, 92, 246, 0.12);
+        border-radius: 18px;
         transition: all 0.4s var(--ease);
         backdrop-filter: blur(10px);
         /* Raycast dark: ring + inset light/dark edges */
