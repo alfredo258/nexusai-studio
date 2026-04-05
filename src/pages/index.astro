@@ -178,13 +178,249 @@ const serviceSchema = {
     }
 
     // =============================================
-    // SPIDER-WEB CARDS — Hero, Stats & Services
+    // SPIDER-WEB CARDS — Dense web network + drag
+    // =============================================
+    (function() {
+      if (window.innerWidth < 768) return;
+
+      var hero = document.querySelector('.hero');
+      var cards = document.querySelectorAll('.pipe-card');
+      if (!hero || !cards.length) return;
+
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+      hero.querySelector('.pipe-wrap').appendChild(svg);
+
+      var heroRect = hero.getBoundingClientRect();
+      var hw = heroRect.width, hh = heroRect.height;
+
+      // Dense anchor grid — edges, corners, header, mid-points
+      var anchors = [];
+      // Top edge (header area) — many points
+      for (var i = 0; i <= 8; i++) anchors.push({ x: i / 8 * hw, y: 0 });
+      // Bottom edge
+      for (var i = 0; i <= 6; i++) anchors.push({ x: i / 6 * hw, y: hh });
+      // Left edge
+      for (var i = 1; i <= 4; i++) anchors.push({ x: 0, y: i / 5 * hh });
+      // Right edge
+      for (var i = 1; i <= 4; i++) anchors.push({ x: hw, y: i / 5 * hh });
+
+      function makeLine(x1, y1, x2, y2, opacity, width, dash) {
+        var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        l.setAttribute('x1', x1); l.setAttribute('y1', y1);
+        l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+        l.setAttribute('stroke', 'rgba(109,40,217,' + opacity + ')');
+        l.setAttribute('stroke-width', width);
+        if (dash) l.setAttribute('stroke-dasharray', dash);
+        l.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(l);
+        return l;
+      }
+
+      var webData = [];
+
+      cards.forEach(function(card) {
+        card.style.animation = 'none';
+        card.style.pointerEvents = 'auto';
+        card.style.cursor = 'grab';
+        card.style.zIndex = '3';
+        card.style.position = 'absolute';
+        card.style.userSelect = 'none';
+        card.style.transition = 'none';
+        card.style.opacity = '1';
+        card.style.clipPath = 'none';
+
+        var rect = card.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2 - heroRect.left;
+        var cy = rect.top + rect.height / 2 - heroRect.top;
+
+        // Sort anchors by distance, pick 5-7 nearest
+        var sorted = anchors.map(function(a) {
+          var d = Math.sqrt((a.x - cx) * (a.x - cx) + (a.y - cy) * (a.y - cy));
+          return { ax: a.x, ay: a.y, dist: d };
+        }).sort(function(a, b) { return a.dist - b.dist; });
+
+        var count = 5 + Math.floor(Math.random() * 3); // 5-7 strands per card
+        var myAnchors = sorted.slice(0, count);
+
+        var lines = [];
+        myAnchors.forEach(function(a, idx) {
+          var op = (0.06 + Math.random() * 0.1).toFixed(2);
+          var w = (0.5 + Math.random() * 1).toFixed(1);
+          var dash = Math.random() > 0.4 ? (3 + Math.floor(Math.random() * 4)) + ',' + (2 + Math.floor(Math.random() * 3)) : '';
+          var el = makeLine(a.ax, a.ay, cx, cy, op, w, dash);
+          lines.push({ el: el, ax: a.ax, ay: a.ay, baseOp: parseFloat(op), baseW: parseFloat(w) });
+        });
+
+        webData.push({ card: card, origX: cx, origY: cy, curX: cx, curY: cy, lines: lines });
+      });
+
+      // Card-to-card connections (web between nearby cards)
+      for (var i = 0; i < webData.length; i++) {
+        for (var j = i + 1; j < webData.length; j++) {
+          var a = webData[i], b = webData[j];
+          var d = Math.sqrt(Math.pow(a.origX - b.origX, 2) + Math.pow(a.origY - b.origY, 2));
+          if (d < hw * 0.6) { // Connect cards within 60% of hero width
+            var op = (0.04 + Math.random() * 0.06).toFixed(2);
+            var el = makeLine(a.origX, a.origY, b.origX, b.origY, op, '0.6', '6,4');
+            a.lines.push({ el: el, ax: b.origX, ay: b.origY, baseOp: parseFloat(op), baseW: 0.6, linked: j });
+            b.lines.push({ el: el, ax: a.origX, ay: a.origY, baseOp: parseFloat(op), baseW: 0.6, linked: i, isEnd1: true });
+          }
+        }
+      }
+
+      // Update all lines for a card
+      function updateLines(d) {
+        d.lines.forEach(function(l) {
+          if (l.isEnd1) {
+            l.el.setAttribute('x1', d.curX);
+            l.el.setAttribute('y1', d.curY);
+          } else {
+            l.el.setAttribute('x2', d.curX);
+            l.el.setAttribute('y2', d.curY);
+          }
+          // Tension effect
+          var ex = l.isEnd1 ? parseFloat(l.el.getAttribute('x2')) : l.ax;
+          var ey = l.isEnd1 ? parseFloat(l.el.getAttribute('y2')) : l.ay;
+          var sDist = Math.sqrt(Math.pow(d.curX - ex, 2) + Math.pow(d.curY - ey, 2));
+          var oDist = Math.sqrt(Math.pow(d.origX - ex, 2) + Math.pow(d.origY - ey, 2));
+          var tension = Math.min(sDist / Math.max(oDist, 1), 2);
+          var newW = (l.baseW + tension * 0.8).toFixed(1);
+          var newOp = Math.min(l.baseOp + tension * 0.12, 0.35).toFixed(2);
+          l.el.setAttribute('stroke-width', newW);
+          l.el.setAttribute('stroke', 'rgba(109,40,217,' + newOp + ')');
+        });
+      }
+
+      // Drag
+      var active = null, smx = 0, smy = 0, scx = 0, scy = 0;
+
+      function onDown(e) {
+        if (needsRebuild) ensureBuilt();
+        var t = e.touches ? e.touches[0] : e;
+        for (var i = 0; i < webData.length; i++) {
+          var r = webData[i].card.getBoundingClientRect();
+          if (t.clientX >= r.left && t.clientX <= r.right && t.clientY >= r.top && t.clientY <= r.bottom) {
+            active = webData[i];
+            active.card.style.cursor = 'grabbing';
+            smx = t.clientX; smy = t.clientY;
+            scx = active.curX; scy = active.curY;
+            e.preventDefault();
+            break;
+          }
+        }
+      }
+
+      function onMove(e) {
+        if (!active) return;
+        var t = e.touches ? e.touches[0] : e;
+        var dx = t.clientX - smx, dy = t.clientY - smy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 80) { dx = dx * 80 / dist; dy = dy * 80 / dist; }
+        active.curX = scx + dx;
+        active.curY = scy + dy;
+        active.card.style.transform = 'translate(' + (active.curX - active.origX) + 'px,' + (active.curY - active.origY) + 'px)';
+        updateLines(active);
+        e.preventDefault();
+      }
+
+      function onUp() {
+        if (!active) return;
+        active.card.style.cursor = 'grab';
+        var c = active; active = null;
+        var vx = 0, vy = 0;
+        (function bounce() {
+          var dx = c.origX - c.curX, dy = c.origY - c.curY;
+          vx = (vx + dx * 0.15) * 0.75;
+          vy = (vy + dy * 0.15) * 0.75;
+          c.curX += vx; c.curY += vy;
+          c.card.style.transform = 'translate(' + (c.curX - c.origX) + 'px,' + (c.curY - c.origY) + 'px)';
+          updateLines(c);
+          if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3 || Math.abs(vx) > 0.3 || Math.abs(vy) > 0.3) {
+            requestAnimationFrame(bounce);
+          } else {
+            c.curX = c.origX; c.curY = c.origY;
+            c.card.style.transform = 'translate(0,0)';
+            updateLines(c);
+          }
+        })();
+      }
+
+      hero.addEventListener('mousedown', onDown);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+      hero.addEventListener('touchstart', onDown, { passive: false });
+      window.addEventListener('touchmove', onMove, { passive: false });
+      window.addEventListener('touchend', onUp);
+
+      // On resize/zoom: clear lines, rebuild on next interaction
+      var needsRebuild = false;
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          active = null;
+          while (svg.firstChild) svg.removeChild(svg.firstChild);
+          webData.length = 0;
+          needsRebuild = true;
+        }, 150);
+      });
+
+      function ensureBuilt() {
+        if (!needsRebuild) return;
+        needsRebuild = false;
+        var newRect = hero.getBoundingClientRect();
+        hw = newRect.width; hh = newRect.height;
+        anchors.length = 0;
+        for (var i = 0; i <= 8; i++) anchors.push({ x: i / 8 * hw, y: 0 });
+        for (var i = 0; i <= 6; i++) anchors.push({ x: i / 6 * hw, y: hh });
+        for (var i = 1; i <= 4; i++) anchors.push({ x: 0, y: i / 5 * hh });
+        for (var i = 1; i <= 4; i++) anchors.push({ x: hw, y: i / 5 * hh });
+        heroRect = newRect;
+        cards.forEach(function(card) {
+          var rect = card.getBoundingClientRect();
+          var cx = rect.left + rect.width / 2 - heroRect.left;
+          var cy = rect.top + rect.height / 2 - heroRect.top;
+          var sorted = anchors.map(function(a) {
+            var d = Math.sqrt((a.x - cx) * (a.x - cx) + (a.y - cy) * (a.y - cy));
+            return { ax: a.x, ay: a.y, dist: d };
+          }).sort(function(a, b) { return a.dist - b.dist; });
+          var count = 5 + Math.floor(Math.random() * 3);
+          var myAnchors = sorted.slice(0, count);
+          var lines = [];
+          myAnchors.forEach(function(a) {
+            var op = (0.06 + Math.random() * 0.1).toFixed(2);
+            var w = (0.5 + Math.random() * 1).toFixed(1);
+            var dash = Math.random() > 0.4 ? (3 + Math.floor(Math.random() * 4)) + ',' + (2 + Math.floor(Math.random() * 3)) : '';
+            var el = makeLine(a.ax, a.ay, cx, cy, op, w, dash);
+            lines.push({ el: el, ax: a.ax, ay: a.ay, baseOp: parseFloat(op), baseW: parseFloat(w) });
+          });
+          webData.push({ card: card, origX: cx, origY: cy, curX: cx, curY: cy, lines: lines });
+        });
+        for (var i = 0; i < webData.length; i++) {
+          for (var j = i + 1; j < webData.length; j++) {
+            var a = webData[i], b = webData[j];
+            var d = Math.sqrt(Math.pow(a.origX - b.origX, 2) + Math.pow(a.origY - b.origY, 2));
+            if (d < hw * 0.6) {
+              var op = (0.04 + Math.random() * 0.06).toFixed(2);
+              var el = makeLine(a.origX, a.origY, b.origX, b.origY, op, '0.6', '6,4');
+              a.lines.push({ el: el, ax: b.origX, ay: b.origY, baseOp: parseFloat(op), baseW: 0.6, linked: j });
+              b.lines.push({ el: el, ax: a.origX, ay: a.origY, baseOp: parseFloat(op), baseW: 0.6, linked: i, isEnd1: true });
+            }
+          }
+        }
+      }
+
+    })();
+
+    // =============================================
+    // SPIDER-WEB CARDS — Stats & Services
     // Unified system with zoom-safe rebuild
     // =============================================
     (function() {
       if (window.innerWidth < 768) return;
 
-      var sections = document.querySelectorAll('.hero, .stats-bar, .services');
+      var sections = document.querySelectorAll('.stats-bar, .services');
       sections.forEach(function(section) {
         var cards = section.querySelectorAll('.web-card');
         if (!cards.length) return;
@@ -193,14 +429,12 @@ const serviceSchema = {
         svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;';
         section.appendChild(svg);
 
-        // Use section dimensions for stable coordinates
         function getSectionSize() {
           return { w: section.offsetWidth, h: section.offsetHeight };
         }
         var dims = getSectionSize();
         var sw = dims.w, sh = dims.h;
 
-        // Get card center relative to section using offset (layout-based, ignores transforms/scroll/zoom)
         function getCardCenter(card) {
           return {
             x: card.offsetLeft + card.offsetWidth / 2,
@@ -208,15 +442,12 @@ const serviceSchema = {
           };
         }
 
-        // Build anchors — spread across full section but denser near content area
         function buildAnchors() {
           var a = [];
-          // Edge anchors (full width)
           for (var i = 0; i <= 8; i++) a.push({ x: i / 8 * sw, y: 0 });
           for (var i = 0; i <= 8; i++) a.push({ x: i / 8 * sw, y: sh });
           for (var i = 1; i <= 4; i++) a.push({ x: 0, y: i / 5 * sh });
           for (var i = 1; i <= 4; i++) a.push({ x: sw, y: i / 5 * sh });
-          // Interior anchors — biased toward center content area
           var contentLeft = Math.max(0, (sw - 1200) / 2);
           var contentRight = sw - contentLeft;
           for (var i = 0; i < 14; i++) {
@@ -226,14 +457,12 @@ const serviceSchema = {
         }
         var anchors = buildAnchors();
 
-        // Track if web has been revealed in this section
         var webRevealed = false;
 
         function makeLine(x1, y1, x2, y2, opacity, width, dash) {
           var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
           l.setAttribute('x1', x1); l.setAttribute('y1', y1);
           l.setAttribute('x2', x2); l.setAttribute('y2', y2);
-          // Start invisible — revealed on first interaction
           l.setAttribute('stroke', 'rgba(109,40,217,0)');
           l.setAttribute('stroke-width', width);
           if (dash) l.setAttribute('stroke-dasharray', dash);
@@ -245,7 +474,6 @@ const serviceSchema = {
 
         var webData = [];
 
-        // Collect static background lines for reactive glow
         var bgSvg = section.querySelector('.web-bg-svg');
         var bgLines = [];
 
@@ -258,10 +486,8 @@ const serviceSchema = {
             dot.setAttribute('fill', webRevealed ? dot._origFill : 'rgba(109,40,217,0)');
             dot.style.transition = 'fill 0.6s ease';
           });
-
           var vb = bgSvg.viewBox.baseVal;
-          var allBgLines = bgSvg.querySelectorAll('line');
-          allBgLines.forEach(function(line) {
+          bgSvg.querySelectorAll('line').forEach(function(line) {
             var x1 = parseFloat(line.getAttribute('x1'));
             var y1 = parseFloat(line.getAttribute('y1'));
             var x2 = parseFloat(line.getAttribute('x2'));
@@ -273,59 +499,39 @@ const serviceSchema = {
             if (!line._origWidth) line._origWidth = line.getAttribute('stroke-width');
             line.setAttribute('stroke', webRevealed ? line._origStroke : 'rgba(109,40,217,0)');
             line.style.transition = 'stroke 0.6s ease, stroke-width 0.4s ease';
-            bgLines.push({
-              el: line,
-              px: px, py: py,
-              origStroke: line._origStroke,
-              origWidth: line._origWidth
-            });
+            bgLines.push({ el: line, px: px, py: py, origStroke: line._origStroke, origWidth: line._origWidth });
           });
         }
 
-        // Build card web lines (card-to-anchor + card-to-card)
         function buildWebLines() {
-          // Remove old dynamic lines from SVG
           while (svg.firstChild) svg.removeChild(svg.firstChild);
-
           webData.length = 0;
-
           cards.forEach(function(card) {
             card.style.pointerEvents = 'auto';
             card.style.cursor = 'grab';
             card.style.zIndex = '3';
             card.style.userSelect = 'none';
-            // Restore idle animation (may have been killed by prior drag)
             card.style.animation = '';
             card.style.transform = '';
-
-            // offsetLeft/offsetTop give layout position, ignoring transforms/animations
             var center = getCardCenter(card);
             var cx = center.x, cy = center.y;
-
-            // Pick 7-10 nearest anchors
             var sorted = anchors.map(function(a) {
               var d = Math.sqrt((a.x - cx) * (a.x - cx) + (a.y - cy) * (a.y - cy));
               return { ax: a.x, ay: a.y, dist: d };
             }).sort(function(a, b) { return a.dist - b.dist; });
-
             var count = 7 + Math.floor(Math.random() * 4);
             var myAnchors = sorted.slice(0, count);
-
             var lines = [];
             myAnchors.forEach(function(a) {
               var op = (0.05 + Math.random() * 0.08).toFixed(2);
               var w = (0.4 + Math.random() * 0.8).toFixed(1);
               var dash = Math.random() > 0.4 ? (3 + Math.floor(Math.random() * 4)) + ',' + (2 + Math.floor(Math.random() * 3)) : '';
               var el = makeLine(a.ax, a.ay, cx, cy, op, w, dash);
-              // If web already revealed, show line immediately
               if (webRevealed) el.setAttribute('stroke', 'rgba(109,40,217,' + op + ')');
               lines.push({ el: el, ax: a.ax, ay: a.ay, baseOp: parseFloat(op), baseW: parseFloat(w) });
             });
-
             webData.push({ card: card, origX: cx, origY: cy, curX: cx, curY: cy, lines: lines });
           });
-
-          // Card-to-card connections
           for (var i = 0; i < webData.length; i++) {
             for (var j = i + 1; j < webData.length; j++) {
               var a = webData[i], b = webData[j];
@@ -344,16 +550,15 @@ const serviceSchema = {
         initBgLines();
         buildWebLines();
 
-        // Glow nearby static bg lines when dragging
-        var GLOW_RADIUS = 250; // px radius of influence
+        var GLOW_RADIUS = 250;
         function glowBgLines(cardX, cardY, dragDist) {
-          var intensity = Math.min(dragDist / 60, 1); // 0-1 based on drag distance
+          var intensity = Math.min(dragDist / 60, 1);
           bgLines.forEach(function(bl) {
             var dx = bl.px - cardX;
             var dy = bl.py - cardY;
             var dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < GLOW_RADIUS) {
-              var proximity = 1 - dist / GLOW_RADIUS; // 1 = right on top, 0 = edge of radius
+              var proximity = 1 - dist / GLOW_RADIUS;
               var factor = proximity * intensity;
               var newOp = Math.min(0.04 + factor * 0.25, 0.3).toFixed(3);
               var newW = (parseFloat(bl.origWidth) + factor * 1.2).toFixed(1);
@@ -389,26 +594,21 @@ const serviceSchema = {
           });
         }
 
-        // Drag interaction
         var active = null, smx = 0, smy = 0, scx = 0, scy = 0;
 
-        // Reveal all web lines in this section (first interaction)
         function revealWeb() {
           if (webRevealed) return;
           webRevealed = true;
-          // Reveal card-to-anchor and card-to-card lines
           webData.forEach(function(d) {
             d.lines.forEach(function(l) {
               l.el.setAttribute('stroke', 'rgba(109,40,217,' + l.baseOp + ')');
             });
           });
-          // Reveal background lines and dots
           bgLines.forEach(function(bl) {
             bl.el.setAttribute('stroke', bl.origStroke);
           });
           if (bgSvg) {
-            var bgDots = bgSvg.querySelectorAll('circle');
-            bgDots.forEach(function(dot) {
+            bgSvg.querySelectorAll('circle').forEach(function(dot) {
               dot.setAttribute('fill', dot._origFill);
             });
           }
@@ -422,21 +622,17 @@ const serviceSchema = {
             if (t.clientX >= r.left && t.clientX <= r.right && t.clientY >= r.top && t.clientY <= r.bottom) {
               revealWeb();
               active = webData[i];
-              // Kill idle animation for drag
               active.card.style.animation = 'none';
               active.card.style.cursor = 'grabbing';
               smx = t.clientX; smy = t.clientY;
-              // offsetLeft/offsetTop give true layout position (ignores animation transform)
               var freshCenter = getCardCenter(active.card);
               active.origX = freshCenter.x;
               active.origY = freshCenter.y;
-              // Calculate current visual offset from the animation that was playing
               var visualRect = active.card.getBoundingClientRect();
               var sectionRect = section.getBoundingClientRect();
               active.curX = visualRect.left + visualRect.width / 2 - sectionRect.left;
               active.curY = visualRect.top + visualRect.height / 2 - sectionRect.top;
               scx = active.curX; scy = active.curY;
-              // Update line endpoints
               updateLines(active);
               e.preventDefault();
               break;
@@ -454,7 +650,6 @@ const serviceSchema = {
           active.curY = scy + dy;
           active.card.style.transform = 'translate(' + (active.curX - active.origX) + 'px,' + (active.curY - active.origY) + 'px)';
           updateLines(active);
-          // Glow nearby background web lines
           var dragDist = Math.sqrt(Math.pow(active.curX - active.origX, 2) + Math.pow(active.curY - active.origY, 2));
           glowBgLines(active.curX, active.curY, dragDist);
           e.preventDefault();
@@ -472,17 +667,13 @@ const serviceSchema = {
             c.curX += vx; c.curY += vy;
             c.card.style.transform = 'translate(' + (c.curX - c.origX) + 'px,' + (c.curY - c.origY) + 'px)';
             updateLines(c);
-            // Fade bg lines back as card bounces back
             var bDist = Math.sqrt(Math.pow(c.curX - c.origX, 2) + Math.pow(c.curY - c.origY, 2));
-            if (bDist > 1) {
-              glowBgLines(c.curX, c.curY, bDist);
-            }
+            if (bDist > 1) { glowBgLines(c.curX, c.curY, bDist); }
             if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3 || Math.abs(vx) > 0.3 || Math.abs(vy) > 0.3) {
               requestAnimationFrame(bounce);
             } else {
               c.curX = c.origX; c.curY = c.origY;
               c.card.style.transform = '';
-              // Restore idle animation
               c.card.style.animation = '';
               updateLines(c);
               resetBgLines();
@@ -497,7 +688,6 @@ const serviceSchema = {
         window.addEventListener('touchmove', onMove, { passive: false });
         window.addEventListener('touchend', onUp);
 
-        // On resize (zoom change): tear down everything, rebuild on next interaction
         var needsRebuild = false;
         var resizeTimer;
         window.addEventListener('resize', function() {
@@ -505,20 +695,13 @@ const serviceSchema = {
           resizeTimer = setTimeout(function() {
             active = null;
             webRevealed = false;
-            // Remove all dynamic lines
             while (svg.firstChild) svg.removeChild(svg.firstChild);
             webData.length = 0;
-            // Hide bg lines and dots
             if (bgSvg) {
-              bgSvg.querySelectorAll('line').forEach(function(line) {
-                line.setAttribute('stroke', 'rgba(109,40,217,0)');
-              });
-              bgSvg.querySelectorAll('circle').forEach(function(dot) {
-                dot.setAttribute('fill', 'rgba(109,40,217,0)');
-              });
+              bgSvg.querySelectorAll('line').forEach(function(line) { line.setAttribute('stroke', 'rgba(109,40,217,0)'); });
+              bgSvg.querySelectorAll('circle').forEach(function(dot) { dot.setAttribute('fill', 'rgba(109,40,217,0)'); });
             }
             bgLines.length = 0;
-            // Mark for lazy rebuild on next interaction
             needsRebuild = true;
           }, 150);
         });
