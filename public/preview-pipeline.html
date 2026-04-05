@@ -1,0 +1,239 @@
+<!--
+  aesthetic_dna: B2B Premium Organic / Scrollytelling
+  ui_paradigm: Scroll-driven Orchestrated Spatial Diagram (Fixed-scaling canvas)
+  palette: Warm Cream (#faf9f7) / Deep Violet (#6d28d9) / Glassmorphism / Brand Accents
+-->
+<!DOCTYPE html>
+<html lang="es" class="antialiased scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Living Pipeline | The Outbound Force</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"DM Sans"', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace'],
+                    },
+                    colors: {
+                        cream: '#faf9f7',
+                        violet: { 400: '#a78bfa', 600: '#6d28d9', 900: '#4c1d95' },
+                        brand: { linkedin: '#0A66C2', email: '#EA4335', meta: '#1877F2', google: '#34A853' }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(109, 40, 217, 0.08)',
+                        'glow': '0 0 25px 5px rgba(109, 40, 217, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(109, 40, 217, 0.15);
+        }
+        .path-line { stroke-dasharray: 8 12; animation: dash-flow 20s linear infinite; }
+        .path-line-secondary { stroke-dasharray: 4 16; animation: dash-flow-reverse 30s linear infinite; }
+        @keyframes dash-flow { to { stroke-dashoffset: -1000; } }
+        @keyframes dash-flow-reverse { to { stroke-dashoffset: 1000; } }
+        .node { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .node::before {
+            content: ''; position: absolute; inset: -4px; border-radius: 50%;
+            background: inherit; opacity: 0; transform: scale(0.8); z-index: -1; transition: all 0.4s ease;
+        }
+        .node.active { transform: scale(1.15) translate(-50%, -50%); transform-origin: 0 0; filter: brightness(1.2); }
+        .node.active::before { opacity: 0.6; transform: scale(1.8); animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.2); opacity: 0; } }
+        .cal-slot { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; transform: scale(0.8) translateY(10px); }
+        .cal-slot.filled { opacity: 1; transform: scale(1) translateY(0); }
+        .particle { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #6d28d9; filter: blur(2px); pointer-events: none; opacity: 0; z-index: 10; }
+        .abs-center { transform: translate(-50%, -50%); }
+    </style>
+</head>
+<body class="bg-cream text-neutral-900">
+    <section id="pipeline-tracker" class="relative w-full h-[400vh]">
+        <div class="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
+            <div class="absolute top-12 md:top-20 left-0 w-full px-8 md:px-16 z-50 pointer-events-none flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                <div class="max-w-2xl">
+                    <p class="font-mono text-violet-600 font-bold uppercase tracking-[0.2em] text-xs mb-3">Pipeline en vivo</p>
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+                        Tu pipeline, trabajando <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-violet-400 italic">en tiempo real.</span>
+                    </h1>
+                </div>
+                <div class="max-w-xs md:text-right">
+                    <p class="text-neutral-500 font-medium text-sm md:text-base leading-relaxed hidden md:block">
+                        Cada prospecto recorre un camino automatizado y personalizado hasta aterrizar en tu calendario.
+                    </p>
+                </div>
+            </div>
+
+            <div id="scale-canvas" class="relative w-[1920px] h-[1080px] origin-center z-10">
+                <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1920 1080">
+                    <defs>
+                        <linearGradient id="path-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="rgba(109, 40, 217, 0.05)" />
+                            <stop offset="50%" stop-color="rgba(109, 40, 217, 0.4)" />
+                            <stop offset="100%" stop-color="rgba(109, 40, 217, 0.1)" />
+                        </linearGradient>
+                        <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                    </defs>
+                    <path d="M 100,500 Q 300,300 450,220 T 750,680 T 1350,550" fill="none" stroke="rgba(109, 40, 217, 0.15)" stroke-width="1.5" class="path-line-secondary" />
+                    <path d="M 450,220 Q 600,400 1050,280 T 1550,500" fill="none" stroke="rgba(109, 40, 217, 0.1)" stroke-width="1.5" class="path-line-secondary" />
+                    <path d="M 750,680 Q 900,500 1050,280" fill="none" stroke="rgba(109, 40, 217, 0.15)" stroke-width="1.5" class="path-line-secondary" />
+                    <path d="M 1050,280 Q 1200,600 1350,550" fill="none" stroke="rgba(109, 40, 217, 0.1)" stroke-width="1.5" class="path-line-secondary" />
+                    <path id="main-route" d="M -100,540 C 150,540 250,220 450,220 C 650,220 550,680 750,680 C 950,680 850,280 1050,280 C 1250,280 1150,550 1350,550 C 1450,550 1500,500 1570,500" fill="none" stroke="transparent" />
+                    <path d="M -100,540 C 150,540 250,220 450,220 C 650,220 550,680 750,680 C 950,680 850,280 1050,280 C 1250,280 1150,550 1350,550 C 1450,550 1500,500 1570,500" fill="none" stroke="url(#path-grad)" stroke-width="3" class="path-line" filter="url(#glow)" />
+                </svg>
+
+                <div class="node absolute left-[450px] top-[220px] abs-center group" data-node="linkedin">
+                    <div class="w-16 h-16 rounded-2xl glass-panel shadow-glass flex items-center justify-center bg-white/80"><i class="ph ph-linkedin-logo text-3xl text-brand-linkedin"></i></div>
+                    <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase font-bold text-neutral-500 tracking-widest whitespace-nowrap">LinkedIn</div>
+                </div>
+                <div class="node absolute left-[750px] top-[680px] abs-center group" data-node="email">
+                    <div class="w-16 h-16 rounded-2xl glass-panel shadow-glass flex items-center justify-center bg-white/80"><i class="ph ph-envelope-simple text-3xl text-brand-email"></i></div>
+                    <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase font-bold text-neutral-500 tracking-widest whitespace-nowrap">Email</div>
+                </div>
+                <div class="node absolute left-[1050px] top-[280px] abs-center group" data-node="meta">
+                    <div class="w-16 h-16 rounded-2xl glass-panel shadow-glass flex items-center justify-center bg-white/80"><i class="ph ph-meta-logo text-3xl text-brand-meta"></i></div>
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase font-bold text-neutral-500 tracking-widest whitespace-nowrap">Meta Ads</div>
+                </div>
+                <div class="node absolute left-[1350px] top-[550px] abs-center group" data-node="google">
+                    <div class="w-16 h-16 rounded-2xl glass-panel shadow-glass flex items-center justify-center bg-white/80 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#EA4335] via-[#FBBC05] to-[#34A853] opacity-10"></div>
+                        <i class="ph ph-google-logo text-3xl text-[#4285F4]"></i>
+                    </div>
+                    <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase font-bold text-neutral-500 tracking-widest whitespace-nowrap">Google Ads</div>
+                </div>
+
+                <div class="absolute left-[1570px] top-[500px] -translate-y-1/2 w-[300px] glass-panel shadow-glass rounded-3xl p-6 border-violet-500/20 backdrop-blur-2xl bg-white/90">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-neutral-800 text-lg flex items-center gap-2"><i class="ph-fill ph-calendar-check text-violet-600"></i> Tu Calendario</h3>
+                        <div class="flex gap-1 items-center"><div class="w-2 h-2 rounded-full bg-violet-600 animate-pulse"></div><span class="font-mono text-[9px] text-violet-600 uppercase font-bold tracking-wider">Live</span></div>
+                    </div>
+                    <div class="grid grid-cols-5 gap-2 text-center text-xs font-mono font-bold text-neutral-400 mb-2"><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div></div>
+                    <div class="grid grid-cols-5 gap-2">
+                        <div class="cal-slot h-10 rounded bg-brand-linkedin/20 border border-brand-linkedin/40 flex items-center justify-center" data-fill="0.25"><i class="ph-fill ph-check-circle text-brand-linkedin text-lg"></i></div>
+                        <div class="cal-slot h-10 rounded bg-transparent" data-fill="9"></div>
+                        <div class="cal-slot h-10 rounded bg-brand-email/20 border border-brand-email/40 flex items-center justify-center" data-fill="0.45"><i class="ph-fill ph-check-circle text-brand-email text-lg"></i></div>
+                        <div class="cal-slot h-10 rounded bg-transparent" data-fill="9"></div>
+                        <div class="cal-slot h-10 rounded bg-violet-600 border border-violet-800 flex items-center justify-center shadow-glow" data-fill="0.55"><i class="ph-fill ph-user-circle-plus text-white text-xl"></i></div>
+                        <div class="cal-slot h-10 rounded bg-transparent" data-fill="9"></div>
+                        <div class="cal-slot h-10 rounded bg-brand-meta/20 border border-brand-meta/40 flex items-center justify-center" data-fill="0.65"><i class="ph-fill ph-check-circle text-brand-meta text-lg"></i></div>
+                        <div class="cal-slot h-10 rounded bg-transparent" data-fill="9"></div>
+                        <div class="cal-slot h-10 rounded bg-[#34A853]/20 border border-[#34A853]/40 flex items-center justify-center" data-fill="0.80"><i class="ph-fill ph-check-circle text-[#34A853] text-lg"></i></div>
+                        <div class="cal-slot h-10 rounded bg-transparent" data-fill="9"></div>
+                        <div class="cal-slot h-10 rounded bg-brand-linkedin/20 border border-brand-linkedin/40 flex items-center justify-center" data-fill="0.88"><i class="ph-fill ph-check-circle text-brand-linkedin text-lg"></i></div>
+                        <div class="cal-slot h-10 rounded bg-transparent" data-fill="9"></div>
+                        <div class="cal-slot h-10 rounded bg-brand-email/20 border border-brand-email/40 flex items-center justify-center" data-fill="0.92"><i class="ph-fill ph-check-circle text-brand-email text-lg"></i></div>
+                        <div class="cal-slot h-10 rounded bg-transparent" data-fill="9"></div>
+                        <div class="cal-slot h-10 rounded bg-violet-100 border border-violet-200" data-fill="0.98"></div>
+                    </div>
+                    <div class="mt-6 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold text-xs">DR</div>
+                            <div><p class="text-[10px] font-bold text-neutral-900 uppercase">Demo Agendada</p><p class="text-[10px] text-neutral-500 font-mono">14:00 - 15:00</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="p1" class="particle"></div>
+                <div id="p2" class="particle"></div>
+
+                <div id="prospect-card" class="absolute left-0 top-0 abs-center z-40 will-change-transform">
+                    <div class="flex items-center gap-3 p-2 pr-5 bg-white/90 backdrop-blur-md border border-violet-600/30 rounded-full shadow-lg shadow-violet-600/20">
+                        <div class="h-10 w-10 relative">
+                            <div class="w-full h-full rounded-full bg-violet-600 flex items-center justify-center text-white font-bold text-sm">DR</div>
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-mono font-bold text-violet-600 uppercase tracking-widest leading-none mb-1">Prospecto</span>
+                            <span class="text-sm font-bold text-neutral-900 leading-none">David R.</span>
+                            <span class="text-[10px] text-neutral-500 leading-tight">VP Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const section = document.getElementById('pipeline-tracker');
+            const scaleCanvas = document.getElementById('scale-canvas');
+            const path = document.getElementById('main-route');
+            const card = document.getElementById('prospect-card');
+            const nodes = document.querySelectorAll('.node');
+            const calSlots = document.querySelectorAll('.cal-slot[data-fill]');
+            const particles = [document.getElementById('p1'), document.getElementById('p2')];
+            let pathLength = path.getTotalLength();
+
+            function resizeCanvas() {
+                const scaleW = (window.innerWidth * 0.95) / 1920;
+                const scaleH = (window.innerHeight * 0.8) / 1080;
+                scaleCanvas.style.transform = 'scale(' + Math.min(scaleW, scaleH) + ')';
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function getScrollProgress() {
+                const rect = section.getBoundingClientRect();
+                const total = rect.height - window.innerHeight;
+                return Math.max(0, Math.min(1, -rect.top / total));
+            }
+
+            function update() {
+                const progress = getScrollProgress();
+                const currentDist = progress * pathLength;
+                const point = path.getPointAtLength(currentDist);
+
+                card.style.transform = 'translate(calc(' + point.x + 'px - 50%), calc(' + point.y + 'px - 50%))';
+
+                particles.forEach(function(p, i) {
+                    var d = Math.max(0, currentDist - (15 + i * 10));
+                    var pp = path.getPointAtLength(d);
+                    p.style.transform = 'translate(calc(' + pp.x + 'px - 50%), calc(' + pp.y + 'px - 50%))';
+                    p.style.opacity = progress > 0.05 && progress < 0.95 ? 0.6 - i * 0.2 : 0;
+                });
+
+                nodes.forEach(function(node) {
+                    var nx = parseInt(node.style.left);
+                    var ny = parseInt(node.style.top);
+                    var dist = Math.hypot(point.x - nx, point.y - ny);
+                    node.classList.toggle('active', dist < 150);
+                });
+
+                calSlots.forEach(function(slot) {
+                    var trigger = parseFloat(slot.getAttribute('data-fill'));
+                    slot.classList.toggle('filled', progress > trigger);
+                });
+
+                if (progress > 0.98) {
+                    card.style.opacity = Math.max(0, 1 - (progress - 0.98) * 50);
+                } else {
+                    card.style.opacity = 1;
+                }
+            }
+
+            var ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(function() { update(); ticking = false; });
+                    ticking = true;
+                }
+            });
+            update();
+        });
+    </script>
+</body>
+</html>
