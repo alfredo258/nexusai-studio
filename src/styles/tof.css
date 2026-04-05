@@ -6,41 +6,30 @@
         box-sizing: border-box;
       }
       :root {
-        /*
-         * VoltAgent Design System — Synthesized from 54 systems
-         * Linear: dark canvas, whisper borders, 510 weight
-         * Stripe: navy headings, weight 300, blue-tinted shadows
-         * Cal.com: shadow-as-border, grayscale restraint
-         * Notion: warm whites, whisper borders, generous spacing
-         * Intercom: sharp geometry, scale interactions
-         */
-        --bg: #ffffff;
-        --bg-warm: #f6f5f4;
-        --bg-dark: #0a0a0b;
-        --bg-dark-elevated: #141415;
+        --bg: #fafafc;
+        --bg-violet: #f5f1ff;
+        --bg-violet2: #ede5ff;
+        --bg-dark: #0b0a10;
         --card: #ffffff;
-        --card-border: rgba(0, 0, 0, 0.08);
-        --card-hover: rgba(0, 0, 0, 0.12);
-        /* Brand: single accent — Stripe-inspired deep violet */
+        --card-border: rgba(109, 40, 217, 0.08);
+        --card-hover: rgba(109, 40, 217, 0.18);
+        --v900: #3b0764;
+        --v700: #6d28d9;
+        --v600: #7c3aed;
+        --v500: #8b5cf6;
+        --v400: #a78bfa;
+        --v300: #c4b5fd;
+        --v200: #ddd6fe;
+        --v100: #ede9fe;
+        --v50: #f5f3ff;
+        --text: #1a1625;
+        --text2: #4a4458;
+        --textm: #7c7591;
+        --white: #fff;
+        --font-d: "Outfit", sans-serif;
+        --font-b: "DM Sans", sans-serif;
         --accent: #6d28d9;
         --accent-hover: #5b21b6;
-        --accent-light: rgba(109, 40, 217, 0.08);
-        --accent-glow: rgba(109, 40, 217, 0.15);
-        /* Violet scale */
-        --v100: #ede9fe;
-        --v200: #ddd6fe;
-        --v300: #c4b5fd;
-        --v400: #a78bfa;
-        --v500: #8b5cf6;
-        --v600: #7c3aed;
-        /* Text: Notion warm near-blacks */
-        --text: #1a1a1a;
-        --text2: #4a4a4a;
-        --textm: #737373;
-        --white: #fff;
-        /* Typography: Outfit display + Inter body */
-        --font-d: "Outfit", sans-serif;
-        --font-b: "Inter", system-ui, -apple-system, sans-serif;
         --mw: 1200px;
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
       }
@@ -49,13 +38,9 @@
       }
       body {
         font-family: var(--font-b);
-        background: linear-gradient(170deg, #fafafc 0%, #f5f1ff 35%, #f5f3ff 60%, #f5f1ff 80%, #fafafc 100%);
+        background: linear-gradient(170deg, var(--bg) 0%, var(--bg-violet) 35%, var(--v50) 60%, var(--bg-violet) 80%, var(--bg) 100%);
         color: var(--text2);
         line-height: 1.6;
-        letter-spacing: -0.11px;
-        font-feature-settings: "cv01", "ss03", "liga";
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
         position: relative;
       }
@@ -153,17 +138,18 @@
         color: var(--text);
       }
       .nav-cta {
-        /* Stripe: solid accent, 6px radius, no decorative shadow */
-        background: var(--accent) !important;
+        background: var(--v700) !important;
         color: var(--white) !important;
-        padding: 0.5rem 1.25rem !important;
-        border-radius: 6px;
-        font-weight: 500 !important;
-        font-family: var(--font-b) !important;
-        transition: background 0.15s !important;
+        padding: 0.55rem 1.4rem !important;
+        border-radius: 10px;
+        font-weight: 600 !important;
+        transition: all 0.3s var(--ease) !important;
+        box-shadow: 0 2px 12px rgba(109, 40, 217, 0.2);
       }
       .nav-cta:hover {
-        background: var(--accent-hover) !important;
+        background: var(--v600) !important;
+        box-shadow: 0 4px 20px rgba(109, 40, 217, 0.35);
+        transform: translateY(-1px);
       }
       .menu-toggle {
         display: none;
@@ -313,13 +299,13 @@
         transform: translateY(-1px);
       }
       .btn-ghost {
-        background: #fff;
-        color: var(--accent);
-        border: 1px solid rgba(109, 40, 217, 0.2);
+        background: var(--text);
+        color: var(--white);
+        border: 1px solid var(--text);
       }
       .btn-ghost:hover {
-        border-color: var(--accent);
-        background: rgba(109, 40, 217, 0.05);
+        background: var(--v900);
+        border-color: var(--v900);
       }
       .float-el {
         position: absolute;
@@ -361,6 +347,9 @@
       }
       .stats-bar {
         padding: 4.5rem 0;
+        background: transparent;
+        border-top: 1px solid var(--v100);
+        border-bottom: 1px solid var(--v100);
       }
       .stats-grid {
         display: grid;
@@ -369,11 +358,10 @@
         text-align: center;
       }
       .stat-item h3 {
-        /* Cal.com: monochrome stats */
         font-family: var(--font-d);
         font-size: 3rem;
-        font-weight: 500;
-        color: var(--text);
+        font-weight: 900;
+        color: var(--v700);
         letter-spacing: -1px;
         min-height: 3.6rem;
         display: flex;
@@ -383,7 +371,7 @@
       .stat-item p {
         font-size: 0.85rem;
         color: var(--textm);
-        margin-top: 0.5rem;
+        margin-top: 0.4rem;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         font-family: var(--font-d);
@@ -394,30 +382,27 @@
         background: transparent;
       }
       .section-label {
-        /* Stripe: monospace label, subtle */
-        font-family: var(--font-b);
-        font-size: 0.8rem;
-        font-weight: 500;
+        font-family: var(--font-d);
+        font-size: 0.85rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 3px;
         color: var(--v600);
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.8rem;
       }
       .section-title {
         font-family: var(--font-d);
         font-weight: 800;
-        font-size: clamp(2rem, 3.5vw, 2.8rem);
+        font-size: clamp(2rem, 3.8vw, 2.8rem);
         color: var(--text);
-        letter-spacing: -1px;
+        letter-spacing: -1.2px;
         line-height: 1.1;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.8rem;
       }
       .section-desc {
         color: var(--textm);
         max-width: 520px;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.6;
+        font-size: 1.05rem;
         margin-bottom: 3.5rem;
       }
       /* Intermediate type scale (Stripe-inspired granularity) */
@@ -453,16 +438,18 @@
         gap: 2rem;
         padding: 2rem 2.5rem;
         background: var(--white);
-        border: none;
-        border-radius: 14px;
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
         align-items: start;
         transition: all 0.4s var(--ease);
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 8px 30px rgba(109, 40, 217, 0.06);
         /* Cal.com: shadow-as-border, whisper depth */
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
       }
       .service-row:hover {
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 12px 40px rgba(109, 40, 217, 0.12);
+        border-color: var(--v200);
         transform: translateY(-2px);
       }
       .service-icon-wrap {
@@ -488,17 +475,17 @@
       }
       .service-body h3 {
         font-family: var(--font-d);
-        font-weight: 600;
-        font-size: 1.15rem;
-        line-height: 1.2;
+        font-weight: 700;
+        font-size: 1.25rem;
         color: var(--text);
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.3px;
         margin-bottom: 0.5rem;
         letter-spacing: -0.2px;
       }
       .service-body p {
-        font-size: 0.9rem;
-        font-weight: 400;
-        line-height: 1.6;
+        font-size: 0.95rem;
+        line-height: 1.7;
         color: var(--textm);
         max-width: 600px;
       }
@@ -724,17 +711,18 @@
       .t-card {
         width: 380px;
         background: var(--white);
-        border: 1px solid rgba(109, 40, 217, 0.08);
+        border: 1px solid var(--card-border);
         border-radius: 18px;
-        padding: 2rem;
+        padding: 2.2rem 2rem;
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         transition: all 0.4s var(--ease);
       }
       .t-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.08);
+        border-color: var(--card-hover);
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(109, 40, 217, 0.08);
       }
       .t-stars {
         color: var(--v500);
@@ -894,11 +882,12 @@
       .cal-visual {
         position:relative;
         background: var(--white);
-        border: 1px solid rgba(109, 40, 217, 0.08);
+        border: 1px solid var(--card-border);
         border-radius: 20px;
         padding: 2.5rem;
         text-align: center;
         overflow: visible;
+        box-shadow: 0 20px 60px rgba(109, 40, 217, 0.08);
       }
       .cal-visual::before {
         content: "";
@@ -2094,9 +2083,7 @@
         border-color: var(--accent);
       }
       .c-logo:hover { opacity: 1; }
-      .cal-visual::before {
-        background: var(--accent);
-      }
+      /* cal-visual gradient defined in main block above */
 
       /* ====================================================================
          SECTION RHYTHM: Alternating backgrounds (Apple pattern)
@@ -2106,67 +2093,7 @@
          3 dark sections evenly distributed, never two in a row
       ==================================================================== */
 
-      .stats-bar {
-        background: transparent;
-        position: relative;
-        overflow: hidden;
-      }
-      .stats-bar .stat-item h3 {
-        color: var(--text);
-      }
-      .stats-bar .stat-item p {
-        color: var(--textm);
-      }
-
-      /* Starburst visual (Stripe-inspired radial lines) */
-      .starburst-wrap {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        pointer-events: none;
-        z-index: 0;
-      }
-      .starburst-svg {
-        width: 700px;
-        height: 700px;
-        opacity: 0.7;
-        animation: sb-rotate 120s linear infinite;
-      }
-      @keyframes sb-rotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      /* 3 layers pulse at different rates — Stripe's multi-layer depth philosophy */
-      .sb-l1 {
-        animation: sb-breathe 6s ease-in-out infinite;
-        transform-origin: center;
-      }
-      .sb-l2 {
-        animation: sb-breathe 10s ease-in-out 1s infinite;
-        transform-origin: center;
-      }
-      .sb-l3 {
-        animation: sb-breathe 14s ease-in-out 2s infinite;
-        transform-origin: center;
-      }
-      @keyframes sb-breathe {
-        0%, 100% { transform: scale(1); opacity: 0.8; }
-        50% { transform: scale(1.04); opacity: 1; }
-      }
-      /* Ensure stats text is above the starburst */
-      .stats-bar .container {
-        position: relative;
-        z-index: 2;
-      }
-      @media (max-width: 768px) {
-        .starburst-svg {
-          width: 500px;
-          height: 500px;
-          opacity: 0.4;
-        }
-      }
+      /* Stats bar uses main .stats-bar styles above */
 
       .testimonials {
         background: transparent;

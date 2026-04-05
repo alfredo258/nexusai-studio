@@ -8,7 +8,6 @@ import Process from '../components/Process.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Clients from '../components/Clients.astro';
 import Calendar from '../components/Calendar.astro';
-import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
 
@@ -43,11 +42,12 @@ const serviceSchema = {
   <main>
     <Hero />
     <Stats />
+    <div class="premium-divider" aria-hidden="true"><div class="premium-divider-line"><div class="premium-divider-accent"></div></div></div>
     <Services />
     <Process />
+    <div class="premium-divider" aria-hidden="true"><div class="premium-divider-line"><div class="premium-divider-accent"></div></div></div>
     <Testimonials />
     <Clients />
-    <FAQ />
     <Calendar />
   </main>
   <Footer />
