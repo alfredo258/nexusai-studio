@@ -350,6 +350,8 @@
         background: transparent;
         border-top: 1px solid var(--v100);
         border-bottom: 1px solid var(--v100);
+        position: relative;
+        overflow: hidden;
       }
       .stats-grid {
         display: grid;
@@ -380,6 +382,85 @@
       .services {
         padding: 7rem 0;
         background: transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Spider-web network background — visual continuity from Hero */
+      .web-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .web-bg-svg {
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+      }
+      .hero .container,
+      .services .container,
+      .stats-bar .container {
+        position: relative;
+        z-index: 2;
+      }
+      /* Floating notification cards on web nodes */
+      .web-card {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 14px;
+        box-shadow: 0 0 0 1px rgba(109, 40, 217, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
+        z-index: 1;
+        white-space: nowrap;
+        animation: wc-float 6s ease-in-out infinite;
+      }
+      .web-card::after {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), transparent, rgba(139, 92, 246, 0.06));
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      /* Hero section cards */
+      .wc-hero-1 { top: 15%; left: 5%; animation: wc-idle 6s ease-in-out infinite; animation-delay: 0s; }
+      .wc-hero-2 { top: 25%; right: 4%; animation: wc-idle 7s ease-in-out infinite; animation-delay: -1s; }
+      .wc-hero-3 { top: 55%; left: 3%; animation: wc-idle 8s ease-in-out infinite; animation-delay: -2s; }
+      .wc-hero-4 { top: 68%; right: 6%; animation: wc-idle 7.5s ease-in-out infinite; animation-delay: -3s; }
+      .wc-hero-5 { top: 38%; right: 12%; animation: wc-idle 6.5s ease-in-out infinite; animation-delay: -4s; }
+      .wc-hero-6 { top: 80%; left: 15%; animation: wc-idle 9s ease-in-out infinite; animation-delay: -5s; }
+
+      /* Stats section cards */
+      .wc-stats-1 { top: 15%; left: 3%; animation: wc-idle 5s ease-in-out infinite; animation-delay: 0s; }
+      .wc-stats-2 { bottom: 12%; right: 4%; animation: wc-idle 6.5s ease-in-out infinite; animation-delay: -2s; }
+
+      /* Services section cards */
+      .wc-svc-1 { top: 6%; right: 5%; animation: wc-idle 5.5s ease-in-out infinite; animation-delay: -1s; }
+      .wc-svc-2 { top: 45%; left: 2%; animation: wc-idle 7s ease-in-out infinite; animation-delay: -3.5s; }
+      .wc-svc-3 { bottom: 10%; right: 3%; animation: wc-idle 6s ease-in-out infinite; animation-delay: -4s; }
+
+      @keyframes wc-idle {
+        0%, 100% { transform: translate(0, 0); }
+        25% { transform: translate(2px, -3px); }
+        50% { transform: translate(-1px, -5px); }
+        75% { transform: translate(-2px, -2px); }
+      }
+
+      @media (max-width: 768px) {
+        .web-bg-svg {
+          opacity: 0.4;
+        }
+        .web-card {
+          display: none;
+        }
       }
       .section-label {
         font-family: var(--font-d);
@@ -451,6 +532,19 @@
         box-shadow: 0 12px 40px rgba(109, 40, 217, 0.12);
         border-color: var(--v200);
         transform: translateY(-2px);
+      }
+      .service-row { cursor: grab; }
+      .service-row.is-dragging {
+        opacity: 0.95;
+        border-color: var(--violet);
+        box-shadow: 0 20px 60px rgba(109, 40, 217, 0.18) !important;
+      }
+      .drag-placeholder {
+        background: var(--v50);
+        border: 2px dashed var(--v200);
+        border-radius: 20px;
+        margin-bottom: 1.2rem;
+        transition: height 0.2s ease;
       }
       .service-icon-wrap {
         width: 56px;

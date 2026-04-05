@@ -1,7 +1,69 @@
 ---
+function generateStatsWebSvg(): string {
+  const w = 1200;
+  const h = 400;
+  const lines: string[] = [];
+  const nodes: {x: number; y: number}[] = [];
+
+  for (let i = 0; i <= 10; i++) {
+    nodes.push({ x: i / 10 * w, y: 0 });
+    nodes.push({ x: i / 10 * w, y: h });
+  }
+  for (let i = 1; i <= 3; i++) {
+    nodes.push({ x: 0, y: i / 4 * h });
+    nodes.push({ x: w, y: i / 4 * h });
+  }
+  for (let i = 0; i < 12; i++) {
+    nodes.push({
+      x: 80 + Math.random() * (w - 160),
+      y: 40 + Math.random() * (h - 80)
+    });
+  }
+
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 300 && Math.random() > 0.6) {
+        const opacity = (0.03 + Math.random() * 0.06).toFixed(3);
+        const strokeW = (0.4 + Math.random() * 0.7).toFixed(1);
+        const dash = Math.random() > 0.5
+          ? `stroke-dasharray="${3 + Math.floor(Math.random() * 4)},${2 + Math.floor(Math.random() * 3)}"`
+          : '';
+        lines.push(
+          `<line x1="${nodes[i].x.toFixed(0)}" y1="${nodes[i].y.toFixed(0)}" x2="${nodes[j].x.toFixed(0)}" y2="${nodes[j].y.toFixed(0)}" stroke="rgba(109,40,217,${opacity})" stroke-width="${strokeW}" ${dash} stroke-linecap="round"/>`
+        );
+      }
+    }
+  }
+
+  const dots = nodes
+    .filter(() => Math.random() > 0.75)
+    .map(n => `<circle cx="${n.x.toFixed(0)}" cy="${n.y.toFixed(0)}" r="${(0.8 + Math.random() * 1.2).toFixed(1)}" fill="rgba(109,40,217,${(0.03 + Math.random() * 0.05).toFixed(2)})"/>`)
+    .join('');
+
+  return `<svg class="web-bg-svg" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">${lines.join('')}${dots}</svg>`;
+}
+
+const statsWebSvg = generateStatsWebSvg();
 ---
 
 <section class="stats-bar">
+  <div class="web-bg" aria-hidden="true">
+    <Fragment set:html={statsWebSvg} />
+  </div>
+
+  <!-- Floating notification cards anchored to web -->
+  <div class="web-card wc-stats-1 reveal-scale">
+    <div class="pc-icon pc-green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+    <div class="pc-body"><div class="pc-title">Campaña activa</div><div class="pc-sub">47 prospectos contactados</div></div>
+  </div>
+  <div class="web-card wc-stats-2 reveal-scale">
+    <div class="pc-icon pc-blue"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/></svg></div>
+    <div class="pc-body"><div class="pc-title">Nuevo prospecto</div><div class="pc-sub">Director Comercial &bull; Fintech</div></div>
+  </div>
+
   <div class="container">
     <div class="stats-grid">
       <div class="reveal stat-item st1">
