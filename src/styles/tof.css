@@ -757,13 +757,13 @@
         color: rgba(255, 255, 255, 0.5);
       }
       .testimonials {
-        padding: 7rem 0;
+        padding: 0.5rem 0 7rem;
         background: transparent;
         overflow: hidden;
       }
       .testimonials-header {
         text-align: center;
-        margin-bottom: 4rem;
+        margin-bottom: 2.5rem;
       }
       .testimonials-header .section-desc {
         margin: 0.5rem auto 0;

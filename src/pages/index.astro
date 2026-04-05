@@ -5,6 +5,7 @@ import Hero from '../components/Hero.astro';
 import Stats from '../components/Stats.astro';
 import Services from '../components/Services.astro';
 import Process from '../components/Process.astro';
+import LivingPipeline from '../components/LivingPipeline.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Clients from '../components/Clients.astro';
 import Calendar from '../components/Calendar.astro';
@@ -45,7 +46,7 @@ const serviceSchema = {
     <div class="premium-divider" aria-hidden="true"><div class="premium-divider-line"><div class="premium-divider-accent"></div></div></div>
     <Services />
     <Process />
-    <div class="premium-divider" aria-hidden="true"><div class="premium-divider-line"><div class="premium-divider-accent"></div></div></div>
+    <LivingPipeline />
     <Testimonials />
     <Clients />
     <Calendar />
@@ -762,6 +763,12 @@ const serviceSchema = {
         placeholder.style.height = dragRect.height + 'px';
         placeholder.style.transition = 'height 0.2s ease';
         placeholder.style.pointerEvents = 'none';
+        placeholder.style.background = 'transparent';
+        placeholder.style.border = 'none';
+        placeholder.style.boxShadow = 'none';
+        placeholder.style.borderRadius = '0';
+        placeholder.style.padding = '0';
+        placeholder.style.margin = '0';
         placeholder.className = 'drag-placeholder';
         row.parentNode.insertBefore(placeholder, row);
 
@@ -862,12 +869,170 @@ const serviceSchema = {
         }, 300);
       }
 
-      list.addEventListener('mousedown', onDown);
+      // Clean up any orphaned placeholders on mousedown
+      function cleanOrphans() {
+        var orphans = list.querySelectorAll('.drag-placeholder');
+        orphans.forEach(function(o) { o.remove(); });
+      }
+
+      list.addEventListener('mousedown', function(e) { cleanOrphans(); onDown(e); });
       window.addEventListener('mousemove', onMove);
       window.addEventListener('mouseup', onUp);
       list.addEventListener('touchstart', onDown, { passive: false });
       window.addEventListener('touchmove', onMove, { passive: false });
       window.addEventListener('touchend', onUp);
+    })();
+  </script>
+
+  <!-- Living Pipeline scroll animation -->
+  <script is:inline>
+    (function() {
+      var section = document.getElementById('pipeline-tracker');
+      if (!section) return;
+      var canvas = document.getElementById('lp-scale-canvas');
+      var path = document.getElementById('lp-main-route');
+      var card = document.getElementById('lp-prospect');
+      var nodes = section.querySelectorAll('.lp-node');
+      var calSlots = section.querySelectorAll('.lp-cal-slot[data-fill]');
+      var particles = [document.getElementById('lp-p1'), document.getElementById('lp-p2')];
+      var pathLength = path.getTotalLength();
+
+      function resizeCanvas() {
+        var sectionWidth = section.offsetWidth;
+        var sticky = section.querySelector('.lp-sticky');
+        var stickyHeight = sticky.offsetHeight;
+        // Scale to fit full width (including calendar on the right)
+        var scale = sectionWidth / 1920;
+        canvas.style.transform = 'scale(' + scale + ')';
+        canvas.style.transformOrigin = 'left top';
+        // Vertically position so content area (y=180-700) is centered in sticky
+        // Offset canvas to show diagram content area (y=180-700 of 1080)
+        var offsetY = -(50 * scale);
+        canvas.style.marginTop = offsetY + 'px';
+        canvas.style.marginLeft = '0';
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      // Scroll-locked animation: same speed as original 400vh
+      var scrollNeeded = window.innerHeight * 3; // 300vh of scroll to complete (like 400vh - 100vh)
+      var accumulated = 0;
+      var progress = 0;
+      var locked = false;
+      var lockScrollY = 0;
+      var completed = false; // true when animation finished going forward
+
+      function updatePipeline(p) {
+        progress = p;
+        var currentDist = p * pathLength;
+        var point = path.getPointAtLength(currentDist);
+
+        card.style.transform = 'translate(calc(' + point.x + 'px - 50%), calc(' + point.y + 'px - 50%))';
+
+        // Fade out prospect when reaching the calendar (like original)
+        if (p > 0.98) {
+          card.style.opacity = Math.max(0, 1 - (p - 0.98) * 50);
+        } else {
+          card.style.opacity = 1;
+        }
+
+        particles.forEach(function(par, i) {
+          var d = Math.max(0, currentDist - (15 + i * 10));
+          var pp = path.getPointAtLength(d);
+          par.style.transform = 'translate(calc(' + pp.x + 'px - 50%), calc(' + pp.y + 'px - 50%))';
+          par.style.opacity = p > 0.05 && p < 0.95 ? 0.6 - i * 0.2 : 0;
+        });
+
+        nodes.forEach(function(node) {
+          var nx = parseInt(node.style.left);
+          var ny = parseInt(node.style.top);
+          var dist = Math.hypot(point.x - nx, point.y - ny);
+          node.classList.toggle('active', dist < 150);
+        });
+
+        calSlots.forEach(function(slot) {
+          var trigger = parseFloat(slot.getAttribute('data-fill'));
+          slot.classList.toggle('filled', p > trigger);
+        });
+      }
+
+      function isSectionInView() {
+        var rect = section.getBoundingClientRect();
+        // Section is "in view" when its top is at or above center of viewport
+        return rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.3;
+      }
+
+      window.addEventListener('wheel', function(e) {
+        var inView = isSectionInView();
+
+        if (inView && !locked && e.deltaY > 0 && progress < 1) {
+          // Scrolling down, section in view, animation not complete — lock
+          locked = true;
+          lockScrollY = window.scrollY;
+          accumulated = progress * scrollNeeded;
+        }
+
+        if (inView && !locked && e.deltaY < 0 && progress > 0 && completed) {
+          // Scrolling back up, animation was completed — lock to reverse
+          locked = true;
+          lockScrollY = window.scrollY;
+          accumulated = progress * scrollNeeded;
+          completed = false;
+        }
+
+        if (locked) {
+          e.preventDefault();
+          accumulated += e.deltaY;
+          accumulated = Math.max(0, Math.min(scrollNeeded, accumulated));
+          var newProgress = accumulated / scrollNeeded;
+          updatePipeline(newProgress);
+
+          // Release lock when animation completes forward
+          if (newProgress >= 1) {
+            locked = false;
+            completed = true;
+          }
+          // Release lock when animation reverses to start
+          if (newProgress <= 0) {
+            locked = false;
+            completed = false;
+          }
+        }
+      }, { passive: false });
+
+      // Touch support for mobile
+      var touchStartY = 0;
+      window.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      window.addEventListener('touchmove', function(e) {
+        var inView = isSectionInView();
+        var deltaY = touchStartY - e.touches[0].clientY;
+        touchStartY = e.touches[0].clientY;
+
+        if (inView && !locked && deltaY > 0 && progress < 1) {
+          locked = true;
+          accumulated = progress * scrollNeeded;
+        }
+        if (inView && !locked && deltaY < 0 && progress > 0 && completed) {
+          locked = true;
+          accumulated = progress * scrollNeeded;
+          completed = false;
+        }
+
+        if (locked) {
+          e.preventDefault();
+          accumulated += deltaY * 3;
+          accumulated = Math.max(0, Math.min(scrollNeeded, accumulated));
+          updatePipeline(accumulated / scrollNeeded);
+
+          if (accumulated >= scrollNeeded) { locked = false; completed = true; }
+          if (accumulated <= 0) { locked = false; completed = false; }
+        }
+      }, { passive: false });
+
+      updatePipeline(0);
     })();
   </script>
 

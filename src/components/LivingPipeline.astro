@@ -1,0 +1,492 @@
+---
+---
+
+<section id="pipeline-tracker" class="lp-section">
+  <div class="lp-sticky">
+    <!-- Header -->
+    <div class="lp-header">
+      <div class="lp-header-left">
+        <p class="lp-label">Pipeline en vivo</p>
+        <h2 class="lp-title">
+          Tu pipeline, trabajando <br>
+          <span class="lp-title-accent">en tiempo real.</span>
+        </h2>
+      </div>
+      <div class="lp-header-right">
+        <p class="lp-subtitle">
+          Cada prospecto recorre un camino automatizado y personalizado hasta aterrizar en tu calendario.
+        </p>
+      </div>
+    </div>
+
+    <!-- Canvas -->
+    <div id="lp-scale-canvas" class="lp-canvas">
+      <!-- SVG paths -->
+      <svg class="lp-svg" viewBox="0 0 1920 1080">
+        <defs>
+          <linearGradient id="lp-path-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(109,40,217,0.05)" />
+            <stop offset="50%" stop-color="rgba(109,40,217,0.4)" />
+            <stop offset="100%" stop-color="rgba(109,40,217,0.1)" />
+          </linearGradient>
+          <filter id="lp-glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <path d="M 100,500 Q 300,300 450,220 T 750,680 T 1350,550" fill="none" stroke="rgba(109,40,217,0.15)" stroke-width="1.5" class="lp-path-secondary" />
+        <path d="M 450,220 Q 600,400 1050,280 T 1550,500" fill="none" stroke="rgba(109,40,217,0.1)" stroke-width="1.5" class="lp-path-secondary" />
+        <path d="M 750,680 Q 900,500 1050,280" fill="none" stroke="rgba(109,40,217,0.15)" stroke-width="1.5" class="lp-path-secondary" />
+        <path d="M 1050,280 Q 1200,600 1350,550" fill="none" stroke="rgba(109,40,217,0.1)" stroke-width="1.5" class="lp-path-secondary" />
+        <path id="lp-main-route" d="M -100,540 C 150,540 250,220 450,220 C 650,220 550,680 750,680 C 950,680 850,280 1050,280 C 1250,280 1150,550 1350,550 C 1450,550 1500,500 1570,500" fill="none" stroke="transparent" />
+        <path d="M -100,540 C 150,540 250,220 450,220 C 650,220 550,680 750,680 C 950,680 850,280 1050,280 C 1250,280 1150,550 1350,550 C 1450,550 1500,500 1570,500" fill="none" stroke="url(#lp-path-grad)" stroke-width="3" class="lp-path-main" filter="url(#lp-glow)" />
+      </svg>
+
+      <!-- Channel nodes -->
+      <div class="lp-node" style="left:450px;top:220px" data-node="linkedin">
+        <div class="lp-node-icon lp-node-linkedin">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.064 2.064 0 110-4.128 2.064 2.064 0 010 4.128zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg>
+        </div>
+        <span class="lp-node-label">LinkedIn</span>
+      </div>
+      <div class="lp-node" style="left:750px;top:680px" data-node="email">
+        <div class="lp-node-icon lp-node-email">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <span class="lp-node-label">Email</span>
+      </div>
+      <div class="lp-node" style="left:1050px;top:280px" data-node="meta">
+        <div class="lp-node-icon lp-node-meta">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1877F2"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 008.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
+        </div>
+        <span class="lp-node-label lp-node-label-top">Meta Ads</span>
+      </div>
+      <div class="lp-node" style="left:1350px;top:550px" data-node="google">
+        <div class="lp-node-icon lp-node-google">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09A6.68 6.68 0 015.5 12c0-.72.12-1.42.35-2.09V7.07H2.18A11.96 11.96 0 001 12c0 1.94.46 3.77 1.18 5.43l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        </div>
+        <span class="lp-node-label">Google Ads</span>
+      </div>
+
+      <!-- Calendar -->
+      <div class="lp-calendar" style="left:1570px;top:500px">
+        <div class="lp-cal-header">
+          <h3 class="lp-cal-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#6d28d9"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+            Tu Calendario
+          </h3>
+          <div class="lp-cal-live">
+            <span class="lp-cal-dot"></span>
+            <span class="lp-cal-live-text">Live</span>
+          </div>
+        </div>
+        <div class="lp-cal-days">
+          <div>L</div><div>M</div><div>M</div><div>J</div><div>V</div>
+        </div>
+        <div class="lp-cal-grid">
+          <div class="lp-cal-slot lp-cal-linkedin" data-fill="0.25"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0A66C2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+          <div class="lp-cal-slot lp-cal-empty" data-fill="9"></div>
+          <div class="lp-cal-slot lp-cal-email" data-fill="0.45"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EA4335"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+          <div class="lp-cal-slot lp-cal-empty" data-fill="9"></div>
+          <div class="lp-cal-slot lp-cal-violet" data-fill="0.55"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <div class="lp-cal-slot lp-cal-empty" data-fill="9"></div>
+          <div class="lp-cal-slot lp-cal-meta" data-fill="0.65"><svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+          <div class="lp-cal-slot lp-cal-empty" data-fill="9"></div>
+          <div class="lp-cal-slot lp-cal-google" data-fill="0.80"><svg width="16" height="16" viewBox="0 0 24 24" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+          <div class="lp-cal-slot lp-cal-empty" data-fill="9"></div>
+          <div class="lp-cal-slot lp-cal-linkedin" data-fill="0.88"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0A66C2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+          <div class="lp-cal-slot lp-cal-empty" data-fill="9"></div>
+          <div class="lp-cal-slot lp-cal-email" data-fill="0.92"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EA4335"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+          <div class="lp-cal-slot lp-cal-empty" data-fill="9"></div>
+          <div class="lp-cal-slot lp-cal-pending" data-fill="0.98"></div>
+        </div>
+        <div class="lp-cal-demo">
+          <div class="lp-cal-demo-avatar">DR</div>
+          <div>
+            <p class="lp-cal-demo-title">Demo Agendada</p>
+            <p class="lp-cal-demo-time">14:00 - 15:00</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Particles -->
+      <div id="lp-p1" class="lp-particle"></div>
+      <div id="lp-p2" class="lp-particle"></div>
+
+      <!-- Prospect card -->
+      <div id="lp-prospect" class="lp-prospect">
+        <div class="lp-prospect-inner">
+          <div class="lp-prospect-avatar">
+            <span>DR</span>
+            <div class="lp-prospect-status"></div>
+          </div>
+          <div class="lp-prospect-info">
+            <span class="lp-prospect-label">Prospecto</span>
+            <span class="lp-prospect-name">David R.</span>
+            <span class="lp-prospect-role">VP Engineering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lp-section {
+    position: relative;
+    width: 100%;
+  }
+  .lp-sticky {
+    position: relative;
+    width: 100%;
+    height: clamp(420px, 68vh, 650px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lp-header {
+    position: relative;
+    width: 100%;
+    padding: 0 4rem;
+    z-index: 50;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .lp-label {
+    font-family: 'Space Mono', monospace;
+    color: var(--v600, #6d28d9);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .lp-title {
+    font-size: clamp(2rem, 4vw, 3.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #171717;
+    line-height: 1.1;
+  }
+  .lp-title-accent {
+    background: linear-gradient(to right, #6d28d9, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: italic;
+  }
+  .lp-header-right {
+    max-width: 20rem;
+    text-align: right;
+  }
+  .lp-subtitle {
+    color: #737373;
+    font-weight: 500;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .lp-canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: left top;
+    z-index: 10;
+    /* Scale handled by CSS custom property set via JS */
+  }
+  .lp-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .lp-path-main {
+    stroke-dasharray: 8 12;
+    animation: lp-dash 20s linear infinite;
+  }
+  .lp-path-secondary {
+    stroke-dasharray: 4 16;
+    animation: lp-dash-rev 30s linear infinite;
+  }
+  @keyframes lp-dash { to { stroke-dashoffset: -1000; } }
+  @keyframes lp-dash-rev { to { stroke-dashoffset: 1000; } }
+
+  /* Nodes */
+  .lp-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .lp-node::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0;
+    transform: scale(0.8);
+    z-index: -1;
+    transition: all 0.4s ease;
+  }
+  .lp-node.active {
+    transform: scale(1.15) translate(-50%, -50%);
+    transform-origin: 0 0;
+    filter: brightness(1.2);
+  }
+  .lp-node.active::before {
+    opacity: 0.6;
+    transform: scale(1.8);
+    animation: lp-pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+  @keyframes lp-pulse-ring {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  .lp-node-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(109,40,217,0.15);
+    box-shadow: 0 8px 32px rgba(109,40,217,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lp-node-label {
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #737373;
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+  }
+  .lp-node-label-top {
+    bottom: auto;
+    top: -2rem;
+  }
+
+  /* Calendar */
+  .lp-calendar {
+    position: absolute;
+    transform: translateY(-50%);
+    width: 300px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(109,40,217,0.2);
+    box-shadow: 0 8px 32px rgba(109,40,217,0.08);
+    border-radius: 24px;
+    padding: 1.5rem;
+  }
+  .lp-cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .lp-cal-title {
+    font-weight: 700;
+    color: #262626;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lp-cal-live {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .lp-cal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6d28d9;
+    animation: lp-pulse-dot 2s ease infinite;
+  }
+  @keyframes lp-pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .lp-cal-live-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: #6d28d9;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .lp-cal-days {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #a3a3a3;
+    margin-bottom: 0.5rem;
+  }
+  .lp-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
+  .lp-cal-slot {
+    height: 40px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .lp-cal-slot.filled {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  .lp-cal-linkedin { background: rgba(10,102,194,0.15); border: 1px solid rgba(10,102,194,0.3); }
+  .lp-cal-email { background: rgba(234,67,53,0.15); border: 1px solid rgba(234,67,53,0.3); }
+  .lp-cal-meta { background: rgba(24,119,242,0.15); border: 1px solid rgba(24,119,242,0.3); }
+  .lp-cal-google { background: rgba(52,168,83,0.15); border: 1px solid rgba(52,168,83,0.3); }
+  .lp-cal-violet { background: #6d28d9; border: 1px solid #4c1d95; box-shadow: 0 0 25px 5px rgba(109,40,217,0.4); }
+  .lp-cal-pending { background: rgba(109,40,217,0.08); border: 1px solid rgba(109,40,217,0.15); }
+  .lp-cal-empty { background: transparent; }
+  .lp-cal-demo {
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .lp-cal-demo-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #6d28d9;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .lp-cal-demo-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #171717;
+    text-transform: uppercase;
+  }
+  .lp-cal-demo-time {
+    font-size: 10px;
+    color: #737373;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Particles */
+  .lp-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6d28d9;
+    filter: blur(2px);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+  }
+
+  /* Prospect card */
+  .lp-prospect {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+    z-index: 40;
+    will-change: transform;
+  }
+  .lp-prospect-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(109,40,217,0.3);
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(109,40,217,0.15);
+  }
+  .lp-prospect-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #6d28d9;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .lp-prospect-status {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    background: #22c55e;
+    border: 2px solid #fff;
+    border-radius: 50%;
+  }
+  .lp-prospect-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .lp-prospect-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: #6d28d9;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .lp-prospect-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #171717;
+    line-height: 1;
+  }
+  .lp-prospect-role {
+    font-size: 10px;
+    color: #737373;
+    line-height: 1.3;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .lp-header {
+      flex-direction: column;
+      padding: 0 1.5rem;
+    }
+    .lp-header-right { display: none; }
+    .lp-title { font-size: 1.75rem; }
+  }
+</style>
