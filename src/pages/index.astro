@@ -897,142 +897,183 @@ const serviceSchema = {
       var particles = [document.getElementById('lp-p1'), document.getElementById('lp-p2')];
       var pathLength = path.getTotalLength();
 
+      // --- Responsive scaling (desktop only) ---
+      var isMobile = window.innerWidth <= 768;
       function resizeCanvas() {
-        var sectionWidth = section.offsetWidth;
-        var sticky = section.querySelector('.lp-sticky');
-        var stickyHeight = sticky.offsetHeight;
-        // Scale to fit full width (including calendar on the right)
-        var scale = sectionWidth / 1920;
+        if (window.innerWidth <= 768) return; // mobile uses CSS layout
+        var scale = window.innerWidth / 1920;
         canvas.style.transform = 'scale(' + scale + ')';
         canvas.style.transformOrigin = 'left top';
-        // Vertically position so content area (y=180-700) is centered in sticky
-        // Offset canvas to show diagram content area (y=180-700 of 1080)
-        var offsetY = -(50 * scale);
-        canvas.style.marginTop = offsetY + 'px';
-        canvas.style.marginLeft = '0';
+        var contentTop = 100;
+        var contentBottom = 770;
+        var scaledContentH = (contentBottom - contentTop) * scale;
+        canvas.style.marginTop = -(contentTop * scale) + 'px';
+        var header = section.querySelector('.lp-header');
+        var headerH = header ? header.offsetHeight : 0;
+        var sticky = section.querySelector('.lp-sticky');
+        sticky.style.height = (headerH + scaledContentH) + 'px';
       }
       window.addEventListener('resize', resizeCanvas);
       resizeCanvas();
 
-      // Scroll-locked animation: same speed as original 400vh
-      var scrollNeeded = window.innerHeight * 3; // 300vh of scroll to complete (like 400vh - 100vh)
-      var accumulated = 0;
-      var progress = 0;
+      // --- Animation state ---
+      var targetProgress = 0;   // where we want to be (0-1)
+      var currentProgress = 0;  // where we are now (smoothed)
       var locked = false;
-      var lockScrollY = 0;
-      var completed = false; // true when animation finished going forward
+      var completed = false;
+      var sectionVisible = false;
+      var scrollNeeded = 1800;  // total wheel delta pixels to complete animation
+      var accumulated = 0;
+      var rafId = null;
 
-      function updatePipeline(p) {
-        progress = p;
-        var currentDist = p * pathLength;
+      // --- Detect when section is fully on screen via IntersectionObserver ---
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          sectionVisible = entry.isIntersecting && entry.intersectionRatio > 0.85;
+        });
+      }, { threshold: [0, 0.5, 0.85, 1] });
+      observer.observe(section);
+
+      // --- Render the pipeline at a given progress (0-1) ---
+      function renderPipeline(p) {
+        // Skip the first ~15% of the path (off-screen entry from left)
+        // Map p (0-1) to the visible portion of the path (~15% to 100%)
+        var pathStart = 0.12;
+        var mappedP = pathStart + p * (1 - pathStart);
+        var currentDist = mappedP * pathLength;
         var point = path.getPointAtLength(currentDist);
 
+        // Move prospect card
         card.style.transform = 'translate(calc(' + point.x + 'px - 50%), calc(' + point.y + 'px - 50%))';
 
-        // Fade out prospect when reaching the calendar (like original)
-        if (p > 0.98) {
-          card.style.opacity = Math.max(0, 1 - (p - 0.98) * 50);
+        // Fade in at start, fade out at end
+        if (p < 0.03) {
+          card.style.opacity = p / 0.03;
+        } else if (p > 0.95) {
+          card.style.opacity = Math.max(0, 1 - (p - 0.95) * 20);
         } else {
           card.style.opacity = 1;
         }
 
+        // Trailing particles
         particles.forEach(function(par, i) {
-          var d = Math.max(0, currentDist - (15 + i * 10));
+          var d = Math.max(0, currentDist - (20 + i * 15));
           var pp = path.getPointAtLength(d);
           par.style.transform = 'translate(calc(' + pp.x + 'px - 50%), calc(' + pp.y + 'px - 50%))';
-          par.style.opacity = p > 0.05 && p < 0.95 ? 0.6 - i * 0.2 : 0;
+          par.style.opacity = p > 0.05 && p < 0.92 ? 0.5 - i * 0.15 : 0;
         });
 
+        // Activate nodes when prospect passes near them
         nodes.forEach(function(node) {
           var nx = parseInt(node.style.left);
           var ny = parseInt(node.style.top);
           var dist = Math.hypot(point.x - nx, point.y - ny);
-          node.classList.toggle('active', dist < 150);
+          node.classList.toggle('active', dist < 180);
         });
 
+        // Fill calendar slots progressively
         calSlots.forEach(function(slot) {
           var trigger = parseFloat(slot.getAttribute('data-fill'));
-          slot.classList.toggle('filled', p > trigger);
+          if (trigger < 1) slot.classList.toggle('filled', p > trigger);
         });
       }
 
-      function isSectionInView() {
-        var rect = section.getBoundingClientRect();
-        // Section is "in view" when its top is at or above center of viewport
-        return rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.3;
+      // --- Smooth animation loop (lerp towards target) ---
+      function animate() {
+        var diff = targetProgress - currentProgress;
+        if (Math.abs(diff) > 0.0005) {
+          currentProgress += diff * 0.12; // smooth easing factor
+          renderPipeline(currentProgress);
+          rafId = requestAnimationFrame(animate);
+        } else {
+          currentProgress = targetProgress;
+          renderPipeline(currentProgress);
+          rafId = null;
+        }
       }
 
-      window.addEventListener('wheel', function(e) {
-        var inView = isSectionInView();
+      function setProgress(p) {
+        targetProgress = Math.max(0, Math.min(1, p));
+        if (!rafId) rafId = requestAnimationFrame(animate);
+      }
 
-        if (inView && !locked && e.deltaY > 0 && progress < 1) {
-          // Scrolling down, section in view, animation not complete — lock
+      // --- Scroll handling ---
+      function handleDelta(deltaY) {
+        // Only activate when section is fully visible on screen
+        if (!sectionVisible) return false;
+
+        // Lock when scrolling down into incomplete animation
+        if (!locked && deltaY > 0 && targetProgress < 1 && !completed) {
           locked = true;
-          lockScrollY = window.scrollY;
-          accumulated = progress * scrollNeeded;
+          accumulated = targetProgress * scrollNeeded;
         }
 
-        if (inView && !locked && e.deltaY < 0 && progress > 0 && completed) {
-          // Scrolling back up, animation was completed — lock to reverse
+        // Lock when scrolling back up into completed animation
+        if (!locked && deltaY < 0 && targetProgress > 0 && completed) {
           locked = true;
-          lockScrollY = window.scrollY;
-          accumulated = progress * scrollNeeded;
+          accumulated = targetProgress * scrollNeeded;
           completed = false;
         }
 
-        if (locked) {
-          e.preventDefault();
-          accumulated += e.deltaY;
-          accumulated = Math.max(0, Math.min(scrollNeeded, accumulated));
-          var newProgress = accumulated / scrollNeeded;
-          updatePipeline(newProgress);
+        if (!locked) return false;
 
-          // Release lock when animation completes forward
-          if (newProgress >= 1) {
-            locked = false;
-            completed = true;
-          }
-          // Release lock when animation reverses to start
-          if (newProgress <= 0) {
-            locked = false;
-            completed = false;
-          }
+        accumulated += deltaY;
+        accumulated = Math.max(0, Math.min(scrollNeeded, accumulated));
+        setProgress(accumulated / scrollNeeded);
+
+        // Release when animation completes
+        if (accumulated >= scrollNeeded) {
+          locked = false;
+          completed = true;
+        }
+        if (accumulated <= 0) {
+          locked = false;
+          completed = false;
+        }
+
+        return true; // consumed the event
+      }
+
+      window.addEventListener('wheel', function(e) {
+        if (handleDelta(e.deltaY)) {
+          e.preventDefault();
         }
       }, { passive: false });
 
-      // Touch support for mobile
+      // Touch support
       var touchStartY = 0;
       window.addEventListener('touchstart', function(e) {
         touchStartY = e.touches[0].clientY;
       }, { passive: true });
 
       window.addEventListener('touchmove', function(e) {
-        var inView = isSectionInView();
         var deltaY = touchStartY - e.touches[0].clientY;
         touchStartY = e.touches[0].clientY;
-
-        if (inView && !locked && deltaY > 0 && progress < 1) {
-          locked = true;
-          accumulated = progress * scrollNeeded;
-        }
-        if (inView && !locked && deltaY < 0 && progress > 0 && completed) {
-          locked = true;
-          accumulated = progress * scrollNeeded;
-          completed = false;
-        }
-
-        if (locked) {
+        if (handleDelta(deltaY * 2.5)) {
           e.preventDefault();
-          accumulated += deltaY * 3;
-          accumulated = Math.max(0, Math.min(scrollNeeded, accumulated));
-          updatePipeline(accumulated / scrollNeeded);
-
-          if (accumulated >= scrollNeeded) { locked = false; completed = true; }
-          if (accumulated <= 0) { locked = false; completed = false; }
         }
       }, { passive: false });
 
-      updatePipeline(0);
+      // Initialize: card at first visible point on the path
+      renderPipeline(0);
+
+      // --- Mobile: sequential reveal animation ---
+      if (window.innerWidth <= 768) {
+        var mobSteps = section.querySelectorAll('.lp-mob-step');
+        var mobObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var step = parseInt(entry.target.getAttribute('data-step'));
+              // Staggered delay based on step order
+              setTimeout(function() {
+                entry.target.classList.add('visible');
+              }, step * 200);
+              mobObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+        mobSteps.forEach(function(s) { mobObserver.observe(s); });
+      }
     })();
   </script>
 
