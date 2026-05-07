@@ -1,0 +1,518 @@
+---
+// FleetBackground.astro — "Outbound Fleet"
+// Adaptación del prototipo de Claude.ai (handoff: design_handoff_faq_background).
+// Concepto: cielo profundo con flota de naves espaciales, nebulosas, estrellas
+// con parallax, shooting stars. Dark-only por diseño (la metáfora "outbound = naves
+// saliendo hacia afuera" se rompe en light mode).
+//
+// Estructura:
+//   .stage (position: fixed; z-index: 0)
+//     ├─ .sky          → gradiente cósmico de fondo
+//     ├─ .neb × 4      → nebulosas con drift animado
+//     ├─ .stars × 3    → canvases de estrellas con parallax al cursor
+//     ├─ .twinkle      → 28 estrellas con twinkle CSS
+//     ├─ .shooter × 3  → estrellas fugaces con timings escalonados
+//     ├─ .fleet        → 7 naves SVG (capital + 3 saucers + 2 drones + diag)
+//     ├─ .grain        → ruido sutil
+//     └─ .vignette     → viñeta radial
+//
+// Interacciones (en script):
+//   - Stars: drawn on canvas at mount + resize. 380/180/80 stars across 3 layers.
+//   - Twinkle: 28 dots inserted as <b> elements with random positions/delays.
+//   - Parallax: pointermove → translate3d on each .stars layer (rAF throttled).
+//   - Cursor halo: ships within 260px of cursor get boosted drop-shadow.
+//   - prefers-reduced-motion: animations off.
+//   - Mobile (≤640px): wing1, wing2, scout-l, diag are hidden.
+---
+
+<div class="stage" aria-hidden="true">
+  <div class="sky"></div>
+
+  <div class="neb neb-1"></div>
+  <div class="neb neb-2"></div>
+  <div class="neb neb-3"></div>
+  <div class="neb neb-4"></div>
+
+  <div class="stars" data-mult="0.25"><canvas id="starsFar"></canvas></div>
+  <div class="stars" data-mult="0.6"><canvas id="starsMid"></canvas></div>
+  <div class="stars" data-mult="1.2"><canvas id="starsNear"></canvas></div>
+
+  <div class="twinkle" id="twinkle"></div>
+
+  <div class="shooter sh-1"></div>
+  <div class="shooter sh-2"></div>
+  <div class="shooter sh-3"></div>
+
+  <div class="fleet" id="fleet"></div>
+
+  <div class="grain"></div>
+  <div class="vignette"></div>
+</div>
+
+<style is:global>
+/* ═══════════════════════════════════════════════════════════
+   FleetBackground — "Outbound Fleet"
+   Self-contained, dark-only, mobile-aware, reduced-motion safe.
+   ═══════════════════════════════════════════════════════════ */
+
+.stage {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+  isolation: isolate;
+}
+
+/* base sky — multi-layer cosmic gradient */
+.sky {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 12%, rgba(91,33,182,0.55), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 82% 78%, rgba(67,20,140,0.50), transparent 65%),
+    radial-gradient(ellipse 60% 80% at 50% 100%, rgba(37,9,82,0.65), transparent 70%),
+    linear-gradient(180deg, #08051a 0%, #04030a 50%, #02010a 100%);
+}
+
+/* ─── nebulae ─── */
+.neb {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); mix-blend-mode: screen;
+  will-change: transform; opacity: 0.9;
+}
+.neb-1 { width: 55vw; height: 55vw; left: -15vw; top: -12vh;
+  background: radial-gradient(circle, rgba(167,139,250,0.55), transparent 65%);
+  animation: drift1 80s ease-in-out infinite; }
+.neb-2 { width: 65vw; height: 65vw; right: -20vw; top: 35vh;
+  background: radial-gradient(circle, rgba(124,58,237,0.50), transparent 65%);
+  animation: drift2 100s ease-in-out infinite; }
+.neb-3 { width: 50vw; height: 50vw; left: 25vw; bottom: -25vh;
+  background: radial-gradient(circle, rgba(196,181,253,0.42), transparent 65%);
+  animation: drift3 90s ease-in-out infinite; }
+.neb-4 { width: 35vw; height: 35vw; right: 8vw; top: 5vh;
+  background: radial-gradient(circle, rgba(251,191,36,0.18), transparent 65%);
+  animation: drift4 120s ease-in-out infinite; }
+@keyframes drift1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(8vw,7vh) scale(1.10)} }
+@keyframes drift2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-10vw,-5vh) scale(0.92)} }
+@keyframes drift3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(7vw,-9vh) scale(1.08)} }
+@keyframes drift4 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(0.95)} }
+
+/* ─── star canvases (3 parallax layers) ─── */
+.stars {
+  position: absolute; inset: 0;
+  transform: translate3d(var(--px,0px), var(--py,0px), 0);
+  will-change: transform;
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stars canvas { width: 100%; height: 100%; display: block; }
+
+/* ─── twinkle subset (CSS-animated stars) ─── */
+.twinkle { position: absolute; inset: 0; pointer-events: none; }
+.twinkle b {
+  position: absolute;
+  width: 2px; height: 2px; border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgba(196,181,253,0.85);
+  animation: twk 4s ease-in-out infinite;
+}
+.twinkle b.big {
+  width: 3px; height: 3px;
+  box-shadow: 0 0 10px 3px rgba(255,255,255,0.95), 0 0 16px 4px rgba(196,181,253,0.6);
+}
+@keyframes twk {
+  0%,100% { opacity: 0.35; transform: scale(1); }
+  50%     { opacity: 1;    transform: scale(1.45); }
+}
+
+/* ─── shooting stars ─── */
+.shooter {
+  position: absolute; left: 0; top: 0;
+  width: 280px; height: 1.5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(196,181,253,0.0) 35%,
+    rgba(196,181,253,0.85) 88%,
+    rgba(255,255,255,1) 100%);
+  transform-origin: 100% 50%;
+  will-change: transform, opacity; opacity: 0;
+}
+.shooter::after {
+  content: ""; position: absolute; right: -3px; top: -2.5px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 14px 5px rgba(196,181,253,0.95);
+}
+.sh-1 { animation: shoot1 13s ease-in 4s infinite; }
+.sh-2 { animation: shoot2 17s ease-in 9s infinite; }
+.sh-3 { animation: shoot3 21s ease-in 14s infinite; }
+@keyframes shoot1 {
+  0%   { transform: translate(-200px, 8vh) rotate(20deg) scaleX(0); opacity: 0; }
+  1%   { opacity: 1; transform: translate(-200px, 8vh) rotate(20deg) scaleX(0.15); }
+  11%  { transform: translate(70vw, 38vh) rotate(20deg) scaleX(1); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shoot2 {
+  0%   { transform: translate(45vw, -12vh) rotate(58deg) scaleX(0); opacity: 0; }
+  1%   { opacity: 1; transform: translate(45vw, -12vh) rotate(58deg) scaleX(0.15); }
+  12%  { transform: translate(85vw, 60vh) rotate(58deg) scaleX(1); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shoot3 {
+  0%   { transform: translate(calc(100vw + 60px), 25vh) rotate(160deg) scaleX(0); opacity: 0; }
+  1%   { opacity: 1; transform: translate(calc(100vw + 60px), 25vh) rotate(160deg) scaleX(0.15); }
+  13%  { transform: translate(15vw, 70vh) rotate(160deg) scaleX(1); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ─── fleet ─── */
+.fleet { position: absolute; inset: 0; pointer-events: none; }
+
+.ship {
+  position: absolute; left: 0; top: 0;
+  will-change: transform, filter;
+  transform-origin: center;
+  filter: drop-shadow(0 0 12px rgba(167,139,250,0.55))
+          drop-shadow(0 0 4px rgba(255,255,255,0.25));
+  transition: filter 280ms ease;
+}
+.ship.s-capital {
+  filter: drop-shadow(0 0 22px rgba(251,191,36,0.55))
+          drop-shadow(0 0 8px rgba(255,255,255,0.35));
+}
+.ship.s-lead, .ship.s-wing1, .ship.s-wing2 {
+  filter: drop-shadow(0 0 18px rgba(167,139,250,0.75))
+          drop-shadow(0 0 6px rgba(255,255,255,0.35));
+}
+.ship.s-scout-r {
+  filter: drop-shadow(0 0 18px rgba(34,211,238,0.80))
+          drop-shadow(0 0 6px rgba(255,255,255,0.40));
+}
+.ship.s-scout-l {
+  filter: drop-shadow(0 0 18px rgba(244,114,182,0.75))
+          drop-shadow(0 0 6px rgba(255,255,255,0.40));
+}
+.ship.s-diag {
+  filter: drop-shadow(0 0 18px rgba(196,181,253,0.80))
+          drop-shadow(0 0 6px rgba(255,255,255,0.40));
+}
+.ship svg { display: block; overflow: visible; }
+.ship .trail { filter: blur(0.8px); }
+
+.ship-light    { animation: blink 1.7s ease-in-out infinite; }
+.ship-light.l2 { animation-delay: 0.4s; }
+.ship-light.l3 { animation-delay: 0.85s; }
+@keyframes blink { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+.engine-core { animation: enginePulse 1.4s ease-in-out infinite; transform-origin: center; }
+@keyframes enginePulse {
+  0%,100% { opacity: 0.85; transform: scale(1); }
+  50%     { opacity: 1;    transform: scale(1.12); }
+}
+
+/* ─── trajectories ─── */
+.ship.s-capital {
+  animation: pathCapital 75s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation-delay: -8s;
+}
+@keyframes pathCapital {
+  0%   { transform: translate(-380px, 48vh) rotate(-1deg); }
+  25%  { transform: translate(22vw, 51vh) rotate(0deg); }
+  50%  { transform: translate(50vw, 49vh) rotate(1deg); }
+  75%  { transform: translate(78vw, 52vh) rotate(0deg); }
+  100% { transform: translate(calc(100vw + 400px), 50vh) rotate(-1deg); }
+}
+
+.ship.s-lead {
+  animation: pathLead 36s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation-delay: -2s;
+}
+@keyframes pathLead {
+  0%   { transform: translate(calc(100vw + 200px), 6vh) rotate(-3deg) scaleX(-1); }
+  25%  { transform: translate(74vw, 4vh) rotate(-4deg) scaleX(-1); }
+  50%  { transform: translate(50vw, 8vh) rotate(0deg) scaleX(-1); }
+  75%  { transform: translate(26vw, 5vh) rotate(2deg) scaleX(-1); }
+  100% { transform: translate(-220px, 7vh) rotate(-3deg) scaleX(-1); }
+}
+.ship.s-wing1 {
+  animation: pathWing1 36s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation-delay: -3.4s;
+}
+@keyframes pathWing1 {
+  0%   { transform: translate(calc(100vw + 240px), 11vh) rotate(-3deg) scaleX(-0.78) scaleY(0.78); }
+  25%  { transform: translate(76vw, 9vh) rotate(-4deg) scaleX(-0.78) scaleY(0.78); }
+  50%  { transform: translate(52vw, 13vh) rotate(0deg) scaleX(-0.78) scaleY(0.78); }
+  75%  { transform: translate(28vw, 10vh) rotate(2deg) scaleX(-0.78) scaleY(0.78); }
+  100% { transform: translate(-260px, 12vh) rotate(-3deg) scaleX(-0.78) scaleY(0.78); }
+}
+.ship.s-wing2 {
+  animation: pathWing2 36s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation-delay: -4.6s;
+}
+@keyframes pathWing2 {
+  0%   { transform: translate(calc(100vw + 280px), 2vh) rotate(-3deg) scaleX(-0.78) scaleY(0.78); }
+  25%  { transform: translate(78vw, 0vh) rotate(-4deg) scaleX(-0.78) scaleY(0.78); }
+  50%  { transform: translate(54vw, 3vh) rotate(0deg) scaleX(-0.78) scaleY(0.78); }
+  75%  { transform: translate(30vw, 1vh) rotate(2deg) scaleX(-0.78) scaleY(0.78); }
+  100% { transform: translate(-300px, 2vh) rotate(-3deg) scaleX(-0.78) scaleY(0.78); }
+}
+
+.ship.s-scout-r { animation: pathScoutR 22s linear infinite; }
+@keyframes pathScoutR {
+  0%   { transform: translate(94vw, -120px) rotate(95deg) scale(0.55); opacity: 0; }
+  8%   { opacity: 1; }
+  50%  { transform: translate(96vw, 50vh) rotate(95deg) scale(0.58); }
+  92%  { opacity: 1; }
+  100% { transform: translate(94vw, calc(100vh + 120px)) rotate(95deg) scale(0.55); opacity: 0; }
+}
+.ship.s-scout-l {
+  animation: pathScoutL 28s linear infinite;
+  animation-delay: -10s;
+}
+@keyframes pathScoutL {
+  0%   { transform: translate(4vw, calc(100vh + 120px)) rotate(-85deg) scale(0.55); opacity: 0; }
+  8%   { opacity: 1; }
+  50%  { transform: translate(6vw, 50vh) rotate(-85deg) scale(0.58); }
+  92%  { opacity: 1; }
+  100% { transform: translate(4vw, -120px) rotate(-85deg) scale(0.55); opacity: 0; }
+}
+
+.ship.s-diag {
+  animation: pathDiag 44s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation-delay: -12s;
+}
+@keyframes pathDiag {
+  0%   { transform: translate(-200px, -100px) rotate(45deg) scale(0.65); }
+  50%  { transform: translate(50vw, 50vh) rotate(45deg) scale(0.65); opacity: 0.9; }
+  100% { transform: translate(calc(100vw + 200px), calc(100vh + 100px)) rotate(45deg) scale(0.65); }
+}
+
+/* ─── grain + vignette ─── */
+.grain {
+  position: absolute; inset: -10%; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='9'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0 0.75 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.07; mix-blend-mode: overlay;
+}
+.vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, rgba(4,3,10,0.55) 80%, rgba(4,3,10,0.96) 100%);
+}
+
+/* Content above the stage */
+.stage ~ nav,
+.stage ~ main,
+.stage ~ footer { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .neb, .ship, .shooter, .twinkle b { animation: none !important; }
+  .stars { transition: none !important; }
+}
+@media (max-width: 640px) {
+  .ship.s-wing1, .ship.s-wing2, .ship.s-scout-l, .ship.s-diag { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT MODE TWILIGHT — solo cuando body tiene .faq-light
+   El dark default NUNCA se ve afectado por estas reglas.
+   ═══════════════════════════════════════════════════════════ */
+body.faq-light .sky {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 12%, rgba(196,181,253,0.55), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 82% 78%, rgba(244,114,182,0.30), transparent 65%),
+    radial-gradient(ellipse 60% 80% at 50% 100%, rgba(253,230,138,0.35), transparent 70%),
+    linear-gradient(180deg, #ddd6fe 0%, #f5e6f5 50%, #fef3c7 100%) !important;
+}
+body.faq-light .neb-1 {
+  background: radial-gradient(circle, rgba(167,139,250,0.45), transparent 65%);
+  opacity: 0.7;
+}
+body.faq-light .neb-2 {
+  background: radial-gradient(circle, rgba(244,114,182,0.35), transparent 65%);
+  opacity: 0.6;
+}
+body.faq-light .neb-3 {
+  background: radial-gradient(circle, rgba(196,181,253,0.42), transparent 65%);
+  opacity: 0.7;
+}
+body.faq-light .neb-4 {
+  background: radial-gradient(circle, rgba(251,191,36,0.30), transparent 65%);
+  opacity: 0.5;
+}
+body.faq-light .stars { display: none; }
+body.faq-light .twinkle b {
+  background: rgba(109,40,217,0.55);
+  box-shadow: 0 0 6px 2px rgba(167,139,250,0.45);
+}
+body.faq-light .shooter { display: none; }
+body.faq-light .vignette {
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, rgba(124,58,237,0.10) 80%, rgba(124,58,237,0.20) 100%);
+}
+body.faq-light .grain { opacity: 0.04; mix-blend-mode: multiply; }
+body.faq-light .ship.s-capital {
+  filter: drop-shadow(0 0 24px rgba(251,191,36,0.65))
+          drop-shadow(0 4px 12px rgba(91,33,182,0.40));
+}
+body.faq-light .ship.s-lead,
+body.faq-light .ship.s-wing1,
+body.faq-light .ship.s-wing2 {
+  filter: drop-shadow(0 0 18px rgba(124,58,237,0.65))
+          drop-shadow(0 4px 10px rgba(91,33,182,0.40));
+}
+body.faq-light .ship.s-scout-r {
+  filter: drop-shadow(0 0 18px rgba(34,211,238,0.70))
+          drop-shadow(0 4px 10px rgba(91,33,182,0.40));
+}
+body.faq-light .ship.s-scout-l {
+  filter: drop-shadow(0 0 18px rgba(244,114,182,0.65))
+          drop-shadow(0 4px 10px rgba(91,33,182,0.40));
+}
+body.faq-light .ship.s-diag {
+  filter: drop-shadow(0 0 18px rgba(167,139,250,0.70))
+          drop-shadow(0 4px 10px rgba(91,33,182,0.40));
+}
+</style>
+
+<script is:inline>
+(function() {
+  // ═══ STAR FIELD — 3 capas con parallax suave al cursor ═══
+  function drawStars(canvas, count, sizeRange, opacityRange) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = canvas.parentElement.clientWidth;
+    const h = canvas.parentElement.clientHeight;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, w, h);
+
+    for (let i = 0; i < count; i++) {
+      const x = Math.random() * w;
+      const y = Math.random() * h;
+      const r = sizeRange[0] + Math.random() * (sizeRange[1] - sizeRange[0]);
+      const op = opacityRange[0] + Math.random() * (opacityRange[1] - opacityRange[0]);
+
+      ctx.beginPath();
+      ctx.arc(x, y, r * 3.5, 0, Math.PI * 2);
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r * 3.5);
+      grad.addColorStop(0, 'rgba(196,181,253,' + (op * 0.45) + ')');
+      grad.addColorStop(1, 'rgba(196,181,253,0)');
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + op + ')';
+      ctx.fill();
+    }
+  }
+
+  const canvases = {
+    far:  document.getElementById('starsFar'),
+    mid:  document.getElementById('starsMid'),
+    near: document.getElementById('starsNear'),
+  };
+  if (!canvases.far || !canvases.mid || !canvases.near) return;
+
+  function redrawStars() {
+    drawStars(canvases.far,  380, [0.4, 0.9],  [0.20, 0.55]);
+    drawStars(canvases.mid,  180, [0.6, 1.3],  [0.40, 0.80]);
+    drawStars(canvases.near,  80, [1.0, 1.9],  [0.65, 1.0]);
+  }
+  redrawStars();
+  let resizeT;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(redrawStars, 200);
+  });
+
+  // ═══ TWINKLE STARS (CSS-animated subset) ═══
+  const tw = document.getElementById('twinkle');
+  const TWINKLES = 28;
+  for (let i = 0; i < TWINKLES; i++) {
+    const b = document.createElement('b');
+    if (Math.random() < 0.25) b.classList.add('big');
+    b.style.left = (Math.random() * 100) + '%';
+    b.style.top  = (Math.random() * 100) + '%';
+    b.style.animationDelay = (-Math.random() * 4) + 's';
+    b.style.animationDuration = (3 + Math.random() * 4) + 's';
+    tw.appendChild(b);
+  }
+
+  // ═══ PARALLAX (rAF-throttled) ═══
+  let mxN = 0, myN = 0, parallaxQueued = false;
+  const starLayers = Array.prototype.slice.call(document.querySelectorAll('.stars'));
+  function applyParallax() {
+    parallaxQueued = false;
+    starLayers.forEach(function(layer) {
+      const mult = parseFloat(layer.dataset.mult);
+      layer.style.setProperty('--px', (-mxN * 36 * mult) + 'px');
+      layer.style.setProperty('--py', (-myN * 22 * mult) + 'px');
+    });
+  }
+  document.addEventListener('pointermove', function(e) {
+    mxN = (e.clientX / window.innerWidth - 0.5);
+    myN = (e.clientY / window.innerHeight - 0.5);
+    if (!parallaxQueued) {
+      parallaxQueued = true;
+      requestAnimationFrame(applyParallax);
+    }
+  });
+
+  // ═══ SHIP SVGs ═══
+  const shipSVGs = {
+    capital: '<svg width="300" height="96" viewBox="-150 -48 300 96"><defs><linearGradient id="cap-body" x1="0" y1="-1" x2="0" y2="1"><stop offset="0%" stop-color="#f5efff"/><stop offset="22%" stop-color="#c4b5fd"/><stop offset="50%" stop-color="#7c3aed"/><stop offset="82%" stop-color="#3b0764"/><stop offset="100%" stop-color="#0f0420"/></linearGradient><linearGradient id="cap-spec" x1="0" y1="-1" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.95)"/><stop offset="40%" stop-color="rgba(255,255,255,0.4)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></linearGradient><radialGradient id="cap-dome" cx="40%" cy="30%" r="75%"><stop offset="0%" stop-color="#ffffff"/><stop offset="30%" stop-color="#e9defe"/><stop offset="70%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#5b21b6"/></radialGradient><linearGradient id="cap-trail" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="rgba(167,139,250,0)"/><stop offset="60%" stop-color="rgba(196,181,253,0.5)"/><stop offset="95%" stop-color="rgba(255,255,255,0.95)"/><stop offset="100%" stop-color="rgba(255,255,255,1)"/></linearGradient><radialGradient id="cap-engine-core" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fffafe"/><stop offset="35%" stop-color="#fde68a"/><stop offset="70%" stop-color="rgba(196,181,253,0.7)"/><stop offset="100%" stop-color="rgba(167,139,250,0)"/></radialGradient></defs><ellipse class="trail" cx="-100" cy="0" rx="95" ry="3.2" fill="url(#cap-trail)" opacity="0.85"/><ellipse cx="-105" cy="0" rx="55" ry="14" fill="url(#cap-engine-core)" opacity="0.6"/><ellipse class="engine-core" cx="-95" cy="0" rx="22" ry="5" fill="url(#cap-engine-core)"/><ellipse cx="5" cy="4" rx="95" ry="22" fill="rgba(167,139,250,0.18)"/><path d="M -92 0 Q -72 -11 -18 -12 L 42 -12 Q 102 -11 118 0 Q 102 11 42 12 L -18 12 Q -72 11 -92 0 Z" fill="url(#cap-body)"/><path d="M -78 -8 Q -50 -12 0 -12 L 38 -12 Q 88 -11 100 -7 Q 88 -9 38 -10 L 0 -10 Q -50 -10 -78 -8 Z" fill="url(#cap-spec)" opacity="0.9"/><path d="M -88 4 Q -60 12 0 12.5 L 38 12.5 Q 100 12 112 4 Q 100 13 38 14 L 0 14 Q -60 13 -88 4 Z" fill="rgba(15,4,32,0.5)"/><line x1="-78" y1="-1" x2="104" y2="-1" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/><line x1="-78" y1="2" x2="104" y2="2" stroke="rgba(20,8,42,0.6)" stroke-width="0.6"/><line x1="-30" y1="-9" x2="-30" y2="9" stroke="rgba(20,8,42,0.45)" stroke-width="0.4"/><line x1="10" y1="-9" x2="10" y2="9" stroke="rgba(20,8,42,0.45)" stroke-width="0.4"/><line x1="50" y1="-9" x2="50" y2="9" stroke="rgba(20,8,42,0.45)" stroke-width="0.4"/><ellipse cx="5" cy="-13" rx="30" ry="12" fill="url(#cap-dome)"/><ellipse cx="-5" cy="-17" rx="11" ry="3.5" fill="rgba(255,255,255,0.85)"/><ellipse cx="12" cy="-13" rx="3" ry="7" fill="rgba(255,255,255,0.25)"/><line x1="5" y1="-25" x2="5" y2="-32" stroke="rgba(196,181,253,0.7)" stroke-width="0.8"/><circle cx="5" cy="-33" r="1.2" fill="#fde68a"/><circle class="ship-light" cx="-52" cy="9.5" r="2.6" fill="#fbbf24"/><circle class="ship-light l2" cx="-18" cy="10.5" r="2.6" fill="#fbbf24"/><circle class="ship-light l3" cx="22" cy="10.5" r="2.6" fill="#fbbf24"/><circle class="ship-light" cx="58" cy="9.5" r="2.6" fill="#fbbf24"/><circle cx="-60" cy="-5" r="0.8" fill="rgba(196,181,253,0.9)"/><circle cx="80" cy="-5" r="0.8" fill="rgba(196,181,253,0.9)"/><circle cx="112" cy="0" r="7" fill="rgba(255,255,255,0.35)"/><circle cx="112" cy="0" r="2.6" fill="#fffafe"/></svg>',
+    saucer: '<svg width="160" height="50" viewBox="-80 -25 160 50"><defs><linearGradient id="sc-body" x1="0" y1="-1" x2="0" y2="1"><stop offset="0%" stop-color="#f5efff"/><stop offset="22%" stop-color="#c4b5fd"/><stop offset="50%" stop-color="#8b5cf6"/><stop offset="82%" stop-color="#3b0764"/><stop offset="100%" stop-color="#0f0420"/></linearGradient><linearGradient id="sc-spec" x1="0" y1="-1" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.95)"/><stop offset="50%" stop-color="rgba(255,255,255,0.4)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></linearGradient><radialGradient id="sc-dome" cx="40%" cy="30%" r="75%"><stop offset="0%" stop-color="#ffffff"/><stop offset="30%" stop-color="#e9defe"/><stop offset="70%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#5b21b6"/></radialGradient><linearGradient id="sc-trail" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="rgba(167,139,250,0)"/><stop offset="60%" stop-color="rgba(196,181,253,0.55)"/><stop offset="95%" stop-color="rgba(255,255,255,0.95)"/><stop offset="100%" stop-color="rgba(255,255,255,1)"/></linearGradient><radialGradient id="sc-engine" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fffafe"/><stop offset="35%" stop-color="#fde68a"/><stop offset="70%" stop-color="rgba(196,181,253,0.7)"/><stop offset="100%" stop-color="rgba(167,139,250,0)"/></radialGradient></defs><ellipse class="trail" cx="-54" cy="0" rx="55" ry="2.6" fill="url(#sc-trail)" opacity="0.9"/><ellipse cx="-56" cy="0" rx="30" ry="7" fill="url(#sc-engine)" opacity="0.6"/><ellipse class="engine-core" cx="-50" cy="0" rx="13" ry="3.2" fill="url(#sc-engine)"/><ellipse cx="0" cy="3" rx="52" ry="12" fill="rgba(167,139,250,0.18)"/><ellipse cx="0" cy="1" rx="30" ry="7" fill="url(#sc-body)"/><ellipse cx="0" cy="-3" rx="24" ry="3.5" fill="url(#sc-spec)" opacity="0.9"/><path d="M -28 4 Q -18 8 0 8.5 L 0 8.5 Q 18 8 28 4 Q 18 9 0 9.5 Q -18 9 -28 4 Z" fill="rgba(15,4,32,0.6)"/><line x1="-26" y1="0" x2="26" y2="0" stroke="rgba(255,255,255,0.25)" stroke-width="0.5"/><line x1="-26" y1="2" x2="26" y2="2" stroke="rgba(15,4,32,0.6)" stroke-width="0.5"/><line x1="-12" y1="-5" x2="-12" y2="6" stroke="rgba(15,4,32,0.4)" stroke-width="0.35"/><line x1="12" y1="-5" x2="12" y2="6" stroke="rgba(15,4,32,0.4)" stroke-width="0.35"/><ellipse cx="0" cy="-4" rx="13" ry="6" fill="url(#sc-dome)"/><ellipse cx="-4" cy="-7" rx="5" ry="1.8" fill="rgba(255,255,255,0.85)"/><ellipse cx="5" cy="-4" rx="1.5" ry="3.5" fill="rgba(255,255,255,0.25)"/><line x1="0" y1="-10" x2="0" y2="-17" stroke="rgba(196,181,253,0.85)" stroke-width="0.7"/><circle cx="0" cy="-18" r="1.3" fill="#fde68a"/><circle cx="0" cy="-18" r="3" fill="rgba(253,230,138,0.45)"/><circle cx="-22" cy="-2" r="0.6" fill="rgba(196,181,253,0.9)"/><circle cx="22" cy="-2" r="0.6" fill="rgba(196,181,253,0.9)"/><circle class="ship-light" cx="-17" cy="4.5" r="1.5" fill="#fbbf24"/><circle class="ship-light l2" cx="0" cy="5" r="1.5" fill="#fbbf24"/><circle class="ship-light l3" cx="17" cy="4.5" r="1.5" fill="#fbbf24"/><circle cx="36" cy="0" r="7" fill="rgba(255,255,255,0.35)"/><circle cx="36" cy="0" r="2" fill="#fffafe"/></svg>',
+    drone: '<svg width="110" height="34" viewBox="-55 -17 110 34"><defs><linearGradient id="dr-body" x1="0" y1="-1" x2="0" y2="1"><stop offset="0%" stop-color="#f5efff"/><stop offset="30%" stop-color="#c4b5fd"/><stop offset="60%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#1a0838"/></linearGradient><linearGradient id="dr-fin" x1="0" y1="-1" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#3b0764"/></linearGradient><linearGradient id="dr-trail" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="rgba(196,181,253,0)"/><stop offset="70%" stop-color="rgba(196,181,253,0.65)"/><stop offset="100%" stop-color="rgba(255,255,255,1)"/></linearGradient><radialGradient id="dr-engine" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fffafe"/><stop offset="35%" stop-color="#fde68a"/><stop offset="100%" stop-color="rgba(196,181,253,0)"/></radialGradient></defs><ellipse class="trail" cx="-32" cy="0" rx="36" ry="2" fill="url(#dr-trail)" opacity="0.95"/><ellipse cx="-34" cy="0" rx="16" ry="4" fill="url(#dr-engine)" opacity="0.6"/><ellipse class="engine-core" cx="-30" cy="0" rx="7" ry="2" fill="url(#dr-engine)"/><ellipse cx="0" cy="0" rx="28" ry="6" fill="rgba(167,139,250,0.22)"/><path d="M -14 -5 L 18 0 L -14 5 Z" fill="url(#dr-body)" stroke="rgba(15,4,32,0.7)" stroke-width="0.4"/><path d="M -12 -4 L 16 -0.5 L -10 -1.5 Z" fill="rgba(255,255,255,0.7)"/><path d="M -10 4 L 14 0.5 L -8 1.5 Z" fill="rgba(15,4,32,0.4)"/><path d="M -8 -3 L -2 -10 L 2 -3 Z" fill="url(#dr-fin)" stroke="rgba(15,4,32,0.6)" stroke-width="0.3"/><circle cx="-2" cy="-10" r="0.8" fill="#fde68a"/><path d="M -8 3 L -2 10 L 2 3 Z" fill="url(#dr-fin)" stroke="rgba(15,4,32,0.6)" stroke-width="0.3"/><circle class="ship-light" cx="6" cy="0" r="1.2" fill="#fbbf24"/><circle cx="18" cy="0" r="4" fill="rgba(255,255,255,0.4)"/><circle cx="18" cy="0" r="1.4" fill="#fffafe"/></svg>',
+  };
+
+  // ═══ SPAWN FLEET ═══
+  const fleetSpec = [
+    { cls: 's-capital', svg: shipSVGs.capital },
+    { cls: 's-lead',    svg: shipSVGs.saucer  },
+    { cls: 's-wing1',   svg: shipSVGs.saucer  },
+    { cls: 's-wing2',   svg: shipSVGs.saucer  },
+    { cls: 's-scout-r', svg: shipSVGs.drone   },
+    { cls: 's-scout-l', svg: shipSVGs.drone   },
+    { cls: 's-diag',    svg: shipSVGs.saucer  },
+  ];
+  const fleetEl = document.getElementById('fleet');
+  fleetSpec.forEach(function(s) {
+    const el = document.createElement('div');
+    el.className = 'ship ' + s.cls;
+    el.innerHTML = s.svg;
+    fleetEl.appendChild(el);
+  });
+
+  // ═══ CURSOR HALO — naves cercanas brillan más ═══
+  const ships = Array.prototype.slice.call(document.querySelectorAll('.ship'));
+  const RADIUS = 260;
+  let pendingHover = false, lastX = 0, lastY = 0;
+  function applyHover() {
+    pendingHover = false;
+    ships.forEach(function(s) {
+      const rect = s.getBoundingClientRect();
+      if (rect.width === 0) return;
+      const sx = rect.left + rect.width / 2;
+      const sy = rect.top  + rect.height / 2;
+      const d = Math.hypot(sx - lastX, sy - lastY);
+      if (d < RADIUS) {
+        const t = 1 - d / RADIUS;
+        s.style.filter =
+          'drop-shadow(0 0 ' + (14 + t * 32) + 'px rgba(196,181,253,' + (0.7 + t * 0.55) + ')) ' +
+          'drop-shadow(0 0 ' + (5 + t * 12) + 'px rgba(255,255,255,' + (0.4 + t * 0.45) + ')) ' +
+          'brightness(' + (1.15 + t * 0.5) + ')';
+      } else if (s.style.filter) {
+        s.style.filter = '';
+      }
+    });
+  }
+  document.addEventListener('pointermove', function(e) {
+    lastX = e.clientX; lastY = e.clientY;
+    if (!pendingHover) {
+      pendingHover = true;
+      requestAnimationFrame(applyHover);
+    }
+  });
+  document.addEventListener('pointerleave', function() {
+    ships.forEach(function(s) { s.style.filter = ''; });
+  });
+})();
+</script>

@@ -1,0 +1,683 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GridBackground from '../../components/GridBackground.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import Hero from '../../components/Hero.astro';
+import Stats from '../../components/Stats.astro';
+import Services from '../../components/Services.astro';
+import Process from '../../components/Process.astro';
+import LivingPipeline from '../../components/LivingPipeline.astro';
+import Verticals from '../../components/Verticals.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import Clients from '../../components/Clients.astro';
+import SocialProof from '../../components/SocialProof.astro';
+import Calendar from '../../components/Calendar.astro';
+import Footer from '../../components/Footer.astro';
+import JsonLd from '../../components/JsonLd.astro';
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "The Outbound Force",
+  "description": "Implementamos un sistema de prospección B2B predecible para empresas. LinkedIn, Email Marketing, Meta Ads y Google Ads. +500 reuniones agendadas.",
+  "url": "https://theoutboundforce.com",
+  "areaServed": ["Argentina", "LATAM", "España", "USA"],
+  "serviceType": ["Prospección B2B", "Generación de Leads", "Email Marketing", "LinkedIn Outreach", "Meta Ads", "Google Ads", "Landing Pages"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "5"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Rosario",
+    "addressRegion": "Santa Fe",
+    "addressCountry": "Argentina"
+  }
+};
+---
+
+<Layout
+  title="The Outbound Force — Prospección B2B que llena tu agenda de reuniones"
+  description="Implementamos un sistema de prospección B2B predecible para empresas. LinkedIn, Email Marketing, Meta Ads y Google Ads. +500 reuniones agendadas. Agendá tu llamada gratis."
+  canonical="/"
+>
+  <JsonLd data={serviceSchema} />
+  <!-- ═══ NAV MULTI-PAGE ═══ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="/web/" class="nav-logo">The Outbound <span>Force</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="/web/" class="nav-active">Inicio</a>
+        <a href="/web/outbound">Outbound</a>
+        <a href="/web/desarrollo-web">Desarrollo Web</a>
+        <a href="/web/faq">FAQ</a>
+      <a href="/web/contacto">Contacto</a>
+        <ThemeToggle />
+        <a
+          href="https://calendar.app.google/Jxg7er6LkiL6tGEw6"
+          class="nav-cta magnetic-btn"
+          rel="noopener"
+          target="_blank"
+        >Agendar Reunión</a>
+      </div>
+      <button aria-label="Menú" class="menu-toggle" id="menuToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main-content" tabindex="-1">
+    <Hero />
+
+    <!-- Mobile social proof cards with spider-web (identical to original) -->
+    <div class="mobile-proof" aria-hidden="true">
+      <svg class="mp-web" viewBox="0 0 350 200" preserveAspectRatio="xMidYMid slice">
+        <line x1="175" y1="100" x2="0" y2="0" stroke="rgba(109,40,217,0.35)" stroke-width="1.2"/>
+        <line x1="175" y1="100" x2="175" y2="-10" stroke="rgba(109,40,217,0.32)" stroke-width="1.1"/>
+        <line x1="175" y1="100" x2="350" y2="0" stroke="rgba(109,40,217,0.35)" stroke-width="1.2"/>
+        <line x1="175" y1="100" x2="360" y2="60" stroke="rgba(109,40,217,0.28)" stroke-width="1"/>
+        <line x1="175" y1="100" x2="360" y2="100" stroke="rgba(109,40,217,0.32)" stroke-width="1.1"/>
+        <line x1="175" y1="100" x2="360" y2="145" stroke="rgba(109,40,217,0.28)" stroke-width="1"/>
+        <line x1="175" y1="100" x2="350" y2="200" stroke="rgba(109,40,217,0.35)" stroke-width="1.2"/>
+        <line x1="175" y1="100" x2="175" y2="210" stroke="rgba(109,40,217,0.32)" stroke-width="1.1"/>
+        <line x1="175" y1="100" x2="0" y2="200" stroke="rgba(109,40,217,0.35)" stroke-width="1.2"/>
+        <line x1="175" y1="100" x2="-10" y2="145" stroke="rgba(109,40,217,0.28)" stroke-width="1"/>
+        <line x1="175" y1="100" x2="-10" y2="100" stroke="rgba(109,40,217,0.32)" stroke-width="1.1"/>
+        <line x1="175" y1="100" x2="-10" y2="60" stroke="rgba(109,40,217,0.28)" stroke-width="1"/>
+        <line x1="175" y1="100" x2="70" y2="-5" stroke="rgba(109,40,217,0.20)" stroke-width="0.8"/>
+        <line x1="175" y1="100" x2="280" y2="-5" stroke="rgba(109,40,217,0.20)" stroke-width="0.8"/>
+        <line x1="175" y1="100" x2="360" y2="30" stroke="rgba(109,40,217,0.18)" stroke-width="0.7"/>
+        <line x1="175" y1="100" x2="360" y2="172" stroke="rgba(109,40,217,0.18)" stroke-width="0.7"/>
+        <line x1="175" y1="100" x2="280" y2="208" stroke="rgba(109,40,217,0.20)" stroke-width="0.8"/>
+        <line x1="175" y1="100" x2="70" y2="208" stroke="rgba(109,40,217,0.20)" stroke-width="0.8"/>
+        <line x1="175" y1="100" x2="-10" y2="172" stroke="rgba(109,40,217,0.18)" stroke-width="0.7"/>
+        <line x1="175" y1="100" x2="-10" y2="30" stroke="rgba(109,40,217,0.18)" stroke-width="0.7"/>
+        <line x1="175" y1="100" x2="125" y2="-8" stroke="rgba(109,40,217,0.13)" stroke-width="0.55"/>
+        <line x1="175" y1="100" x2="230" y2="-8" stroke="rgba(109,40,217,0.13)" stroke-width="0.55"/>
+        <line x1="175" y1="100" x2="125" y2="210" stroke="rgba(109,40,217,0.13)" stroke-width="0.55"/>
+        <line x1="175" y1="100" x2="230" y2="210" stroke="rgba(109,40,217,0.13)" stroke-width="0.55"/>
+        <path d="M175,84 Q187,81 193,88 Q199,97 192,106 Q185,114 176,115 Q165,116 159,108 Q153,99 158,91 Q163,84 175,84Z" fill="none" stroke="rgba(109,40,217,0.38)" stroke-width="0.9"/>
+        <path d="M175,70 Q203,65 218,77 Q233,91 227,110 Q220,130 198,135 Q175,139 153,133 Q131,125 127,104 Q123,82 140,72 Q154,65 175,70Z" fill="none" stroke="rgba(109,40,217,0.32)" stroke-width="0.85"/>
+        <path d="M175,55 Q218,48 244,65 Q270,84 266,108 Q262,135 236,150 Q208,162 175,160 Q140,158 115,143 Q90,126 88,100 Q86,72 112,58 Q138,46 175,55Z" fill="none" stroke="rgba(109,40,217,0.26)" stroke-width="0.8"/>
+        <path d="M175,40 Q232,32 266,52 Q302,74 300,106 Q298,142 268,162 Q236,180 175,178 Q114,176 82,160 Q48,142 46,106 Q44,68 76,50 Q110,32 175,40Z" fill="none" stroke="rgba(109,40,217,0.22)" stroke-width="0.75"/>
+        <path d="M175,26 Q246,16 290,42 Q336,70 334,106 Q332,148 292,175 Q252,198 175,196 Q98,194 56,173 Q12,150 10,106 Q8,58 50,34 Q96,12 175,26Z" fill="none" stroke="rgba(109,40,217,0.17)" stroke-width="0.7"/>
+        <path d="M175,14 Q258,2 310,32 Q364,64 362,106 Q360,154 314,184 Q264,210 175,208 Q84,206 34,182 Q-16,156 -14,106 Q-12,52 36,26 Q88,0 175,14Z" fill="none" stroke="rgba(109,40,217,0.12)" stroke-width="0.6"/>
+        <path d="M175,4 Q270,-6 328,24 Q386,56 384,106 Q382,162 330,194 Q274,222 175,220 Q74,218 20,192 Q-34,164 -32,106 Q-30,44 22,18 Q78,-8 175,4Z" fill="none" stroke="rgba(109,40,217,0.08)" stroke-width="0.5"/>
+        <path d="M158,86 Q162,78 172,82" fill="none" stroke="rgba(109,40,217,0.22)" stroke-width="0.5"/>
+        <path d="M184,84 Q191,78 197,86" fill="none" stroke="rgba(109,40,217,0.22)" stroke-width="0.5"/>
+        <path d="M165,110 Q172,116 182,112" fill="none" stroke="rgba(109,40,217,0.22)" stroke-width="0.5"/>
+        <circle cx="175" cy="100" r="2.5" fill="rgba(109,40,217,0.30)"/>
+        <circle cx="175" cy="100" r="5.5" fill="none" stroke="rgba(109,40,217,0.15)" stroke-width="0.5"/>
+        <circle cx="193" cy="88" r="1.5" fill="rgba(109,40,217,0.22)"/>
+        <circle cx="158" cy="91" r="1.3" fill="rgba(109,40,217,0.20)"/>
+        <circle cx="159" cy="108" r="1.5" fill="rgba(109,40,217,0.22)"/>
+        <circle cx="192" cy="106" r="1.3" fill="rgba(109,40,217,0.20)"/>
+        <circle cx="218" cy="77" r="1.3" fill="rgba(109,40,217,0.16)"/>
+        <circle cx="127" cy="104" r="1.3" fill="rgba(109,40,217,0.16)"/>
+        <circle cx="244" cy="65" r="1.1" fill="rgba(109,40,217,0.12)"/>
+        <circle cx="115" cy="143" r="1.1" fill="rgba(109,40,217,0.12)"/>
+      </svg>
+      <div class="mp-card" style="left:5%;top:15%">
+        <div class="mp-icon mp-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><div class="mp-title">Reunión confirmada</div><div class="mp-sub">Miércoles 10:00 AM</div></div>
+      </div>
+      <div class="mp-card" style="right:3%;top:8%">
+        <div class="mp-icon mp-blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.064 2.064 0 110-4.128 2.064 2.064 0 010 4.128zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></div>
+        <div><div class="mp-title">Nuevo lead calificado</div><div class="mp-sub">VP Comercial · SaaS B2B</div></div>
+      </div>
+      <div class="mp-card" style="left:8%;top:58%">
+        <div class="mp-icon mp-violet"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div><div class="mp-title">+10 reuniones este mes</div><div class="mp-sub">Pipeline creciendo</div></div>
+      </div>
+      <div class="mp-card" style="right:6%;top:52%">
+        <div class="mp-icon mp-amber"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+        <div><div class="mp-title">Propuesta aprobada</div><div class="mp-sub">Deal cerrado</div></div>
+      </div>
+    </div>
+
+    <Verticals />
+    <SocialProof />
+    <LivingPipeline />
+    <Testimonials />
+    <Calendar />
+  </main>
+  <Footer />
+
+  <!-- ═══ ALL SCRIPTS — Identical to original index.astro ═══ -->
+  <script is:inline>
+    // Scroll reveal observer
+    var allR = document.querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale");
+    var rObs = new IntersectionObserver(function(e) {
+      e.forEach(function(e) { e.isIntersecting && e.target.classList.add("active"); });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    allR.forEach(function(e) { rObs.observe(e); });
+
+    // Nav scroll effect
+    window.addEventListener("scroll", function() {
+      document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 50);
+    });
+
+    // Mobile menu
+    document.getElementById("menuToggle").addEventListener("click", function() {
+      document.getElementById("navLinks").classList.toggle("open");
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function(e) {
+      e.addEventListener("click", function(t) {
+        t.preventDefault();
+        var n = document.querySelector(e.getAttribute("href"));
+        n && (n.scrollIntoView({ behavior: "smooth", block: "start" }),
+          document.getElementById("navLinks").classList.remove("open"));
+      });
+    });
+
+    // Slot counter animation
+    var slotCounters = document.querySelectorAll(".slot-counter");
+    var slotObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.dataset.target);
+        var prefix = el.dataset.prefix || "";
+        var fps = 1000 / 60;
+        var totalFrames = Math.round(2000 / fps);
+        var frame = 0;
+        var timer = setInterval(function() {
+          frame++;
+          var progress = 1 - Math.pow(1 - frame / totalFrames, 4);
+          el.textContent = prefix + Math.round(target * progress);
+          if (frame === totalFrames) clearInterval(timer);
+        }, fps);
+        slotObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    slotCounters.forEach(function(e) { slotObs.observe(e); });
+
+    // Parallax floating elements
+    document.addEventListener("mousemove", function(e) {
+      var els = document.querySelectorAll(".float-el");
+      var mx = 20 * (e.clientX / window.innerWidth - 0.5);
+      var my = 20 * (e.clientY / window.innerHeight - 0.5);
+      els.forEach(function(el, i) {
+        var factor = 0.4 * (i + 1);
+        el.style.transform = "translate(" + mx * factor + "px," + my * factor + "px)";
+      });
+    });
+
+    // Magnetic buttons
+    document.querySelectorAll('.magnetic-btn').forEach(function(btn) {
+      var strength = 0.3;
+      btn.addEventListener('mousemove', function(e) {
+        var rect = btn.getBoundingClientRect();
+        var x = e.clientX - rect.left - rect.width / 2;
+        var y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = 'translate(' + x * strength + 'px, ' + y * strength + 'px)';
+      });
+      btn.addEventListener('mouseleave', function() {
+        btn.style.transform = 'translate(0, 0)';
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        setTimeout(function() { btn.style.transition = ''; }, 400);
+      });
+      btn.addEventListener('mouseenter', function() { btn.style.transition = 'none'; });
+    });
+
+    // Mascot interactions
+    document.querySelectorAll('.time-slot').forEach(function(s) {
+      s.addEventListener('click', function() {
+        var c = document.querySelector('.mascot-toggle');
+        if (c) { c.checked = true; setTimeout(function() { c.checked = false; }, 3000); }
+      });
+    });
+    var bubbleLink = document.querySelector('.bubble-link');
+    if (bubbleLink) {
+      bubbleLink.addEventListener('click', function(e) {
+        var toggle = document.querySelector('.mascot-toggle');
+        if (toggle && toggle.checked) {
+          window.open('https://calendar.app.google/Jxg7er6LkiL6tGEw6', '_blank');
+        }
+        e.stopPropagation();
+      });
+    }
+    var mascotToggle = document.querySelector('.mascot-toggle');
+    if (mascotToggle) {
+      mascotToggle.addEventListener('change', function() {
+        if (this.checked) { setTimeout(function() { mascotToggle.checked = false; }, 3000); }
+      });
+    }
+    if (window.innerWidth < 768) {
+      var catSvg = document.querySelector('.mascot-wrap svg');
+      if (catSvg) catSvg.setAttribute('viewBox', '20 70 360 240');
+    }
+
+    // Mobile proof progressive reveal
+    (function() {
+      if (window.innerWidth >= 768) return;
+      var proof = document.querySelector('.mobile-proof');
+      if (!proof) return;
+      var svg = proof.querySelector('.mp-web');
+      var cards = proof.querySelectorAll('.mp-card');
+      if (!cards.length) return;
+      var allEls = Array.from(svg.children);
+      var quarters = [[], [], [], []];
+      function getElQuadrants(el) {
+        var pts = [];
+        if (el.tagName === 'line') {
+          pts.push({ x: parseFloat(el.getAttribute('x1')), y: parseFloat(el.getAttribute('y1')) });
+          pts.push({ x: parseFloat(el.getAttribute('x2')), y: parseFloat(el.getAttribute('y2')) });
+        } else if (el.tagName === 'circle') {
+          return [(parseFloat(el.getAttribute('cx')) < 175 ? 0 : 1) + (parseFloat(el.getAttribute('cy')) < 100 ? 0 : 2)];
+        } else if (el.tagName === 'path') {
+          var nums = (el.getAttribute('d') || '').match(/-?[\d.]+/g);
+          if (nums) for (var i = 0; i < nums.length - 1; i += 2) pts.push({ x: parseFloat(nums[i]), y: parseFloat(nums[i + 1]) });
+        }
+        var qs = {};
+        pts.forEach(function(p) { qs[(p.x < 175 ? 0 : 1) + (p.y < 100 ? 0 : 2)] = true; });
+        var result = Object.keys(qs).map(Number);
+        return result.length ? result : [0];
+      }
+      allEls.forEach(function(el) { if (el.tagName === 'defs') return; getElQuadrants(el).forEach(function(q) { quarters[q].push(el); }); });
+      allEls.forEach(function(el) { if (el.tagName === 'defs') return; el.style.opacity = '0'; el.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1)'; });
+      var cardToQuadrant = [0, 1, 2, 3];
+      var revealedQuadrants = {};
+      function revealQuarter(q) { if (revealedQuadrants[q]) return; revealedQuadrants[q] = true; quarters[q].forEach(function(el) { el.style.opacity = '1'; }); }
+      var proofRect = proof.getBoundingClientRect();
+      var cardData = [];
+      cards.forEach(function(card, i) {
+        card.style.touchAction = 'none';
+        var rect = card.getBoundingClientRect();
+        cardData.push({ card: card, origX: rect.left + rect.width / 2 - proofRect.left, origY: rect.top + rect.height / 2 - proofRect.top, curX: 0, curY: 0, index: i });
+        cardData[i].curX = cardData[i].origX; cardData[i].curY = cardData[i].origY;
+      });
+      var active = null, smx = 0, smy = 0, scx = 0, scy = 0;
+      proof.addEventListener('touchstart', function(e) {
+        var t = e.touches[0];
+        for (var i = 0; i < cardData.length; i++) {
+          var r = cardData[i].card.getBoundingClientRect();
+          if (t.clientX >= r.left && t.clientX <= r.right && t.clientY >= r.top && t.clientY <= r.bottom) {
+            active = cardData[i]; active.card.style.zIndex = '5'; smx = t.clientX; smy = t.clientY; scx = active.curX; scy = active.curY;
+            revealQuarter(cardToQuadrant[i]); e.preventDefault(); break;
+          }
+        }
+      }, { passive: false });
+      window.addEventListener('touchmove', function(e) {
+        if (!active) return;
+        var t = e.touches[0], dx = t.clientX - smx, dy = t.clientY - smy, dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 50) { dx = dx * 50 / dist; dy = dy * 50 / dist; }
+        active.curX = scx + dx; active.curY = scy + dy;
+        active.card.style.transform = 'translate(' + (active.curX - active.origX) + 'px,' + (active.curY - active.origY) + 'px)';
+        e.preventDefault();
+      }, { passive: false });
+      window.addEventListener('touchend', function() {
+        if (!active) return;
+        active.card.style.zIndex = '1'; var c = active; active = null;
+        var vx = 0, vy = 0;
+        (function bounce() {
+          var dx = c.origX - c.curX, dy = c.origY - c.curY;
+          vx = (vx + dx * 0.15) * 0.75; vy = (vy + dy * 0.15) * 0.75;
+          c.curX += vx; c.curY += vy;
+          c.card.style.transform = 'translate(' + (c.curX - c.origX) + 'px,' + (c.curY - c.origY) + 'px)';
+          if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3 || Math.abs(vx) > 0.3 || Math.abs(vy) > 0.3) requestAnimationFrame(bounce);
+          else { c.curX = c.origX; c.curY = c.origY; c.card.style.transform = 'translate(0,0)'; }
+        })();
+      });
+      var t = 0;
+      (function idleFloat() {
+        if (active) { requestAnimationFrame(idleFloat); return; }
+        t += 0.006;
+        cardData.forEach(function(d, i) {
+          var offX = Math.sin(t + i * 1.7) * 4, offY = Math.cos(t * 0.6 + i * 2.1) * 3;
+          d.curX = d.origX + offX; d.curY = d.origY + offY;
+          d.card.style.transform = 'translate(' + offX + 'px,' + offY + 'px)';
+        });
+        requestAnimationFrame(idleFloat);
+      })();
+    })();
+
+    // Testimonials — clone for infinite carousel
+    (function() {
+      var track = document.querySelector('.t-track');
+      if (!track) return;
+      track.querySelectorAll('.t-card').forEach(function(c) { track.appendChild(c.cloneNode(true)); });
+    })();
+
+    // Spider-web cards — Hero
+    (function() {
+      var isMobile = window.innerWidth < 768;
+      var hero = document.querySelector('.hero');
+      var cards = document.querySelectorAll('.pipe-card');
+      if (!hero || !cards.length) return;
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+      hero.querySelector('.pipe-wrap').appendChild(svg);
+      var heroRect = hero.getBoundingClientRect(), hw = heroRect.width, hh = heroRect.height;
+      var anchors = [];
+      for (var i = 0; i <= 8; i++) anchors.push({ x: i / 8 * hw, y: 0 });
+      for (var i = 0; i <= 6; i++) anchors.push({ x: i / 6 * hw, y: hh });
+      for (var i = 1; i <= 4; i++) anchors.push({ x: 0, y: i / 5 * hh });
+      for (var i = 1; i <= 4; i++) anchors.push({ x: hw, y: i / 5 * hh });
+      function makeLine(x1, y1, x2, y2, opacity, width, dash) {
+        var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+        l.setAttribute('stroke', 'rgba(109,40,217,' + opacity + ')'); l.setAttribute('stroke-width', width);
+        if (dash) l.setAttribute('stroke-dasharray', dash);
+        l.setAttribute('stroke-linecap', 'round'); svg.appendChild(l); return l;
+      }
+      var webData = [];
+      cards.forEach(function(card) {
+        card.style.animation = 'none'; card.style.opacity = '1'; card.style.clipPath = 'none'; card.style.zIndex = '3'; card.style.position = 'absolute';
+        if (!isMobile) { card.style.pointerEvents = 'auto'; card.style.cursor = 'grab'; card.style.userSelect = 'none'; card.style.transition = 'none'; }
+        var rect = card.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2 - heroRect.left, cy = rect.top + rect.height / 2 - heroRect.top;
+        var sorted = anchors.map(function(a) { return { ax: a.x, ay: a.y, dist: Math.sqrt((a.x - cx) * (a.x - cx) + (a.y - cy) * (a.y - cy)) }; }).sort(function(a, b) { return a.dist - b.dist; });
+        var count = 5 + Math.floor(Math.random() * 3), myAnchors = sorted.slice(0, count), lines = [];
+        myAnchors.forEach(function(a) {
+          var op = (0.06 + Math.random() * 0.1).toFixed(2), w = (0.5 + Math.random() * 1).toFixed(1);
+          var dash = Math.random() > 0.4 ? (3 + Math.floor(Math.random() * 4)) + ',' + (2 + Math.floor(Math.random() * 3)) : '';
+          lines.push({ el: makeLine(a.ax, a.ay, cx, cy, op, w, dash), ax: a.ax, ay: a.ay, baseOp: parseFloat(op), baseW: parseFloat(w) });
+        });
+        webData.push({ card: card, origX: cx, origY: cy, curX: cx, curY: cy, lines: lines });
+      });
+      for (var i = 0; i < webData.length; i++) {
+        for (var j = i + 1; j < webData.length; j++) {
+          var a = webData[i], b = webData[j];
+          var d = Math.sqrt(Math.pow(a.origX - b.origX, 2) + Math.pow(a.origY - b.origY, 2));
+          if (d < hw * 0.6) {
+            var op = (0.04 + Math.random() * 0.06).toFixed(2);
+            var el = makeLine(a.origX, a.origY, b.origX, b.origY, op, '0.6', '6,4');
+            a.lines.push({ el: el, ax: b.origX, ay: b.origY, baseOp: parseFloat(op), baseW: 0.6, linked: j });
+            b.lines.push({ el: el, ax: a.origX, ay: a.origY, baseOp: parseFloat(op), baseW: 0.6, linked: i, isEnd1: true });
+          }
+        }
+      }
+      function updateLines(d) {
+        d.lines.forEach(function(l) {
+          if (l.isEnd1) { l.el.setAttribute('x1', d.curX); l.el.setAttribute('y1', d.curY); }
+          else { l.el.setAttribute('x2', d.curX); l.el.setAttribute('y2', d.curY); }
+          var ex = l.isEnd1 ? parseFloat(l.el.getAttribute('x2')) : l.ax;
+          var ey = l.isEnd1 ? parseFloat(l.el.getAttribute('y2')) : l.ay;
+          var sDist = Math.sqrt(Math.pow(d.curX - ex, 2) + Math.pow(d.curY - ey, 2));
+          var oDist = Math.sqrt(Math.pow(d.origX - ex, 2) + Math.pow(d.origY - ey, 2));
+          var tension = Math.min(sDist / Math.max(oDist, 1), 2);
+          l.el.setAttribute('stroke-width', (l.baseW + tension * 0.8).toFixed(1));
+          l.el.setAttribute('stroke', 'rgba(109,40,217,' + Math.min(l.baseOp + tension * 0.12, 0.35).toFixed(2) + ')');
+        });
+      }
+      var active = null, smx = 0, smy = 0, scx = 0, scy = 0, needsRebuild = false;
+      function onDown(e) {
+        if (needsRebuild) ensureBuilt();
+        var t = e.touches ? e.touches[0] : e;
+        for (var i = 0; i < webData.length; i++) {
+          var r = webData[i].card.getBoundingClientRect();
+          if (t.clientX >= r.left && t.clientX <= r.right && t.clientY >= r.top && t.clientY <= r.bottom) {
+            active = webData[i]; active.card.style.cursor = 'grabbing'; smx = t.clientX; smy = t.clientY; scx = active.curX; scy = active.curY;
+            e.preventDefault(); break;
+          }
+        }
+      }
+      function onMove(e) {
+        if (!active) return;
+        var t = e.touches ? e.touches[0] : e, dx = t.clientX - smx, dy = t.clientY - smy, dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 80) { dx = dx * 80 / dist; dy = dy * 80 / dist; }
+        active.curX = scx + dx; active.curY = scy + dy;
+        active.card.style.transform = 'translate(' + (active.curX - active.origX) + 'px,' + (active.curY - active.origY) + 'px)';
+        updateLines(active); e.preventDefault();
+      }
+      function onUp() {
+        if (!active) return;
+        active.card.style.cursor = 'grab'; var c = active; active = null;
+        var vx = 0, vy = 0;
+        (function bounce() {
+          var dx = c.origX - c.curX, dy = c.origY - c.curY;
+          vx = (vx + dx * 0.15) * 0.75; vy = (vy + dy * 0.15) * 0.75;
+          c.curX += vx; c.curY += vy;
+          c.card.style.transform = 'translate(' + (c.curX - c.origX) + 'px,' + (c.curY - c.origY) + 'px)';
+          updateLines(c);
+          if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3 || Math.abs(vx) > 0.3 || Math.abs(vy) > 0.3) requestAnimationFrame(bounce);
+          else { c.curX = c.origX; c.curY = c.origY; c.card.style.transform = 'translate(0,0)'; updateLines(c); }
+        })();
+      }
+      if (!isMobile) {
+        hero.addEventListener('mousedown', onDown);
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        hero.addEventListener('touchstart', onDown, { passive: false });
+        window.addEventListener('touchmove', onMove, { passive: false });
+        window.addEventListener('touchend', onUp);
+      }
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          active = null;
+          while (svg.firstChild) svg.removeChild(svg.firstChild);
+          webData.length = 0; needsRebuild = true; ensureBuilt();
+        }, 150);
+      });
+      function ensureBuilt() {
+        if (!needsRebuild) return; needsRebuild = false;
+        var newRect = hero.getBoundingClientRect(); hw = newRect.width; hh = newRect.height;
+        anchors.length = 0;
+        for (var i = 0; i <= 8; i++) anchors.push({ x: i / 8 * hw, y: 0 });
+        for (var i = 0; i <= 6; i++) anchors.push({ x: i / 6 * hw, y: hh });
+        for (var i = 1; i <= 4; i++) anchors.push({ x: 0, y: i / 5 * hh });
+        for (var i = 1; i <= 4; i++) anchors.push({ x: hw, y: i / 5 * hh });
+        heroRect = newRect;
+        cards.forEach(function(card) {
+          var rect = card.getBoundingClientRect(), cx = rect.left + rect.width / 2 - heroRect.left, cy = rect.top + rect.height / 2 - heroRect.top;
+          var sorted = anchors.map(function(a) { return { ax: a.x, ay: a.y, dist: Math.sqrt((a.x - cx) * (a.x - cx) + (a.y - cy) * (a.y - cy)) }; }).sort(function(a, b) { return a.dist - b.dist; });
+          var count = 5 + Math.floor(Math.random() * 3), myAnchors = sorted.slice(0, count), lines = [];
+          myAnchors.forEach(function(a) {
+            var op = (0.06 + Math.random() * 0.1).toFixed(2), w = (0.5 + Math.random() * 1).toFixed(1);
+            var dash = Math.random() > 0.4 ? (3 + Math.floor(Math.random() * 4)) + ',' + (2 + Math.floor(Math.random() * 3)) : '';
+            lines.push({ el: makeLine(a.ax, a.ay, cx, cy, op, w, dash), ax: a.ax, ay: a.ay, baseOp: parseFloat(op), baseW: parseFloat(w) });
+          });
+          webData.push({ card: card, origX: cx, origY: cy, curX: cx, curY: cy, lines: lines });
+        });
+        for (var i = 0; i < webData.length; i++) for (var j = i + 1; j < webData.length; j++) {
+          var a = webData[i], b = webData[j];
+          if (Math.sqrt(Math.pow(a.origX - b.origX, 2) + Math.pow(a.origY - b.origY, 2)) < hw * 0.6) {
+            var op = (0.04 + Math.random() * 0.06).toFixed(2), el = makeLine(a.origX, a.origY, b.origX, b.origY, op, '0.6', '6,4');
+            a.lines.push({ el: el, ax: b.origX, ay: b.origY, baseOp: parseFloat(op), baseW: 0.6, linked: j });
+            b.lines.push({ el: el, ax: a.origX, ay: a.origY, baseOp: parseFloat(op), baseW: 0.6, linked: i, isEnd1: true });
+          }
+        }
+      }
+
+    })();
+  </script>
+
+  <!-- Living Pipeline scroll animation -->
+  <script is:inline>
+    (function() {
+      var section = document.getElementById('pipeline-tracker');
+      if (!section) return;
+      var canvas = document.getElementById('lp-scale-canvas');
+      var path = document.getElementById('lp-main-route');
+      var card = document.getElementById('lp-prospect');
+      var nodes = section.querySelectorAll('.lp-node');
+      var calSlots = section.querySelectorAll('.lp-cal-slot[data-fill]');
+      var particles = [document.getElementById('lp-p1'), document.getElementById('lp-p2')];
+      var pathLength = path.getTotalLength();
+      var isMobile = window.innerWidth <= 768;
+
+      function resizeCanvas() {
+        var vw = window.innerWidth;
+        var header = section.querySelector('.lp-header');
+        var headerH = header ? header.offsetHeight : 0;
+        var sticky = section.querySelector('.lp-sticky');
+        if (isMobile) return;
+        var scale = vw / 1920;
+        canvas.style.transform = 'scale(' + scale + ')';
+        canvas.style.transformOrigin = 'left top';
+        var contentTop = 100, contentBottom = 770;
+        var scaledContentH = (contentBottom - contentTop) * scale;
+        canvas.style.marginTop = -(contentTop * scale) + 'px';
+        canvas.style.marginLeft = '0px';
+        sticky.style.height = (headerH + scaledContentH) + 'px';
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      var targetProgress = 0, currentProgress = 0, locked = false, completed = false, sectionVisible = false;
+      var scrollNeeded = 1800, accumulated = 0, rafId = null;
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          sectionVisible = entry.isIntersecting && entry.intersectionRatio > 0.85;
+        });
+      }, { threshold: [0, 0.5, 0.85, 1] });
+      observer.observe(section);
+
+      function renderPipeline(p) {
+        var pathStart = 0.12;
+        var mappedP = pathStart + p * (1 - pathStart);
+        var currentDist = mappedP * pathLength;
+        var point = path.getPointAtLength(currentDist);
+        card.style.transform = 'translate(calc(' + point.x + 'px - 50%), calc(' + point.y + 'px - 50%))';
+        if (p < 0.03) card.style.opacity = p / 0.03;
+        else if (p > 0.95) card.style.opacity = Math.max(0, 1 - (p - 0.95) * 20);
+        else card.style.opacity = 1;
+        particles.forEach(function(par, i) {
+          var d = Math.max(0, currentDist - (20 + i * 15));
+          var pp = path.getPointAtLength(d);
+          par.style.transform = 'translate(calc(' + pp.x + 'px - 50%), calc(' + pp.y + 'px - 50%))';
+          par.style.opacity = p > 0.05 && p < 0.92 ? 0.5 - i * 0.15 : 0;
+        });
+        nodes.forEach(function(node) {
+          var nx = parseInt(node.style.left), ny = parseInt(node.style.top);
+          var dist = Math.hypot(point.x - nx, point.y - ny);
+          node.classList.toggle('active', dist < 180);
+        });
+        calSlots.forEach(function(slot) {
+          var trigger = parseFloat(slot.getAttribute('data-fill'));
+          if (trigger < 1) slot.classList.toggle('filled', p > trigger);
+        });
+      }
+
+      function animate() {
+        var diff = targetProgress - currentProgress;
+        if (Math.abs(diff) > 0.0005) {
+          currentProgress += diff * 0.12;
+          renderPipeline(currentProgress);
+          rafId = requestAnimationFrame(animate);
+        } else { currentProgress = targetProgress; renderPipeline(currentProgress); rafId = null; }
+      }
+
+      function setProgress(p) {
+        targetProgress = Math.max(0, Math.min(1, p));
+        if (!rafId) rafId = requestAnimationFrame(animate);
+      }
+
+      function handleDelta(deltaY) {
+        if (!sectionVisible) return false;
+        if (!locked && deltaY > 0 && targetProgress < 1 && !completed) { locked = true; accumulated = targetProgress * scrollNeeded; }
+        if (!locked && deltaY < 0 && targetProgress > 0 && completed) { locked = true; accumulated = targetProgress * scrollNeeded; completed = false; }
+        if (!locked) return false;
+        accumulated += deltaY;
+        accumulated = Math.max(0, Math.min(scrollNeeded, accumulated));
+        setProgress(accumulated / scrollNeeded);
+        if (accumulated >= scrollNeeded) { locked = false; completed = true; }
+        if (accumulated <= 0) { locked = false; completed = false; }
+        return true;
+      }
+
+      if (window.innerWidth > 768) {
+        window.addEventListener('wheel', function(e) {
+          if (handleDelta(e.deltaY)) e.preventDefault();
+        }, { passive: false });
+      }
+
+      renderPipeline(0);
+
+      // Mobile
+      if (isMobile) {
+        var mobileEl = document.getElementById('lp-mobile');
+        var mSvg = document.getElementById('lpm-svg');
+        var mPath = document.getElementById('lpm-route');
+        var mCard = document.getElementById('lpm-prospect');
+        var mParticles = [document.getElementById('lpm-p1'), document.getElementById('lpm-p2')];
+        var mNodes = mobileEl ? mobileEl.querySelectorAll('.lpm-n') : [];
+        var mCalSlots = mobileEl ? mobileEl.querySelectorAll('.lpm-cal-slot') : [];
+        if (mobileEl && mPath && mCard) {
+          var mPathLen = mPath.getTotalLength();
+          var canvasEl = mobileEl.querySelector('.lpm-canvas');
+          function scaleCanvas() {
+            var vw = mobileEl.offsetWidth;
+            var scale = vw / 360;
+            canvasEl.style.height = (850 * scale) + 'px';
+            canvasEl.style.transform = 'scale(' + scale + ')';
+            canvasEl.style.transformOrigin = 'left top';
+          }
+          scaleCanvas();
+          window.addEventListener('resize', scaleCanvas);
+
+          var mCurrentProgress = 0;
+          var mCalEl = mobileEl.querySelector('.lpm-cal');
+          var mCascadeStarted = false, mCascadeTimers = [], mLateSlots = [];
+          mCalSlots.forEach(function(s) { if (s.getAttribute('data-fill') === 'late') mLateSlots.push(s); });
+
+          var mPointCache = [], mCacheSteps = 300;
+          for (var ci = 0; ci <= mCacheSteps; ci++) mPointCache.push(mPath.getPointAtLength(ci / mCacheSteps * mPathLen));
+          function mGetPoint(fraction) {
+            var f = Math.min(1, Math.max(0, fraction)) * mCacheSteps;
+            var lo = Math.floor(f), hi = Math.min(mCacheSteps, lo + 1), t = f - lo;
+            var a = mPointCache[lo], b = mPointCache[hi];
+            return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+          }
+
+          function renderMobile(p) {
+            var pathStart = 0.05, mp = pathStart + p * (1 - pathStart), pt = mGetPoint(mp);
+            var arrivalStart = 0.82;
+            var scaleVal = p > arrivalStart ? Math.max(0.3, 1 - (p - arrivalStart) / (1 - arrivalStart) * 0.7) : 1;
+            mCard.style.transform = 'translate(' + (pt.x - 50) + 'px,' + (pt.y - 20) + 'px) scale(' + scaleVal + ')';
+            var op = 1;
+            if (p < 0.04) op = p / 0.04;
+            else if (p > 0.90) op = Math.max(0, 1 - (p - 0.90) * 10);
+            mCard.style.opacity = op;
+            mParticles.forEach(function(par, i) {
+              if (!par) return;
+              var pFrac = Math.max(0, mp - (0.018 + i * 0.012));
+              var pp = mGetPoint(pFrac);
+              par.style.transform = 'translate(' + pp.x + 'px,' + pp.y + 'px)';
+              par.style.opacity = p > 0.06 && p < 0.86 ? (0.45 - i * 0.15) : 0;
+            });
+            mNodes.forEach(function(node) {
+              var nx = parseInt(node.style.left), ny = parseInt(node.style.top);
+              node.classList.toggle('active', Math.hypot(pt.x - nx, pt.y - ny) < 130);
+            });
+            if (mCalEl) mCalEl.classList.toggle('lpm-cal-arrived', p > 0.85);
+            if (p > 0.85 && !mCascadeStarted) {
+              mCascadeStarted = true;
+              var sorted = mLateSlots.slice().sort(function(a, b) { return Array.from(a.parentNode.children).indexOf(a) - Array.from(b.parentNode.children).indexOf(b); });
+              mCascadeTimers = [];
+              sorted.forEach(function(slot, i) { mCascadeTimers.push(setTimeout(function() { slot.classList.add('filled'); }, 1000 * (i + 1))); });
+            }
+            if (p < 0.75 && mCascadeStarted) {
+              mCascadeStarted = false;
+              mCascadeTimers.forEach(function(t) { clearTimeout(t); });
+              mLateSlots.forEach(function(slot) { slot.classList.remove('filled'); });
+            }
+          }
+
+          function onScroll() {
+            var rect = section.getBoundingClientRect(), winH = window.innerHeight;
+            var totalTravel = rect.height + winH;
+            var scrolled = winH - rect.top;
+            var rawP = Math.max(0, Math.min(1, scrolled / totalTravel));
+            var sH = rect.height;
+            var start = (winH * 0.6) / totalTravel, end = (sH + winH * 0.3) / totalTravel;
+            var mapped = Math.max(0, Math.min(1, (rawP - start) / (end - start)));
+            var diff = mapped - mCurrentProgress;
+            mCurrentProgress += diff * (Math.abs(diff) > 0.08 ? 0.18 : 0.12);
+            renderMobile(mCurrentProgress);
+            requestAnimationFrame(onScroll);
+          }
+          requestAnimationFrame(onScroll);
+          renderMobile(0);
+        }
+      }
+    })();
+  </script>
+</Layout>

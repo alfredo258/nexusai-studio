@@ -1,0 +1,361 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GridBackground from '../../components/GridBackground.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import Services from '../../components/Services.astro';
+import Showcase from '../../components/Showcase.astro';
+import Process from '../../components/Process.astro';
+import Footer from '../../components/Footer.astro';
+---
+<Layout title="Outbound B2B gestionado — LinkedIn, Email, Meta & Google Ads | TOF" description="Lo hacemos por vos: outbound B2B end-to-end. LinkedIn Sales Navigator, cold email, Meta Ads y Google Ads. +500 reuniones agendadas en 24 meses.">
+
+<GridBackground />
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/web/" class="nav-logo">The Outbound <span>Force</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="/web/">Inicio</a>
+      <a href="/web/outbound" class="nav-active">Outbound</a>
+      <a href="/web/desarrollo-web">Desarrollo Web</a>
+      <a href="/web/faq">FAQ</a>
+      <a href="/web/contacto">Contacto</a>
+      <ThemeToggle />
+      <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="nav-cta magnetic-btn" rel="noopener" target="_blank">Agendar Reunión</a>
+    </div>
+    <button aria-label="Menú" class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main id="main-content" tabindex="-1">
+  <div style="height: 4.5rem;"></div>
+
+  <section class="vp-hero">
+    <div class="container">
+      <a href="/web/outbound" class="vp-back">← Volver a Outbound</a>
+      <span class="vp-kicker">Lo hacemos por vos</span>
+      <h1 class="vp-title">Outbound completo, gestionado <em>end-to-end</em>.</h1>
+      <p class="vp-desc">Diseñamos, ejecutamos y optimizamos un sistema multicanal que llena tu agenda con clientes calificados sin que muevas un dedo. LinkedIn + Email + Meta Ads + Google Ads.</p>
+      <div class="vp-actions">
+        <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="btn btn-primary magnetic-btn" rel="noopener" target="_blank">Agendar diagnóstico</a>
+        <a href="#detalle" class="btn btn-ghost">Ver qué incluye</a>
+      </div>
+      <div class="vp-stats">
+        <div><strong>+500</strong><span>Reuniones</span></div>
+        <div><strong>+30</strong><span>Empresas</span></div>
+        <div><strong>x10</strong><span>Leads calificados</span></div>
+        <div><strong>+8</strong><span>Mercados</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="detalle"></div>
+  <Services />
+  <Showcase />
+  <Process />
+
+  <section class="vp-cta-section">
+    <div class="container">
+      <div class="vp-cta-box reveal">
+        <h2>¿Lo arrancamos?</h2>
+        <p>Agendá una llamada de 30 min. Diagnosticamos tu prospección actual y vemos si tiene sentido trabajar juntos.</p>
+        <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="btn btn-primary magnetic-btn" rel="noopener" target="_blank">Agendar diagnóstico</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<Footer />
+
+</Layout>
+
+<style is:global>
+body { background: var(--bg-dark, #1a1625) !important; }
+
+nav { background: rgba(26, 22, 37, 0.8) !important; }
+nav.scrolled { background: rgba(26, 22, 37, 0.95) !important; box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important; }
+.nav-logo { color: #fff !important; }
+.nav-links a { color: rgba(255,255,255,0.6) !important; }
+.nav-links a:hover, .nav-links a.nav-active { color: #fff !important; }
+nav { border-bottom-color: rgba(255,255,255,0.06) !important; }
+
+.services { padding-top: 3rem; background: transparent !important; }
+.service-row {
+  background: rgba(255,255,255,0.02) !important;
+  border: 1px solid rgba(167,139,250,0.15) !important;
+}
+.service-body h3 { color: #fff !important; }
+.service-body p { color: rgba(255,255,255,0.65) !important; }
+.section-title { color: #fff !important; }
+.section-desc { color: rgba(255,255,255,0.55) !important; }
+.section-label { color: #a78bfa !important; }
+.service-tag {
+  background: rgba(167,139,250,0.08) !important;
+  color: #a78bfa !important;
+  border: 1px solid rgba(167,139,250,0.2) !important;
+}
+
+.step-desc { color: rgba(255,255,255,0.92) !important; }
+.step-kicker { color: #a78bfa !important; }
+.counter-current, .counter-total { color: #fff !important; }
+.counter-sep { color: rgba(255,255,255,0.3) !important; }
+
+.step-title {
+  background: linear-gradient(90deg,
+    #ffffff calc(var(--fill, 0) * 100%),
+    rgba(255, 255, 255, 0.28) calc(var(--fill, 0) * 100%)
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.gl { stroke: rgba(109, 40, 217, 0.18) !important; }
+.pl { filter: drop-shadow(0 0 8px rgba(109, 40, 217, 0.6)) !important; }
+.gn { fill: #a78bfa !important; }
+.nh { stroke: #a78bfa !important; }
+
+footer { border-top: none !important; }
+
+/* Vertical-page hero (shared by /outbound /asesoria /desarrollo-web) */
+.vp-hero { padding: 3rem 0 4rem; }
+.vp-back {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.85rem; color: rgba(255,255,255,0.5);
+  text-decoration: none; margin-bottom: 1.5rem;
+  transition: color 0.2s var(--ease);
+}
+.vp-back:hover { color: #a78bfa; }
+.vp-kicker {
+  display: inline-block;
+  font-family: var(--font-b);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.12);
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+}
+.vp-title {
+  font-family: var(--font-d);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  color: #fff;
+  letter-spacing: -1.5px;
+  margin-bottom: 1.25rem;
+  max-width: 820px;
+}
+.vp-title em { font-style: normal; color: #a78bfa; }
+.vp-desc {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.7);
+  max-width: 640px;
+  margin-bottom: 2.25rem;
+}
+.vp-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 3.5rem;
+}
+.vp-actions .btn-ghost {
+  background: rgba(255,255,255,0.04) !important;
+  color: rgba(255,255,255,0.85) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+.vp-actions .btn-ghost:hover {
+  border-color: #a78bfa !important;
+  background: rgba(167,139,250,0.1) !important;
+  color: #fff !important;
+}
+.vp-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 1.75rem 0 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  max-width: 700px;
+}
+.vp-stats > div { display: flex; flex-direction: column; gap: 0.15rem; }
+.vp-stats strong {
+  font-family: var(--font-d);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -1px;
+}
+.vp-stats span {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+@media (max-width: 720px) {
+  .vp-stats { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .vp-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* CTA section after Process */
+.vp-cta-section { padding: 4rem 0 6rem; }
+.vp-cta-box {
+  background: linear-gradient(135deg, rgba(109,40,217,0.18), rgba(109,40,217,0.05));
+  border: 1px solid rgba(167,139,250,0.25);
+  border-radius: 24px;
+  padding: 3.5rem 2.5rem;
+  text-align: center;
+}
+.vp-cta-box h2 {
+  font-family: var(--font-d);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: #fff;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.5px;
+}
+.vp-cta-box p {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.7);
+  max-width: 480px;
+  margin: 0 auto 1.75rem;
+}
+@media (max-width: 640px) { .vp-cta-box { padding: 2.5rem 1.5rem; } }
+
+/* Process section dark adaptation (component is light by default) */
+.process { background: transparent !important; padding: 5rem 0 !important; }
+.process .section-label { color: #a78bfa !important; }
+.process .section-title { color: #fff !important; }
+.process .section-desc { color: rgba(255,255,255,0.55) !important; }
+.process-step h3 { color: #fff !important; }
+.process-step p { color: rgba(255,255,255,0.7) !important; }
+.process-step-tag {
+  background: rgba(167,139,250,0.10) !important;
+  color: #a78bfa !important;
+  border: 1px solid rgba(167,139,250,0.2) !important;
+}
+.process-step-number { color: rgba(167,139,250,0.18) !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT MODE OVERRIDES — solo cuando body NO tiene .dark.
+   Anula las reglas dark de arriba para que la página respete
+   el theme global elegido por el usuario.
+   ═══════════════════════════════════════════════════════════ */
+body:not(.dark) { background: var(--bg) !important; }
+body:not(.dark) nav {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-bottom-color: var(--card-border) !important;
+}
+body:not(.dark) nav.scrolled {
+  background: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 1px 3px rgba(109, 40, 217, 0.08) !important;
+}
+body:not(.dark) .nav-logo { color: var(--text) !important; }
+body:not(.dark) .nav-links a { color: var(--text2) !important; }
+body:not(.dark) .nav-links a:hover,
+body:not(.dark) .nav-links a.nav-active { color: var(--accent) !important; }
+
+body:not(.dark) .service-row {
+  background: var(--card) !important;
+  border: 1px solid var(--card-border) !important;
+}
+body:not(.dark) .service-body h3 { color: var(--text) !important; }
+body:not(.dark) .service-body p { color: var(--text2) !important; }
+body:not(.dark) .section-title { color: var(--text) !important; }
+body:not(.dark) .section-desc { color: var(--text2) !important; }
+body:not(.dark) .section-label { color: var(--accent) !important; }
+body:not(.dark) .service-tag {
+  background: rgba(109, 40, 217, 0.08) !important;
+  color: var(--accent) !important;
+  border: 1px solid rgba(109, 40, 217, 0.2) !important;
+}
+
+body:not(.dark) .step-desc { color: var(--text2) !important; }
+body:not(.dark) .step-kicker { color: var(--accent) !important; }
+body:not(.dark) .counter-current,
+body:not(.dark) .counter-total { color: var(--text) !important; }
+body:not(.dark) .counter-sep { color: var(--textm) !important; }
+body:not(.dark) .step-title {
+  background: linear-gradient(90deg,
+    var(--text) calc(var(--fill, 0) * 100%),
+    rgba(26, 22, 37, 0.28) calc(var(--fill, 0) * 100%)
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body:not(.dark) .gl { stroke: rgba(109, 40, 217, 0.10) !important; }
+body:not(.dark) .pl { filter: drop-shadow(0 0 6px rgba(109, 40, 217, 0.45)) !important; }
+body:not(.dark) .gn { fill: var(--accent) !important; }
+body:not(.dark) .nh { stroke: var(--accent) !important; }
+
+body:not(.dark) .vp-back { color: var(--textm) !important; }
+body:not(.dark) .vp-back:hover { color: var(--accent) !important; }
+body:not(.dark) .vp-kicker {
+  color: var(--accent) !important;
+  background: rgba(109, 40, 217, 0.08) !important;
+}
+body:not(.dark) .vp-title { color: var(--text) !important; }
+body:not(.dark) .vp-title em { color: var(--accent) !important; }
+body:not(.dark) .vp-desc { color: var(--text2) !important; }
+body:not(.dark) .vp-actions .btn-ghost {
+  background: var(--card) !important;
+  color: var(--text2) !important;
+  border-color: var(--card-border) !important;
+}
+body:not(.dark) .vp-actions .btn-ghost:hover {
+  border-color: var(--accent) !important;
+  background: rgba(109, 40, 217, 0.05) !important;
+  color: var(--accent) !important;
+}
+body:not(.dark) .vp-stats { border-top: 1px solid var(--card-border) !important; }
+body:not(.dark) .vp-stats strong { color: var(--text) !important; }
+body:not(.dark) .vp-stats span { color: var(--textm) !important; }
+
+body:not(.dark) .process { background: transparent !important; }
+body:not(.dark) .process .section-label { color: var(--accent) !important; }
+body:not(.dark) .process .section-title { color: var(--text) !important; }
+body:not(.dark) .process .section-desc { color: var(--text2) !important; }
+body:not(.dark) .process-step h3 { color: var(--text) !important; }
+body:not(.dark) .process-step p { color: var(--text2) !important; }
+body:not(.dark) .process-step-tag {
+  background: rgba(109, 40, 217, 0.08) !important;
+  color: var(--accent) !important;
+  border: 1px solid rgba(109, 40, 217, 0.2) !important;
+}
+body:not(.dark) .process-step-number { color: rgba(109, 40, 217, 0.18) !important; }
+</style>
+
+<script is:inline>
+  var allR = document.querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale");
+  var rObs = new IntersectionObserver(function(e) {
+    e.forEach(function(e) { e.isIntersecting && e.target.classList.add("active"); });
+  }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+  allR.forEach(function(e) { rObs.observe(e); });
+
+  window.addEventListener("scroll", function() {
+    document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 50);
+  });
+  document.getElementById("menuToggle").addEventListener("click", function() {
+    document.getElementById("navLinks").classList.toggle("open");
+  });
+
+  document.querySelectorAll('.magnetic-btn').forEach(function(btn) {
+    var strength = 0.3;
+    btn.addEventListener('mousemove', function(e) {
+      var rect = btn.getBoundingClientRect();
+      btn.style.transform = 'translate(' + (e.clientX - rect.left - rect.width / 2) * strength + 'px, ' + (e.clientY - rect.top - rect.height / 2) * strength + 'px)';
+    });
+    btn.addEventListener('mouseleave', function() {
+      btn.style.transform = 'translate(0, 0)';
+      btn.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      setTimeout(function() { btn.style.transition = ''; }, 400);
+    });
+    btn.addEventListener('mouseenter', function() { btn.style.transition = 'none'; });
+  });
+</script>

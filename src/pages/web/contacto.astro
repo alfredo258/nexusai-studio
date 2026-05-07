@@ -1,0 +1,728 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContactBackground from '../../components/ContactBackground.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import Footer from '../../components/Footer.astro';
+---
+<Layout title="Agendá tu llamada gratis — Diagnóstico de prospección B2B | TOF" description="30 minutos sin compromiso: diagnosticamos tu prospección, detectamos oportunidades concretas y te mostramos cómo triplicar reuniones en 90 días.">
+
+<ContactBackground />
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/web/" class="nav-logo">The Outbound <span>Force</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="/web/">Inicio</a>
+      <a href="/web/outbound">Outbound</a>
+      <a href="/web/desarrollo-web">Desarrollo Web</a>
+      <a href="/web/faq">FAQ</a>
+      <a href="/web/contacto" class="nav-active">Contacto</a>
+      <ThemeToggle />
+      <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="nav-cta magnetic-btn" rel="noopener" target="_blank">Agendar Reunión</a>
+    </div>
+    <button aria-label="Menú" class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main id="main-content" tabindex="-1">
+  <div style="height: 4.5rem;"></div>
+
+  <section class="ct-section">
+    <div class="container">
+      <div class="ct-grid">
+
+        <!-- LEFT: Info -->
+        <div class="ct-left">
+          <span class="ct-kicker">Contacto</span>
+          <h1 class="ct-title">30 minutos para encontrar <em>dónde está el cuello de botella.</em></h1>
+          <p class="ct-subtitle">Contanos sobre tu negocio y en menos de 24 horas te respondemos con un diagnóstico preliminar + 3 oportunidades concretas que podés accionar (hayamos trabajado juntos o no).</p>
+
+          <div class="ct-trust">
+            <div class="ct-trust-avatars" aria-hidden="true">
+              <img src="/assets/images/avatar-tomas.png" alt="Tomás — TOF" width="30" height="30" loading="eager" />
+              <img src="/assets/images/avatar-sebastian.png" alt="Sebastián — TOF" width="30" height="30" loading="eager" />
+              <img src="/assets/images/avatar-jorge.png" alt="Jorge — TOF" width="30" height="30" loading="eager" />
+              <img src="/assets/images/avatar-sandra.png" alt="Sandra — TOF" width="30" height="30" loading="eager" />
+            </div>
+            <div class="ct-trust-text">
+              <div class="ct-trust-stars">★★★★★</div>
+              <span>Respuesta promedio <strong>menos de 24h</strong></span>
+            </div>
+          </div>
+
+          <!-- Contact cards -->
+          <div class="ct-cards">
+            <a href="mailto:alfredo@theoutboundforce.com" class="ct-card">
+              <div class="ct-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <span class="ct-card-label">Email</span>
+                <span class="ct-card-value">alfredo@theoutboundforce.com</span>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/company/the-outbound-force" target="_blank" rel="noopener" class="ct-card">
+              <div class="ct-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.064 2.064 0 110-4.128 2.064 2.064 0 010 4.128zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg>
+              </div>
+              <div>
+                <span class="ct-card-label">LinkedIn</span>
+                <span class="ct-card-value">the-outbound-force</span>
+              </div>
+            </a>
+            <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" target="_blank" rel="noopener" class="ct-card">
+              <div class="ct-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect height="18" rx="2" width="18" x="3" y="4"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+              </div>
+              <div>
+                <span class="ct-card-label">Agenda directa</span>
+                <span class="ct-card-value">Elegí tu horario</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT: Form card + Cat -->
+        <div class="ct-right">
+          <div class="ct-form-card">
+            <form class="ct-form" name="contacto-tof" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="ct-multistep">
+              <input type="hidden" name="form-name" value="contacto-tof" />
+              <p class="hidden" style="display:none;"><label>No llenar: <input name="bot-field" /></label></p>
+
+              <!-- STEP 1 -->
+              <div class="ct-step active" data-step="0">
+                <div class="ct-form-dot"></div>
+                <p class="ct-form-step">Paso 1 de 4: Contanos de vos</p>
+                <h2 class="ct-form-title">¡Hola! Empecemos por presentarnos.</h2>
+                <p class="ct-form-sub">¿Cómo te llamás y de qué empresa nos visitás?</p>
+                <div class="ct-fields">
+                  <label class="ct-label">Nombre completo
+                    <input type="text" name="nombre" class="ct-input" placeholder="Tu nombre" required autocomplete="name" />
+                  </label>
+                  <label class="ct-label">Empresa
+                    <input type="text" name="empresa" class="ct-input" placeholder="Nombre de tu empresa" required autocomplete="organization" />
+                  </label>
+                </div>
+                <button type="button" class="btn btn-primary ct-next" data-next="1">Siguiente
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" height="16" width="16"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+              </div>
+
+              <!-- STEP 2 -->
+              <div class="ct-step" data-step="1">
+                <div class="ct-form-dot"></div>
+                <p class="ct-form-step">Paso 2 de 4: ¿Cómo te contactamos?</p>
+                <h2 class="ct-form-title">Compartinos tus datos.</h2>
+                <p class="ct-form-sub">Para agendar la sesión y enviarte el diagnóstico.</p>
+                <div class="ct-fields">
+                  <label class="ct-label">Email
+                    <input type="email" name="email" class="ct-input" placeholder="tu@empresa.com" required autocomplete="email" inputmode="email" />
+                  </label>
+                  <label class="ct-label">Teléfono
+                    <input type="tel" name="telefono" class="ct-input" placeholder="+54 9 11 1234 5678" autocomplete="tel" inputmode="tel" />
+                  </label>
+                </div>
+                <div class="ct-nav-buttons">
+                  <button type="button" class="btn btn-ghost ct-prev" data-prev="0">Atrás</button>
+                  <button type="button" class="btn btn-primary ct-next" data-next="2">Siguiente
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" height="16" width="16"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- STEP 3 -->
+              <div class="ct-step" data-step="2">
+                <div class="ct-form-dot"></div>
+                <p class="ct-form-step">Paso 3 de 4: Sobre tu prospección</p>
+                <h2 class="ct-form-title">¿Qué canal te interesa?</h2>
+                <p class="ct-form-sub">Ayudanos a entender qué necesitás para asignar al especialista correcto.</p>
+                <div class="ct-fields">
+                  <label class="ct-label">Canal de interés
+                    <select name="canal" class="ct-input ct-select" required>
+                      <option value="" disabled selected>Seleccioná una opción</option>
+                      <option value="LinkedIn Outreach">LinkedIn Outreach</option>
+                      <option value="Email Marketing">Email Marketing</option>
+                      <option value="Meta Ads">Meta Ads</option>
+                      <option value="Google Ads">Google Ads</option>
+                      <option value="Landing Pages">Landing Pages</option>
+                      <option value="Todos">Todos los canales</option>
+                      <option value="No estoy seguro">No estoy seguro</option>
+                    </select>
+                  </label>
+                  <label class="ct-label">¿Cuántas reuniones buscás por mes?
+                    <select name="reuniones" class="ct-input ct-select" required>
+                      <option value="" disabled selected>Seleccioná un rango</option>
+                      <option value="5-10">5 - 10 reuniones</option>
+                      <option value="10-20">10 - 20 reuniones</option>
+                      <option value="20-50">20 - 50 reuniones</option>
+                      <option value="50+">Más de 50 reuniones</option>
+                      <option value="No sé aún">Aún no lo tengo pensado</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="ct-nav-buttons">
+                  <button type="button" class="btn btn-ghost ct-prev" data-prev="1">Atrás</button>
+                  <button type="button" class="btn btn-primary ct-next" data-next="3">Siguiente
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" height="16" width="16"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- STEP 4 -->
+              <div class="ct-step" data-step="3">
+                <div class="ct-form-dot"></div>
+                <p class="ct-form-step">Paso 4 de 4: Detalles finales</p>
+                <h2 class="ct-form-title">¿Algo más que debamos saber?</h2>
+                <p class="ct-form-sub">Contanos brevemente sobre tu negocio o el desafío que querés resolver.</p>
+                <div class="ct-fields">
+                  <label class="ct-label">Mensaje (opcional)
+                    <textarea name="mensaje" class="ct-input ct-textarea" placeholder="Describí tu proyecto o reto brevemente..." rows="4"></textarea>
+                  </label>
+                </div>
+                <div class="ct-nav-buttons">
+                  <button type="button" class="btn btn-ghost ct-prev" data-prev="2">Atrás</button>
+                  <button type="submit" class="btn btn-primary ct-submit">Enviar mensaje
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" height="16" width="16"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- SUCCESS -->
+              <div class="ct-step ct-success" data-step="4">
+                <div class="ct-success-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <h2 class="ct-form-title">¡Mensaje recibido!</h2>
+                <p class="ct-form-sub">Gracias por confiar en The Outbound Force. Nuestro equipo te contactará en menos de 24 horas.</p>
+                <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="btn btn-primary" target="_blank" rel="noopener">Agendar reunión ahora
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" height="16" width="16"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- MASCOT CAT — identical to Calendar.astro original -->
+          <div class="ct-mascot">
+          <label class="mascot-wrap" style="width:250px;height:240px;opacity:.95;pointer-events:auto;cursor:pointer;display:block;">
+            <input type="checkbox" class="mascot-toggle"/>
+            <svg viewBox="10 70 400 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">
+      <!-- Desk propio del componente removido — el gato/PC ahora se sienta sobre
+           el desk del ContactBackground, sin doble escritorio. -->
+      <!-- (rects originales: x=20 y=230 w=280 h=70 fill=#1a1a2e + edge highlight) -->
+      <rect x="85" y="85" width="150" height="110" rx="8" fill="#252540"/>
+      <rect x="80" y="80" width="160" height="115" rx="10" fill="#2d2d50"/>
+      <rect x="90" y="90" width="140" height="95" rx="6" fill="#0e0e1a"/>
+      <ellipse cx="160" cy="137" rx="55" ry="35" fill="#6d28d9" class="monitor-light"/>
+      <g class="screen-content">
+        <rect x="100" y="102" width="45" height="3" rx="1.5" fill="#8b5cf6"/>
+        <rect x="100" y="110" width="65" height="3" rx="1.5" fill="#6d28d9"/>
+        <rect x="100" y="118" width="35" height="3" rx="1.5" fill="#a78bfa"/>
+        <rect x="100" y="126" width="55" height="3" rx="1.5" fill="#7c3aed"/>
+        <rect x="100" y="134" width="40" height="3" rx="1.5" fill="#8b5cf6"/>
+        <rect x="100" y="142" width="70" height="3" rx="1.5" fill="#6d28d9"/>
+        <rect x="100" y="150" width="30" height="3" rx="1.5" fill="#a78bfa"/>
+        <rect x="100" y="158" width="50" height="3" rx="1.5" fill="#7c3aed"/>
+        <rect x="100" y="166" width="60" height="3" rx="1.5" fill="#8b5cf6"/>
+        <rect x="100" y="174" width="2" height="8" rx="1" fill="#a78bfa" opacity=".6"><animate attributeName="opacity" values=".6;0;.6" dur="1.2s" repeatCount="indefinite"/></rect>
+      </g>
+      <rect x="145" y="195" width="30" height="18" rx="3" fill="#2d2d50"/>
+      <rect x="130" y="210" width="60" height="8" rx="4" fill="#2d2d50"/>
+      <rect x="65" y="222" width="190" height="20" rx="4" fill="#2a2a48"/>
+      <rect x="68" y="224" width="184" height="16" rx="3" fill="#1f1f3a"/>
+      <g opacity=".35"><rect x="73" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="83" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="93" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="103" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="113" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="123" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="133" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="143" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="153" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="163" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="173" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="183" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="193" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="203" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="213" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="223" y="226" width="8" height="4" rx="1" fill="#555"/><rect x="233" y="226" width="12" height="4" rx="1" fill="#555"/><rect x="75" y="232" width="12" height="4" rx="1" fill="#555"/><rect x="90" y="232" width="8" height="4" rx="1" fill="#555"/><rect x="105" y="232" width="50" height="4" rx="1" fill="#666"/><rect x="160" y="232" width="8" height="4" rx="1" fill="#555"/><rect x="175" y="232" width="8" height="4" rx="1" fill="#555"/><rect x="190" y="232" width="8" height="4" rx="1" fill="#555"/><rect x="205" y="232" width="38" height="4" rx="1" fill="#555"/></g>
+      <rect x="38" y="212" width="20" height="22" rx="3" fill="#3d2c5e"/>
+      <rect x="35" y="210" width="26" height="5" rx="2.5" fill="#4a3570"/>
+      <path d="M58 217q7-1 6 6t-6 5" stroke="#3d2c5e" stroke-width="3" fill="none"/>
+      <path d="M45 220c0-2 2-3 3-1.5c1-1.5 3-.5 3 1.5c0 2.5-3 4-3 4s-3-1.5-3-4" fill="#8b5cf6" opacity=".5"/>
+      <g class="steam"><path d="M44 207q1.5-5 3 0q1.5-4 3 0" stroke="#a78bfa" stroke-width="1" fill="none" opacity=".5"/><path d="M47 205q1-4 2 0q1-3 2 0" stroke="#a78bfa" stroke-width=".8" fill="none" opacity=".3"/></g>
+      <g class="cat-body-main">
+        <path d="M230 200Q260 185 268 160Q275 135 260 125Q250 118 245 128" stroke="#c4b5fd" stroke-width="10" fill="none" stroke-linecap="round" class="cat-tail"/>
+        <circle cx="245" cy="128" r="5" fill="#c4b5fd" class="cat-tail"/>
+        <ellipse cx="175" cy="208" rx="55" ry="28" fill="#c4b5fd"/>
+        <ellipse cx="172" cy="212" rx="40" ry="20" fill="#e8e0ff" opacity=".3"/>
+        <path d="M150 195q5-5 10 0" stroke="#b4a0e8" stroke-width="1.5" fill="none" opacity=".3"/>
+        <path d="M165 192q5-5 10 0" stroke="#b4a0e8" stroke-width="1.5" fill="none" opacity=".3"/>
+        <path d="M180 193q5-5 10 0" stroke="#b4a0e8" stroke-width="1.5" fill="none" opacity=".3"/>
+        <ellipse cx="220" cy="225" rx="12" ry="7" fill="#b4a0e8"/>
+        <circle cx="216" cy="226" r="2" fill="#9580cc" opacity=".3"/><circle cx="220" cy="227" r="1.5" fill="#9580cc" opacity=".3"/><circle cx="224" cy="226" r="1.5" fill="#9580cc" opacity=".3"/>
+        <g class="paw-left"><ellipse cx="128" cy="222" rx="14" ry="8" fill="#b4a0e8"/><circle cx="122" cy="223" r="2.5" fill="#9580cc" opacity=".3"/><circle cx="127" cy="225" r="2" fill="#9580cc" opacity=".3"/><circle cx="132" cy="223" r="2" fill="#9580cc" opacity=".3"/><ellipse cx="128" cy="221" rx="13" ry="7" fill="#b4a0e8" class="typing-paw"/></g>
+        <g class="paw-right"><ellipse cx="178" cy="222" rx="14" ry="8" fill="#b4a0e8"/><circle cx="172" cy="223" r="2.5" fill="#9580cc" opacity=".3"/><circle cx="177" cy="225" r="2" fill="#9580cc" opacity=".3"/><circle cx="182" cy="223" r="2" fill="#9580cc" opacity=".3"/><ellipse cx="178" cy="221" rx="13" ry="7" fill="#b4a0e8" class="typing-paw"/></g>
+      </g>
+      <g class="cat-head-group">
+        <ellipse cx="150" cy="170" rx="38" ry="34" fill="#c4b5fd"/>
+        <path d="M117 148L108 115L130 140Z" fill="#c4b5fd"/><path d="M119 145L112 120L128 140Z" fill="#e8b4c8" opacity=".35"/>
+        <g class="ear-right"><path d="M183 148L192 115L170 140Z" fill="#c4b5fd"/><path d="M181 145L188 120L172 140Z" fill="#e8b4c8" opacity=".35"/></g>
+        <path d="M135 148q3-4 6 0" stroke="#b4a0e8" stroke-width="1.2" fill="none" opacity=".25"/>
+        <path d="M145 145q3-4 6 0" stroke="#b4a0e8" stroke-width="1.2" fill="none" opacity=".25"/>
+        <path d="M155 147q3-4 6 0" stroke="#b4a0e8" stroke-width="1.2" fill="none" opacity=".25"/>
+        <ellipse cx="150" cy="174" rx="30" ry="26" fill="#d4c8f0" opacity=".25"/>
+        <g class="eyes-closed"><path d="M132 168q6 4 12 0" stroke="#3d2014" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M157 168q6 4 12 0" stroke="#3d2014" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="131" y1="168" x2="129" y2="165" stroke="#3d2014" stroke-width="1" stroke-linecap="round"/><line x1="156" y1="168" x2="154" y2="165" stroke="#3d2014" stroke-width="1" stroke-linecap="round"/></g>
+        <g class="eyes-open"><g class="pupil-group"><ellipse cx="138" cy="166" rx="8" ry="9" fill="#fff"/><circle cx="138" cy="167" r="5.5" fill="#4a2810"/><circle cx="138" cy="167" r="3.5" fill="#111"/><circle cx="140" cy="164.5" r="2" fill="#fff" class="eye-sparkle"/><circle cx="136" cy="168" r="1" fill="#fff" opacity=".4" class="eye-sparkle"/><ellipse cx="163" cy="166" rx="8" ry="9" fill="#fff"/><circle cx="163" cy="167" r="5.5" fill="#4a2810"/><circle cx="163" cy="167" r="3.5" fill="#111"/><circle cx="165" cy="164.5" r="2" fill="#fff" class="eye-sparkle"/><circle cx="161" cy="168" r="1" fill="#fff" opacity=".4" class="eye-sparkle"/></g><path d="M128 162q2-3 4-1" stroke="#3d2014" stroke-width="1" fill="none"/><path d="M130 160q2-2 3 0" stroke="#3d2014" stroke-width=".8" fill="none"/><path d="M168 160q2-2 3 0" stroke="#3d2014" stroke-width=".8" fill="none"/><path d="M170 162q2-3 4-1" stroke="#3d2014" stroke-width="1" fill="none"/><path d="M130 158q4-3 8 0" stroke="#9580cc" stroke-width="1.2" fill="none" opacity=".4"/><path d="M155 158q4-3 8 0" stroke="#9580cc" stroke-width="1.2" fill="none" opacity=".4"/></g>
+        <g class="glasses-group"><circle cx="138" cy="167" r="12" fill="none" stroke="#555" stroke-width="2"/><circle cx="138" cy="167" r="12" fill="#88f" opacity=".03"/><circle cx="163" cy="167" r="12" fill="none" stroke="#555" stroke-width="2"/><circle cx="163" cy="167" r="12" fill="#88f" opacity=".03"/><path d="M150 167q0-3 1 0" stroke="#555" stroke-width="2" fill="none"/><line x1="126" y1="165" x2="115" y2="160" stroke="#555" stroke-width="1.5" stroke-linecap="round"/><line x1="175" y1="165" x2="186" y2="160" stroke="#555" stroke-width="1.5" stroke-linecap="round"/><path d="M131 162q2-3 5-1" stroke="#fff" stroke-width=".8" fill="none" opacity=".15"/><path d="M156 162q2-3 5-1" stroke="#fff" stroke-width=".8" fill="none" opacity=".15"/></g>
+        <path d="M148 177l2.5 3l2.5-3" fill="#e8a0b0"/><ellipse cx="150.5" cy="177.5" rx="2.5" ry="2" fill="#e8a0b0"/>
+        <path d="M147 181q3.5 2 7 0" stroke="#c4956a" stroke-width=".8" fill="none" opacity=".5"/>
+        <g opacity=".2" stroke="#8b7db5" stroke-width=".8"><line x1="130" y1="175" x2="105" y2="172"/><line x1="130" y1="178" x2="102" y2="179"/><line x1="130" y1="181" x2="105" y2="185"/><line x1="171" y1="175" x2="196" y2="172"/><line x1="171" y1="178" x2="199" y2="179"/><line x1="171" y1="181" x2="196" y2="185"/></g>
+        <ellipse cx="126" cy="176" rx="6" ry="3.5" fill="#f5a0b8" class="blush"/><ellipse cx="175" cy="176" rx="6" ry="3.5" fill="#f5a0b8" class="blush"/>
+      </g>
+      <text x="195" y="140" font-family="system-ui" font-size="14" font-weight="800" fill="#8b5cf6" class="zzz z1">z</text>
+      <text x="210" y="125" font-family="system-ui" font-size="18" font-weight="800" fill="#8b5cf6" class="zzz z2">z</text>
+      <text x="228" y="108" font-family="system-ui" font-size="22" font-weight="800" fill="#8b5cf6" class="zzz z3">Z</text>
+      <g class="speech-bubble" style="cursor:pointer"><a class="bubble-link" href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" target="_blank" rel="noopener"><path d="M210 100 h155 a14 14 0 0 1 14 14 v34 a14 14 0 0 1-14 14 h-120 l-12 14 l-4-14 h-19 a14 14 0 0 1-14-14 v-34 a14 14 0 0 1 14-14z" fill="#fff" stroke="#d8d4de" stroke-width="1"/><text x="225" y="124" font-family="system-ui" font-size="14" fill="#6d28d9" font-weight="700">&#191;Quer&#233;s agendar?</text><text x="225" y="143" font-family="system-ui" font-size="11" fill="#999">Haz click aqu&#237; &#128142;</text></a></g>
+      <rect x="260" y="215" width="14" height="16" rx="3" fill="#2d2050"/><path d="M264 215q3-8 7 0" stroke="#4ade80" stroke-width="1.5" fill="none"/><path d="M266 215q1-10 5-5" stroke="#22c55e" stroke-width="1.2" fill="none"/><circle cx="270" cy="207" r="2" fill="#4ade80" opacity=".5"/>
+            </svg>
+          </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<Footer />
+
+</Layout>
+
+<style is:global>
+html, body { overflow-x: clip !important; }
+
+/* ═══ CONTACT PAGE — Fluss style ═══ */
+.ct-section { padding: 0; min-height: calc(100vh - 4.5rem); display: flex; align-items: center; }
+.ct-section > .container { width: 100%; padding-top: 2rem; padding-bottom: 2rem; }
+.ct-grid {
+  display: grid;
+  grid-template-columns: 0.65fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+/* Left */
+.ct-left { margin-top: -1.5rem; }
+.ct-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  display: block;
+}
+.ct-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.ct-title em { font-style: normal; color: var(--accent); }
+.ct-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  max-width: 42ch;
+}
+
+/* Trust strip */
+.ct-trust {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1rem;
+  margin-bottom: 2rem;
+  border-radius: 14px;
+  background: rgba(167,139,250,0.06);
+  border: 1px solid rgba(167,139,250,0.18);
+  max-width: 360px;
+}
+.ct-trust-avatars { display: flex; }
+.ct-trust-avatars img {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid rgba(26,22,37,0.95);
+  object-fit: cover;
+  margin-left: -8px;
+}
+.ct-trust-avatars img:first-child { margin-left: 0; }
+.ct-trust-text {
+  display: flex; flex-direction: column; gap: 0.1rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.35;
+}
+.ct-trust-text strong { color: #fff; }
+.ct-trust-stars { color: #f59e0b; font-size: 0.8rem; letter-spacing: 1px; }
+
+/* Contact info cards */
+.ct-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+.ct-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--card, #fff);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.25s var(--ease);
+}
+.ct-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(109,40,217,0.06);
+}
+.ct-card-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: var(--accent-light);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+}
+.ct-card-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.ct-card-value {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Right: form + cat */
+.ct-right { position: relative; overflow: visible; }
+
+.ct-form-card {
+  background: var(--card, #fff);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem 3.5rem 3rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.04), 0 16px 48px -8px rgba(0,0,0,0.06);
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+}
+.ct-form-dot {
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
+}
+.ct-form-step {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
+}
+.ct-form-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+.ct-form-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* Form */
+.ct-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.ct-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.ct-label {
+  font-size: 0.88rem;
+}
+.ct-input {
+  padding: 0.85rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--bg, #fafafc);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.ct-input::placeholder { color: var(--text-muted); opacity: 0.6; }
+.ct-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(109,40,217,0.1);
+}
+/* Multi-step form */
+.ct-step {
+  display: none;
+  flex-direction: column;
+}
+.ct-step.active { display: flex; }
+.ct-step { flex: 1; }
+.ct-fields { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
+.ct-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23736b85' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+.ct-textarea { resize: vertical; min-height: 100px; font-family: var(--font); }
+.ct-nav-buttons { display: flex; gap: 0.75rem; align-items: center; }
+.ct-submit, .ct-next { align-self: flex-start; }
+
+/* Success state */
+.ct-success { align-items: center; text-align: center; padding: 2rem 0; }
+.ct-success-icon { margin-bottom: 1.5rem; }
+.ct-success .ct-form-title { margin-bottom: 0.5rem; }
+.ct-success .ct-form-sub { margin-bottom: 2rem; max-width: 35ch; }
+
+/* Step transition animation */
+.ct-step { animation: ctFadeIn 0.35s var(--ease) both; }
+@keyframes ctFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Mascot: bubble link only works when awake (checked) */
+.ct-mascot .speech-bubble { pointer-events: none; }
+.ct-mascot .mascot-toggle:checked ~ svg .speech-bubble { pointer-events: auto; }
+.ct-mascot .bubble-link { pointer-events: none; }
+.ct-mascot .mascot-toggle:checked ~ svg .bubble-link { pointer-events: auto; }
+
+/* Mascot FIXED — encima del escritorio del ContactBackground.
+   El desk en el bg está a ~64% del alto del viewport (con preserveAspectRatio
+   xMidYMax slice). Posicionamos el gato sentado sobre esa línea, con el cuerpo
+   y la pantallita pisando el desk top. Permanece visible al scrollear. */
+.ct-mascot {
+  position: fixed;
+  right: clamp(60px, 6vw, 140px);
+  /* bottom es calculado dinámicamente por JS (al final de este archivo)
+     porque depende del scale del bg SVG (xMidYMax slice). Default fallback: */
+  bottom: clamp(220px, 30vh, 380px);
+  top: auto;
+  transform: none;
+  z-index: 5;
+  pointer-events: none;
+}
+.ct-mascot .mascot-wrap {
+  pointer-events: auto;
+  /* Desactivar el m-float (cat flotando arriba/abajo) — acá la PC está
+     APOYADA sobre el escritorio, no debería flotar. */
+  animation: none !important;
+}
+
+/* Tablet+laptop range: gato un poco más chico */
+@media (max-width: 1600px) and (min-width: 901px) {
+  .ct-mascot {
+    right: clamp(40px, 4vw, 90px);
+    bottom: clamp(200px, 26vh, 290px);
+  }
+  .ct-mascot .mascot-wrap {
+    width: 200px !important;
+    height: 190px !important;
+  }
+}
+
+
+/* ═══ DARK MODE ═══ */
+body.dark .ct-title { color: #fff; }
+body.dark .ct-title em { color: #a78bfa; }
+body.dark .ct-subtitle { color: rgba(255,255,255,0.45); }
+body.dark .ct-kicker { color: rgba(255,255,255,0.35); }
+body.dark .ct-card {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+}
+body.dark .ct-card:hover { border-color: rgba(109,40,217,0.4); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+body.dark .ct-card-icon { background: rgba(109,40,217,0.15); color: #a78bfa; }
+body.dark .ct-card-label { color: rgba(255,255,255,0.35); }
+body.dark .ct-card-value { color: #fff; }
+body.dark .ct-form-card {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+}
+body.dark .ct-form-title { color: #fff; }
+body.dark .ct-form-sub { color: rgba(255,255,255,0.4); }
+body.dark .ct-form-step { color: rgba(255,255,255,0.3); }
+body.dark .ct-label { color: rgba(255,255,255,0.7); }
+body.dark .ct-input {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.1);
+  color: #fff;
+}
+body.dark .ct-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(109,40,217,0.2); }
+body.dark .ct-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a78bfa' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  color: rgba(255,255,255,0.7) !important;
+}
+body.dark .ct-select option { background: #1a1625; color: #e8e6f0; }
+body.dark .ct-select option:disabled { color: rgba(255,255,255,0.35); }
+body.dark .ct-textarea { color: #fff !important; }
+body.dark .ct-textarea::placeholder { color: rgba(255,255,255,0.3); }
+body.dark .ct-success-icon svg { stroke: #a78bfa; }
+
+/* Footer */
+footer { background: #0e0e0e !important; padding: 3.5rem 0 0 !important; border-top: none !important; position: relative; }
+footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(109,40,217,0.4) 30%, rgba(109,40,217,0.4) 70%, transparent); }
+.ft-top { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.ft-brand { flex-shrink: 0; } .ft-logo { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 0.6rem; } .ft-logo em { font-style: italic; color: #8b5cf6; }
+.ft-tagline { font-size: 0.85rem; line-height: 1.55; color: rgba(255,255,255,0.3); margin: 0; } .ft-tagline em { font-style: italic; color: rgba(139,92,246,0.5); }
+.ft-right { text-align: right; } .ft-channels-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.3); margin-bottom: 0.75rem; }
+.ft-ch-grid { display: flex; gap: 0.4rem; justify-content: flex-end; flex-wrap: wrap; }
+.ft-ch { display: flex; align-items: center; gap: 0.4rem; padding: 0.42rem 0.75rem; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); text-decoration: none; transition: all 0.25s var(--ease); }
+.ft-ch span { font-size: 0.73rem; color: rgba(255,255,255,0.45); } .ft-ch:hover { background: rgba(255,255,255,0.08); transform: translateY(-1px); } .ft-ch:hover span { color: rgba(255,255,255,0.8); }
+.ft-bottom { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+.ft-social { display: flex; gap: 0.5rem; }
+.ft-social-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); transition: all 0.25s var(--ease); }
+.ft-social-btn:hover { background: rgba(109,40,217,0.12); color: #a78bfa; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ct-mascot { display: none; }
+}
+@media (max-width: 768px) {
+  .ct-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .ft-top { flex-direction: column; align-items: flex-start; gap: 2rem; }
+  .ft-right { text-align: left; width: 100%; }
+  .ft-ch-grid { justify-content: flex-start; }
+  .ft-bottom { flex-direction: column; gap: 1rem; align-items: center; text-align: center; }
+}
+</style>
+
+<script is:inline>
+  // Multi-step form logic
+  (function() {
+    var form = document.getElementById('ct-multistep');
+    if (!form) return;
+    var steps = form.querySelectorAll('.ct-step');
+    var current = 0;
+
+    function showStep(n) {
+      steps.forEach(function(s, i) {
+        s.classList.toggle('active', i === n);
+      });
+      current = n;
+    }
+
+    // Next buttons
+    form.querySelectorAll('.ct-next').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var step = steps[current];
+        var inputs = step.querySelectorAll('input[required], select[required]');
+        var valid = true;
+        inputs.forEach(function(inp) {
+          if (!inp.value.trim()) { inp.focus(); valid = false; }
+        });
+        if (!valid) return;
+        var next = parseInt(btn.getAttribute('data-next'));
+        showStep(next);
+      });
+    });
+
+    // Prev buttons
+    form.querySelectorAll('.ct-prev').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        showStep(parseInt(btn.getAttribute('data-prev')));
+      });
+    });
+
+    // Submit
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var formData = new FormData(form);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      }).then(function() {
+        showStep(4); // success
+      }).catch(function() {
+        showStep(4); // show success anyway, Netlify will retry
+      });
+    });
+  })();
+
+  // Mascot toggle
+  var mascotToggle = document.querySelector('.mascot-toggle');
+  if (mascotToggle) {
+    mascotToggle.addEventListener('change', function() {
+      if (this.checked) { setTimeout(function() { mascotToggle.checked = false; }, 3000); }
+    });
+  }
+
+  var nav = document.getElementById('navbar');
+  if (nav) window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 50); });
+
+  // ═══ Posicionar el gato/PC exactamente sobre el desk del ContactBackground ═══
+  // bg SVG: viewBox 1600x1100 con preserveAspectRatio="xMidYMax slice"
+  // → scale = max(vw/1600, vh/1100), bottom-aligned
+  // Desk top en viewBox: y=730 → desk top viewport y = vh - (1100-730)*scale = vh - 370*scale
+  // Cat svg viewBox 10 70 400 240. Monitor base ~ y=242 en viewBox = (242-70)/240 = 71.6% from top of wrap.
+  // Para que la base del monitor (PC) caiga exactamente sobre el desk top,
+  // wrap.bottom debe estar a deskTopVp + (1 - 0.716)*wrapHeight
+  (function() {
+    var mascot = document.querySelector('.ct-mascot');
+    if (!mascot) return;
+    function measureGap(wrap, vh) {
+      var vw = window.innerWidth;
+      var bgScale = Math.max(vw / 1600, vh / 1100);
+      var deskTopVp = vh - 370 * bgScale;
+      var lowestVp = -Infinity;
+      wrap.querySelectorAll('rect, ellipse, circle, path').forEach(function(el) {
+        var r = el.getBoundingClientRect();
+        if (r.width > 0 && r.bottom > lowestVp) lowestVp = r.bottom;
+      });
+      return { deskTopVp: deskTopVp, lowestVp: lowestVp, gap: deskTopVp - lowestVp };
+    }
+    function alignCatToDesk() {
+      var wrap = mascot.querySelector('.mascot-wrap');
+      if (!wrap) return;
+      var vw = window.innerWidth, vh = window.innerHeight;
+      if (vw < 901) { mascot.style.bottom = ''; return; }
+      // Iterar: medir gap entre cat-bottom y desk-top, ajustar hasta gap ≈ 0
+      var currentBottom = parseFloat(getComputedStyle(mascot).bottom) || 280;
+      for (var i = 0; i < 5; i++) {
+        var m = measureGap(wrap, vh);
+        if (m.lowestVp === -Infinity) return;
+        if (Math.abs(m.gap) < 1) break;
+        // Si gap > 0, cat está ABOVE desk (volando) → bajar (decrease bottom)
+        currentBottom = currentBottom - m.gap - 2; // -2 para overlap mínimo de apoyo
+        mascot.style.bottom = currentBottom + 'px';
+      }
+    }
+    alignCatToDesk();
+    setTimeout(alignCatToDesk, 50);
+    setTimeout(alignCatToDesk, 250);
+    var t;
+    window.addEventListener('resize', function() {
+      clearTimeout(t);
+      t = setTimeout(alignCatToDesk, 100);
+    });
+  })();
+  var menuToggle = document.getElementById('menuToggle');
+  var navLinks = document.getElementById('navLinks');
+  if (menuToggle && navLinks) menuToggle.addEventListener('click', function() { navLinks.classList.toggle('open'); menuToggle.classList.toggle('active'); });
+  document.querySelectorAll('.magnetic-btn').forEach(function(btn) {
+    btn.addEventListener('mousemove', function(e) { var r = btn.getBoundingClientRect(); btn.style.transform = 'translate(' + (e.clientX-r.left-r.width/2)*0.3 + 'px,' + (e.clientY-r.top-r.height/2)*0.3 + 'px)'; });
+    btn.addEventListener('mouseleave', function() { btn.style.transform = 'translate(0,0)'; btn.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)'; setTimeout(function(){btn.style.transition='';},400); });
+    btn.addEventListener('mouseenter', function() { btn.style.transition = 'none'; });
+  });
+</script>

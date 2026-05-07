@@ -1,0 +1,601 @@
+---
+// ContactBackground.astro — "La Oficina"
+// Adaptación del prototipo de Claude.ai (ContactBackground Preview.html).
+// Concepto: una oficina ilustrada (pared, ventana grande con vista, lámpara,
+// escritorio con libros/taza/papeles, plantita, polvo flotando).
+// Light = día (sol, ciudad lejana, sunbeam por la ventana, lámpara apagada).
+// Dark  = noche (luna, skyline iluminado, lámpara encendida con cono de luz,
+//         car headlights pasando por la calle, polvo cálido).
+// La zona top-right queda libre porque ahí va el gato de TOF.
+---
+
+<div class="contact-bg-fixed" aria-hidden="true">
+  <!-- ═══════════════════════════ LIGHT / DAY ═══════════════════════════ -->
+  <svg class="scene scene-light" viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#dbeafe"/>
+        <stop offset="60%" stop-color="#ede9fe"/>
+        <stop offset="100%" stop-color="#fef3c7"/>
+      </linearGradient>
+      <linearGradient id="wallDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f5f1ff"/>
+        <stop offset="100%" stop-color="#ede9fe"/>
+      </linearGradient>
+      <linearGradient id="floorDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#e9e2f5"/>
+        <stop offset="100%" stop-color="#dbcff0"/>
+      </linearGradient>
+      <linearGradient id="sunbeam" x1="0" y1="0" x2="0.5" y2="1">
+        <stop offset="0%" stop-color="rgba(254, 240, 138, 0.55)"/>
+        <stop offset="60%" stop-color="rgba(254, 240, 138, 0.18)"/>
+        <stop offset="100%" stop-color="rgba(254, 240, 138, 0)"/>
+      </linearGradient>
+      <linearGradient id="deskDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c4a883"/>
+        <stop offset="100%" stop-color="#a08561"/>
+      </linearGradient>
+      <linearGradient id="deskTopDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#d4b896"/>
+        <stop offset="100%" stop-color="#b59872"/>
+      </linearGradient>
+      <linearGradient id="glassDay" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.4)"/>
+        <stop offset="50%" stop-color="rgba(255,255,255,0.1)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </linearGradient>
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(254, 240, 138, 0.9)"/>
+        <stop offset="100%" stop-color="rgba(254, 240, 138, 0)"/>
+      </radialGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1600" height="700" fill="url(#skyDay)"/>
+    <rect x="0" y="0" width="1600" height="900" fill="url(#wallDay)"/>
+    <polygon points="0,900 1600,900 1600,1100 0,1100" fill="url(#floorDay)"/>
+    <g stroke="rgba(109,40,217,0.06)" stroke-width="0.7">
+      <line x1="0" y1="930" x2="1600" y2="950"/>
+      <line x1="0" y1="970" x2="1600" y2="990"/>
+      <line x1="0" y1="1010" x2="1600" y2="1030"/>
+      <line x1="0" y1="1050" x2="1600" y2="1070"/>
+    </g>
+
+    <!-- WINDOW -->
+    <g class="window">
+      <rect x="180" y="80" width="780" height="640" rx="8" fill="#e8dff5" stroke="#7c6ba0" stroke-width="2"/>
+      <rect x="195" y="95" width="750" height="610" rx="4" fill="url(#skyDay)"/>
+      <!-- Sun glow + rays + core -->
+      <circle cx="780" cy="220" r="80" fill="url(#sunGlow)" opacity="0.7"/>
+      <g stroke="rgba(254, 240, 138, 0.45)" stroke-width="1.5" stroke-linecap="round" class="window-shimmer">
+        <line x1="780" y1="135" x2="780" y2="155"/>
+        <line x1="780" y1="285" x2="780" y2="305"/>
+        <line x1="695" y1="220" x2="715" y2="220"/>
+        <line x1="845" y1="220" x2="865" y2="220"/>
+        <line x1="720" y1="160" x2="734" y2="174"/>
+        <line x1="826" y1="266" x2="840" y2="280"/>
+        <line x1="720" y1="280" x2="734" y2="266"/>
+        <line x1="826" y1="174" x2="840" y2="160"/>
+      </g>
+      <circle cx="780" cy="220" r="55" fill="url(#sunGlow)"/>
+      <circle cx="780" cy="220" r="32" fill="#fef9c3"/>
+      <circle cx="772" cy="212" r="8" fill="rgba(255,255,255,0.55)"/>
+      <g fill="#c4b5fd" opacity="0.55">
+        <rect x="220" y="450" width="60" height="255"/><rect x="285" y="410" width="35" height="295"/>
+        <rect x="325" y="470" width="50" height="235"/><rect x="380" y="430" width="40" height="275"/>
+        <rect x="425" y="490" width="55" height="215"/><rect x="485" y="440" width="38" height="265"/>
+        <rect x="528" y="475" width="45" height="230"/><rect x="578" y="455" width="55" height="250"/>
+        <rect x="638" y="490" width="42" height="215"/><rect x="685" y="465" width="50" height="240"/>
+        <rect x="740" y="450" width="38" height="255"/><rect x="783" y="495" width="48" height="210"/>
+        <rect x="836" y="430" width="55" height="275"/><rect x="896" y="475" width="44" height="230"/>
+      </g>
+      <g fill="rgba(255,255,255,0.85)">
+        <ellipse cx="380" cy="230" rx="55" ry="18"/>
+        <ellipse cx="410" cy="220" rx="40" ry="16"/>
+        <ellipse cx="350" cy="225" rx="35" ry="14"/>
+      </g>
+      <g fill="rgba(255,255,255,0.75)">
+        <ellipse cx="620" cy="320" rx="45" ry="14"/>
+        <ellipse cx="640" cy="312" rx="32" ry="12"/>
+      </g>
+      <line x1="585" y1="95" x2="585" y2="705" stroke="#7c6ba0" stroke-width="3"/>
+      <line x1="195" y1="395" x2="945" y2="395" stroke="#7c6ba0" stroke-width="3"/>
+      <rect x="195" y="95" width="750" height="610" fill="url(#glassDay)" class="window-shimmer"/>
+      <rect x="170" y="715" width="800" height="14" rx="3" fill="#a89bc7"/>
+      <rect x="175" y="729" width="790" height="6" fill="rgba(109,40,217,0.18)"/>
+    </g>
+
+    <polygon class="window-shimmer" fill="url(#sunbeam)" points="280,720 880,720 1100,1100 60,1100"/>
+
+    <!-- PICTURE FRAME — mini chart (mes a mes de reuniones agendadas) -->
+    <g>
+      <rect x="40" y="180" width="100" height="130" fill="#fef3c7" stroke="#a08561" stroke-width="3"/>
+      <rect x="50" y="190" width="80" height="110" fill="#fafafc"/>
+      <!-- Title bar -->
+      <rect x="55" y="195" width="40" height="3" fill="#6d28d9" opacity="0.5"/>
+      <rect x="55" y="201" width="25" height="2" fill="#a78bfa" opacity="0.4"/>
+      <!-- Bar chart growing -->
+      <rect x="58" y="280" width="8" height="10" fill="#a78bfa"/>
+      <rect x="70" y="270" width="8" height="20" fill="#a78bfa"/>
+      <rect x="82" y="255" width="8" height="35" fill="#8b5cf6"/>
+      <rect x="94" y="240" width="8" height="50" fill="#7c3aed"/>
+      <rect x="106" y="220" width="8" height="70" fill="#6d28d9"/>
+      <rect x="118" y="210" width="8" height="80" fill="#5b21b6"/>
+      <!-- Axis -->
+      <line x1="55" y1="290" x2="125" y2="290" stroke="#a08561" stroke-width="0.6"/>
+      <line x1="55" y1="215" x2="125" y2="215" stroke="rgba(167,139,250,0.3)" stroke-width="0.4" stroke-dasharray="2,2"/>
+    </g>
+
+    <!-- PLANT — pot terracotta más pastel para encajar con paleta cream -->
+    <g transform="translate(120, 700)">
+      <path d="M -45 100 L -38 200 L 38 200 L 45 100 Z" fill="#c89b6c"/>
+      <ellipse cx="0" cy="100" rx="45" ry="10" fill="#a37b50"/>
+      <ellipse cx="0" cy="100" rx="40" ry="7" fill="#7a5934"/>
+      <g class="plant-leaves">
+        <path d="M 0 95 Q -50 30 -85 -10 Q -55 -30 -25 0 Q 5 30 0 95" fill="#86c8a8" stroke="#5fa182" stroke-width="1"/>
+        <path d="M 0 95 Q 45 20 75 -25 Q 95 5 60 40 Q 25 75 0 95" fill="#9bd1b3" stroke="#6fb087" stroke-width="1"/>
+        <path d="M 0 95 Q -10 10 -5 -55 Q 25 -50 18 5 Q 10 60 0 95" fill="#7ec095" stroke="#558e6e" stroke-width="1"/>
+        <path d="M 0 95 Q 25 30 55 -35 Q 35 -55 8 -10 Q -2 50 0 95" fill="#a8d9c0" stroke="#7eb898" stroke-width="1"/>
+        <path d="M 0 95 Q -30 30 -70 -5" stroke="#558e6e" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M 0 95 Q 25 25 55 -20" stroke="#558e6e" stroke-width="0.8" fill="none" opacity="0.6"/>
+      </g>
+    </g>
+
+    <!-- DESK -->
+    <g>
+      <rect x="270" y="730" width="1330" height="22" fill="url(#deskTopDay)" stroke="#8a6e4a" stroke-width="1"/>
+      <rect x="270" y="730" width="1330" height="3" fill="rgba(255,255,255,0.4)"/>
+      <rect x="295" y="752" width="14" height="240" fill="url(#deskDay)"/>
+      <rect x="1560" y="752" width="14" height="240" fill="url(#deskDay)"/>
+      <rect x="1280" y="755" width="280" height="80" fill="#b59872" stroke="#8a6e4a" stroke-width="1"/>
+      <line x1="1280" y1="795" x2="1560" y2="795" stroke="#8a6e4a" stroke-width="0.8"/>
+      <circle cx="1420" cy="775" r="3" fill="#5c3a1a"/>
+      <circle cx="1420" cy="815" r="3" fill="#5c3a1a"/>
+    </g>
+
+    <!-- BOOKS — paleta violet/cream/amber armónica -->
+    <g transform="translate(420, 700)">
+      <rect x="0" y="0" width="120" height="14" fill="#6d28d9" stroke="#4c1d95" stroke-width="0.5"/>
+      <rect x="0" y="0" width="6" height="14" fill="#fde68a"/>
+      <rect x="-3" y="14" width="125" height="12" fill="#fef3c7" stroke="#d6b85a" stroke-width="0.5"/>
+      <rect x="-3" y="14" width="6" height="12" fill="#a78bfa"/>
+      <rect x="2" y="26" width="118" height="10" fill="#a78bfa" stroke="#7c3aed" stroke-width="0.5"/>
+      <rect x="2" y="26" width="5" height="10" fill="#fbbf24"/>
+    </g>
+
+    <!-- COFFEE MUG -->
+    <g transform="translate(620, 690)">
+      <path d="M 0 5 L 5 50 L 55 50 L 60 5 Z" fill="#fafafc" stroke="#a78bfa" stroke-width="1.5"/>
+      <path d="M 60 12 Q 80 12 80 28 Q 80 42 60 42" fill="none" stroke="#a78bfa" stroke-width="3"/>
+      <ellipse cx="30" cy="6" rx="28" ry="4" fill="#5c3a1a"/>
+      <ellipse cx="30" cy="5" rx="22" ry="2.5" fill="#7c4a25"/>
+      <text x="22" y="35" font-family="DM Sans, sans-serif" font-size="9" font-weight="700" fill="#a78bfa">tof</text>
+      <g stroke="rgba(167,139,250,0.6)" stroke-width="1.5" fill="none" stroke-linecap="round">
+        <path class="steam-1" d="M 18 0 q -3 -8 0 -16 q 3 -8 0 -16"/>
+        <path class="steam-2" d="M 30 0 q 3 -8 0 -16 q -3 -8 0 -16"/>
+        <path class="steam-3" d="M 42 0 q -3 -8 0 -16 q 3 -8 0 -16"/>
+      </g>
+    </g>
+
+    <!-- PAPERS -->
+    <g class="papers" transform="translate(770, 705)">
+      <rect x="0" y="20" width="100" height="22" fill="#fff" stroke="rgba(109,40,217,0.2)" stroke-width="0.5" transform="rotate(-2)"/>
+      <rect x="3" y="13" width="100" height="22" fill="#fff" stroke="rgba(109,40,217,0.2)" stroke-width="0.5" transform="rotate(1)"/>
+      <rect x="2" y="6" width="100" height="22" fill="#fff" stroke="rgba(109,40,217,0.25)" stroke-width="0.5"/>
+      <line x1="12" y1="14" x2="80" y2="14" stroke="#a78bfa" stroke-width="1"/>
+      <line x1="12" y1="20" x2="65" y2="20" stroke="rgba(109,40,217,0.4)" stroke-width="0.6"/>
+      <line x1="12" y1="25" x2="75" y2="25" stroke="rgba(109,40,217,0.4)" stroke-width="0.6"/>
+    </g>
+
+    <!-- PENCIL -->
+    <g transform="translate(910, 720)">
+      <rect x="0" y="0" width="80" height="5" fill="#fbbf24"/>
+      <polygon points="80,0 88,2.5 80,5" fill="#1f2937"/>
+      <rect x="-8" y="0" width="8" height="5" fill="#dc2626"/>
+      <rect x="-12" y="0" width="4" height="5" fill="#9ca3af"/>
+    </g>
+
+    <!-- LAMP (off in day) — sway sutil en el brazo articulado -->
+    <g transform="translate(1080, 580)">
+      <!-- Base anclada al desk (no sway) -->
+      <ellipse cx="0" cy="148" rx="38" ry="6" fill="#7c3aed"/>
+      <rect x="-28" y="138" width="56" height="12" rx="2" fill="#8b5cf6"/>
+      <circle cx="0" cy="138" r="5" fill="#7c3aed"/>
+      <!-- Brazo + cabeza (sway sutil simulando peso del shade) -->
+      <g class="lamp-cord-group" style="transform-origin: 0px 138px;">
+        <line x1="0" y1="138" x2="-30" y2="60" stroke="#8b5cf6" stroke-width="6" stroke-linecap="round"/>
+        <line x1="-30" y1="60" x2="20" y2="20" stroke="#8b5cf6" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="-30" cy="60" r="5" fill="#7c3aed"/>
+        <path d="M 5 0 L 50 5 L 45 35 L 0 30 Z" fill="#a78bfa" stroke="#7c3aed" stroke-width="1.5"/>
+        <ellipse cx="22" cy="32" rx="22" ry="3" fill="#7c3aed"/>
+        <ellipse cx="22" cy="32" rx="18" ry="2" fill="rgba(254, 240, 138, 0.15)"/>
+      </g>
+    </g>
+
+    <!-- DUST -->
+    <g fill="rgba(254, 240, 138, 0.7)">
+      <circle class="dust-1" cx="350" cy="850" r="2"/>
+      <circle class="dust-2" cx="450" cy="780" r="1.5"/>
+      <circle class="dust-3" cx="550" cy="900" r="2"/>
+      <circle class="dust-4" cx="650" cy="820" r="1.7"/>
+      <circle class="dust-5" cx="500" cy="950" r="1.3"/>
+      <circle class="dust-6" cx="700" cy="870" r="1.8"/>
+      <circle class="dust-7" cx="400" cy="970" r="1.5"/>
+      <circle class="dust-8" cx="800" cy="890" r="1.6"/>
+      <circle class="dust-9" cx="600" cy="1000" r="1.4"/>
+      <circle class="dust-10" cx="750" cy="950" r="1.5"/>
+    </g>
+
+    <ellipse cx="1320" cy="752" rx="280" ry="5" fill="rgba(0,0,0,0.06)"/>
+  </svg>
+
+  <!-- ═══════════════════════════ DARK / NIGHT ═══════════════════════════ -->
+  <svg class="scene scene-dark" viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0a0816"/>
+        <stop offset="50%" stop-color="#1a1233"/>
+        <stop offset="100%" stop-color="#3b1f5c"/>
+      </linearGradient>
+      <linearGradient id="wallNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1a1525"/>
+        <stop offset="100%" stop-color="#0f0c18"/>
+      </linearGradient>
+      <linearGradient id="floorNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#15101f"/>
+        <stop offset="100%" stop-color="#0a0810"/>
+      </linearGradient>
+      <radialGradient id="lampGlow" cx="50%" cy="40%" r="55%">
+        <stop offset="0%" stop-color="rgba(254, 215, 110, 0.95)"/>
+        <stop offset="35%" stop-color="rgba(252, 165, 75, 0.45)"/>
+        <stop offset="100%" stop-color="rgba(167, 139, 250, 0)"/>
+      </radialGradient>
+      <linearGradient id="lampCone" x1="0.5" y1="0" x2="0.5" y2="1">
+        <stop offset="0%" stop-color="rgba(254, 215, 110, 0.55)"/>
+        <stop offset="60%" stop-color="rgba(254, 215, 110, 0.18)"/>
+        <stop offset="100%" stop-color="rgba(254, 215, 110, 0)"/>
+      </linearGradient>
+      <linearGradient id="glassNight" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="rgba(167,139,250,0.2)"/>
+        <stop offset="50%" stop-color="rgba(167,139,250,0.05)"/>
+        <stop offset="100%" stop-color="rgba(167,139,250,0)"/>
+      </linearGradient>
+      <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(231, 222, 255, 0.9)"/>
+        <stop offset="100%" stop-color="rgba(231, 222, 255, 0)"/>
+      </radialGradient>
+      <linearGradient id="deskNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3b2a1f"/>
+        <stop offset="100%" stop-color="#221710"/>
+      </linearGradient>
+      <linearGradient id="deskTopNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#4a352a"/>
+        <stop offset="100%" stop-color="#2d1f17"/>
+      </linearGradient>
+      <linearGradient id="deskTopLit" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(254, 215, 110, 0.6)"/>
+        <stop offset="100%" stop-color="rgba(254, 215, 110, 0)"/>
+      </linearGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1600" height="700" fill="url(#skyNight)"/>
+    <rect x="0" y="0" width="1600" height="900" fill="url(#wallNight)"/>
+    <polygon points="0,900 1600,900 1600,1100 0,1100" fill="url(#floorNight)"/>
+    <g stroke="rgba(167,139,250,0.05)" stroke-width="0.7">
+      <line x1="0" y1="930" x2="1600" y2="950"/>
+      <line x1="0" y1="970" x2="1600" y2="990"/>
+      <line x1="0" y1="1010" x2="1600" y2="1030"/>
+      <line x1="0" y1="1050" x2="1600" y2="1070"/>
+    </g>
+
+    <g class="window">
+      <rect x="180" y="80" width="780" height="640" rx="8" fill="#1a1228" stroke="#3a2a52" stroke-width="2"/>
+      <rect x="195" y="95" width="750" height="610" rx="4" fill="url(#skyNight)"/>
+      <g fill="#e7defc">
+        <circle class="star-1" cx="280" cy="160" r="1.2"/><circle class="star-2" cx="380" cy="130" r="1"/>
+        <circle class="star-3" cx="450" cy="200" r="1.5"/><circle class="star-4" cx="550" cy="150" r="1"/>
+        <circle class="star-5" cx="680" cy="180" r="1.3"/><circle class="star-1" cx="800" cy="120" r="1.1"/>
+        <circle class="star-2" cx="900" cy="170" r="1"/><circle class="star-3" cx="320" cy="240" r="0.8"/>
+        <circle class="star-4" cx="500" cy="280" r="1.2"/><circle class="star-5" cx="720" cy="260" r="1"/>
+        <circle class="star-1" cx="860" cy="240" r="0.9"/><circle class="star-2" cx="240" cy="320" r="1"/>
+      </g>
+      <circle cx="780" cy="200" r="60" fill="url(#moonGlow)"/>
+      <circle cx="780" cy="200" r="36" fill="#f5f0ff"/>
+      <circle cx="770" cy="195" r="6" fill="#d4c8ed" opacity="0.55"/>
+      <circle cx="790" cy="210" r="4" fill="#d4c8ed" opacity="0.4"/>
+      <circle cx="775" cy="215" r="3" fill="#d4c8ed" opacity="0.5"/>
+      <g>
+        <rect x="220" y="450" width="60" height="255" fill="#0d0818"/><rect x="285" y="410" width="35" height="295" fill="#150c25"/>
+        <rect x="325" y="470" width="50" height="235" fill="#0d0818"/><rect x="380" y="430" width="40" height="275" fill="#150c25"/>
+        <rect x="425" y="490" width="55" height="215" fill="#0d0818"/><rect x="485" y="440" width="38" height="265" fill="#150c25"/>
+        <rect x="528" y="475" width="45" height="230" fill="#0d0818"/><rect x="578" y="455" width="55" height="250" fill="#150c25"/>
+        <rect x="638" y="490" width="42" height="215" fill="#0d0818"/><rect x="685" y="465" width="50" height="240" fill="#150c25"/>
+        <rect x="740" y="450" width="38" height="255" fill="#0d0818"/><rect x="783" y="495" width="48" height="210" fill="#150c25"/>
+        <rect x="836" y="430" width="55" height="275" fill="#0d0818"/><rect x="896" y="475" width="44" height="230" fill="#150c25"/>
+        <g fill="#fde68a">
+          <rect x="230" y="470" width="6" height="8"/><rect x="245" y="470" width="6" height="8"/>
+          <rect x="260" y="490" width="6" height="8"/><rect x="230" y="510" width="6" height="8"/>
+          <rect x="260" y="530" width="6" height="8"/><rect x="245" y="560" width="6" height="8"/>
+          <rect x="295" y="430" width="5" height="7"/><rect x="310" y="450" width="5" height="7"/>
+          <rect x="295" y="490" width="5" height="7"/><rect x="310" y="520" width="5" height="7"/>
+          <rect x="335" y="495" width="5" height="7"/><rect x="355" y="510" width="5" height="7"/>
+          <rect x="395" y="450" width="5" height="7"/><rect x="395" y="490" width="5" height="7"/>
+          <rect x="410" y="520" width="5" height="7"/><rect x="440" y="510" width="5" height="7"/>
+          <rect x="465" y="540" width="5" height="7"/><rect x="495" y="475" width="4" height="6"/>
+          <rect x="510" y="495" width="4" height="6"/><rect x="540" y="500" width="5" height="7"/>
+          <rect x="555" y="525" width="5" height="7"/><rect x="590" y="475" width="5" height="7"/>
+          <rect x="610" y="500" width="5" height="7"/><rect x="600" y="535" width="5" height="7"/>
+          <rect x="650" y="510" width="4" height="6"/><rect x="665" y="535" width="4" height="6"/>
+          <rect x="700" y="490" width="5" height="7"/><rect x="720" y="510" width="5" height="7"/>
+          <rect x="700" y="540" width="5" height="7"/><rect x="755" y="475" width="4" height="6"/>
+          <rect x="770" y="500" width="4" height="6"/><rect x="795" y="510" width="5" height="7"/>
+          <rect x="815" y="540" width="5" height="7"/><rect x="850" y="455" width="5" height="7"/>
+          <rect x="870" y="480" width="5" height="7"/><rect x="855" y="510" width="5" height="7"/>
+          <rect x="880" y="540" width="5" height="7"/><rect x="905" y="490" width="5" height="7"/>
+          <rect x="920" y="520" width="5" height="7"/>
+        </g>
+        <g fill="#a78bfa" opacity="0.7">
+          <rect x="245" y="540" width="6" height="8"/><rect x="295" y="470" width="5" height="7"/>
+          <rect x="335" y="535" width="5" height="7"/><rect x="445" y="475" width="5" height="7"/>
+          <rect x="505" y="525" width="4" height="6"/><rect x="640" y="470" width="4" height="6"/>
+          <rect x="780" y="535" width="4" height="6"/><rect x="855" y="475" width="5" height="7"/>
+          <rect x="915" y="555" width="5" height="7"/>
+        </g>
+        <g>
+          <circle class="car-1" cx="220" cy="690" r="2" fill="#fef3c7"/>
+          <circle class="car-2" cx="220" cy="695" r="1.8" fill="#fde68a"/>
+          <circle class="car-3" cx="220" cy="685" r="1.5" fill="#fef3c7"/>
+        </g>
+        <!-- Streetlights — pequeños postes con halo cálido -->
+        <g>
+          <line x1="350" y1="700" x2="350" y2="685" stroke="#3a2a52" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="350" cy="683" r="2.5" fill="rgba(254,215,110,0.85)"/>
+          <circle cx="350" cy="683" r="6" fill="rgba(254,215,110,0.20)"/>
+          <line x1="620" y1="700" x2="620" y2="685" stroke="#3a2a52" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="620" cy="683" r="2.5" fill="rgba(254,215,110,0.85)"/>
+          <circle cx="620" cy="683" r="6" fill="rgba(254,215,110,0.20)"/>
+          <line x1="880" y1="700" x2="880" y2="685" stroke="#3a2a52" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="880" cy="683" r="2.5" fill="rgba(254,215,110,0.85)"/>
+          <circle cx="880" cy="683" r="6" fill="rgba(254,215,110,0.20)"/>
+        </g>
+      </g>
+      <line x1="585" y1="95" x2="585" y2="705" stroke="#3a2a52" stroke-width="3"/>
+      <line x1="195" y1="395" x2="945" y2="395" stroke="#3a2a52" stroke-width="3"/>
+      <rect x="195" y="95" width="750" height="610" fill="url(#glassNight)" class="window-shimmer"/>
+      <rect x="170" y="715" width="800" height="14" rx="3" fill="#2a1f3d"/>
+      <rect x="175" y="729" width="790" height="6" fill="rgba(167,139,250,0.18)"/>
+    </g>
+
+    <!-- PICTURE FRAME dark — mini chart en glow night style -->
+    <g>
+      <rect x="40" y="180" width="100" height="130" fill="#2a1f3d" stroke="#5b21b6" stroke-width="2"/>
+      <rect x="50" y="190" width="80" height="110" fill="#15102a"/>
+      <rect x="55" y="195" width="40" height="3" fill="#a78bfa" opacity="0.55"/>
+      <rect x="55" y="201" width="25" height="2" fill="#c4b5fd" opacity="0.4"/>
+      <rect x="58" y="280" width="8" height="10" fill="#7c3aed"/>
+      <rect x="70" y="270" width="8" height="20" fill="#8b5cf6"/>
+      <rect x="82" y="255" width="8" height="35" fill="#a78bfa"/>
+      <rect x="94" y="240" width="8" height="50" fill="#a78bfa"/>
+      <rect x="106" y="220" width="8" height="70" fill="#c4b5fd"/>
+      <rect x="118" y="210" width="8" height="80" fill="#ddd6fe"/>
+      <line x1="55" y1="290" x2="125" y2="290" stroke="#5b21b6" stroke-width="0.6"/>
+      <line x1="55" y1="215" x2="125" y2="215" stroke="rgba(167,139,250,0.25)" stroke-width="0.4" stroke-dasharray="2,2"/>
+    </g>
+
+    <g transform="translate(120, 700)">
+      <path d="M -45 100 L -38 200 L 38 200 L 45 100 Z" fill="#3d2818"/>
+      <ellipse cx="0" cy="100" rx="45" ry="10" fill="#2a1a0e"/>
+      <ellipse cx="0" cy="100" rx="40" ry="7" fill="#1a0f08"/>
+      <g class="plant-leaves">
+        <path d="M 0 95 Q -50 30 -85 -10 Q -55 -30 -25 0 Q 5 30 0 95" fill="#2d4a3a" stroke="#1a2e22" stroke-width="1"/>
+        <path d="M 0 95 Q 45 20 75 -25 Q 95 5 60 40 Q 25 75 0 95" fill="#36533f" stroke="#1f3527" stroke-width="1"/>
+        <path d="M 0 95 Q -10 10 -5 -55 Q 25 -50 18 5 Q 10 60 0 95" fill="#2a4435" stroke="#152920" stroke-width="1"/>
+        <path d="M 0 95 Q 25 30 55 -35 Q 35 -55 8 -10 Q -2 50 0 95" fill="#3d5a48" stroke="#21372a" stroke-width="1"/>
+      </g>
+    </g>
+
+    <g>
+      <rect x="270" y="730" width="1330" height="22" fill="url(#deskTopNight)" stroke="#1a0f08" stroke-width="1"/>
+      <!-- Mancha cálida sobre el desk, bajo el bulbo (x=1102) -->
+      <ellipse cx="1102" cy="730" rx="380" ry="16" fill="url(#deskTopLit)" opacity="0.85"/>
+      <rect x="295" y="752" width="14" height="240" fill="url(#deskNight)"/>
+      <rect x="1560" y="752" width="14" height="240" fill="url(#deskNight)"/>
+      <rect x="1280" y="755" width="280" height="80" fill="#2d1f17" stroke="#1a0f08" stroke-width="1"/>
+      <line x1="1280" y1="795" x2="1560" y2="795" stroke="#1a0f08" stroke-width="0.8"/>
+      <circle cx="1420" cy="775" r="3" fill="#0a0510"/>
+      <circle cx="1420" cy="815" r="3" fill="#0a0510"/>
+    </g>
+
+    <!-- BOOKS dark — violet deep + amber + lila lit by lamp -->
+    <g transform="translate(420, 700)">
+      <rect x="0" y="0" width="120" height="14" fill="#4c1d95" stroke="#2e1065" stroke-width="0.5"/>
+      <rect x="0" y="0" width="6" height="14" fill="#fbbf24"/>
+      <rect x="-3" y="14" width="125" height="12" fill="#3b2a52" stroke="#1f1235" stroke-width="0.5"/>
+      <rect x="-3" y="14" width="6" height="12" fill="#a78bfa"/>
+      <rect x="2" y="26" width="118" height="10" fill="#5b21b6" stroke="#3b0764" stroke-width="0.5"/>
+      <rect x="2" y="26" width="5" height="10" fill="#fde68a"/>
+    </g>
+
+    <g transform="translate(620, 690)">
+      <path d="M 0 5 L 5 50 L 55 50 L 60 5 Z" fill="#2a1f3d" stroke="#a78bfa" stroke-width="1.5"/>
+      <path d="M 60 12 Q 80 12 80 28 Q 80 42 60 42" fill="none" stroke="#a78bfa" stroke-width="3"/>
+      <ellipse cx="30" cy="6" rx="28" ry="4" fill="#1a0f08"/>
+      <ellipse cx="30" cy="5" rx="22" ry="2.5" fill="#3d2418"/>
+      <text x="22" y="35" font-family="DM Sans, sans-serif" font-size="9" font-weight="700" fill="#a78bfa">tof</text>
+      <g stroke="rgba(254, 215, 110, 0.7)" stroke-width="1.5" fill="none" stroke-linecap="round">
+        <path class="steam-1" d="M 18 0 q -3 -8 0 -16 q 3 -8 0 -16"/>
+        <path class="steam-2" d="M 30 0 q 3 -8 0 -16 q -3 -8 0 -16"/>
+        <path class="steam-3" d="M 42 0 q -3 -8 0 -16 q 3 -8 0 -16"/>
+      </g>
+    </g>
+
+    <g class="papers" transform="translate(770, 705)">
+      <rect x="0" y="20" width="100" height="22" fill="#e8e0ff" stroke="rgba(167,139,250,0.3)" stroke-width="0.5" transform="rotate(-2)"/>
+      <rect x="3" y="13" width="100" height="22" fill="#e8e0ff" stroke="rgba(167,139,250,0.3)" stroke-width="0.5" transform="rotate(1)"/>
+      <rect x="2" y="6" width="100" height="22" fill="#f0e9ff" stroke="rgba(167,139,250,0.4)" stroke-width="0.5"/>
+      <line x1="12" y1="14" x2="80" y2="14" stroke="#6d28d9" stroke-width="1"/>
+      <line x1="12" y1="20" x2="65" y2="20" stroke="rgba(109,40,217,0.5)" stroke-width="0.6"/>
+      <line x1="12" y1="25" x2="75" y2="25" stroke="rgba(109,40,217,0.5)" stroke-width="0.6"/>
+    </g>
+
+    <g transform="translate(910, 720)">
+      <rect x="0" y="0" width="80" height="5" fill="#d97706"/>
+      <polygon points="80,0 88,2.5 80,5" fill="#0a0510"/>
+      <rect x="-8" y="0" width="8" height="5" fill="#991b1b"/>
+      <rect x="-12" y="0" width="4" height="5" fill="#4b5563"/>
+    </g>
+
+    <!-- LAMP ON — cono y halo alineados con el bulbo en (1102, 612) -->
+    <g>
+      <!-- Cono: top edge sigue la apertura de la pantalla (de x=1080 a x=1125 a y=615),
+           bottom abre simétrico centrado en x=1102. -->
+      <polygon class="lamp-glow" fill="url(#lampCone)" points="1080,617 1125,617 1335,1100 870,1100"/>
+      <!-- Halo amplio centrado exactamente en el bulbo. -->
+      <ellipse class="lamp-glow" cx="1102" cy="612" rx="380" ry="280" fill="url(#lampGlow)" opacity="0.85"/>
+      <g transform="translate(1080, 580)">
+        <!-- Base estática -->
+        <ellipse cx="0" cy="148" rx="38" ry="6" fill="#3a2a52"/>
+        <rect x="-28" y="138" width="56" height="12" rx="2" fill="#4c2a85"/>
+        <circle cx="0" cy="138" r="5" fill="#3a2a52"/>
+        <!-- Brazo + cabeza con sway -->
+        <g class="lamp-cord-group" style="transform-origin: 0px 138px;">
+          <line x1="0" y1="138" x2="-30" y2="60" stroke="#5b21b6" stroke-width="6" stroke-linecap="round"/>
+          <line x1="-30" y1="60" x2="20" y2="20" stroke="#5b21b6" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="-30" cy="60" r="5" fill="#3a2a52"/>
+          <path d="M 5 0 L 50 5 L 45 35 L 0 30 Z" fill="#7c3aed" stroke="#a78bfa" stroke-width="1.5"/>
+          <ellipse cx="22" cy="32" rx="22" ry="3" fill="#fed18a"/>
+          <ellipse cx="22" cy="32" rx="18" ry="2.5" fill="#fef3c7"/>
+        </g>
+      </g>
+    </g>
+
+    <g fill="rgba(254, 215, 110, 0.85)">
+      <circle class="dust-1" cx="980" cy="850" r="2"/>
+      <circle class="dust-2" cx="1080" cy="780" r="1.5"/>
+      <circle class="dust-3" cx="1180" cy="900" r="2"/>
+      <circle class="dust-4" cx="1100" cy="820" r="1.7"/>
+      <circle class="dust-5" cx="1020" cy="950" r="1.3"/>
+      <circle class="dust-6" cx="1230" cy="870" r="1.8"/>
+      <circle class="dust-7" cx="950" cy="970" r="1.5"/>
+      <circle class="dust-8" cx="1280" cy="890" r="1.6"/>
+      <circle class="dust-9" cx="1140" cy="1000" r="1.4"/>
+      <circle class="dust-10" cx="1190" cy="950" r="1.5"/>
+    </g>
+
+    <ellipse cx="1320" cy="752" rx="280" ry="5" fill="rgba(0,0,0,0.4)"/>
+  </svg>
+</div>
+
+<style is:global>
+/* ═══════════════════════════════════════════════════════════
+   ContactBackground — "La Oficina"
+   Light = día, Dark = noche. Switch via body.dark / body:not(.dark)
+   ═══════════════════════════════════════════════════════════ */
+
+.contact-bg-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.contact-bg-fixed svg.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Light por default, dark cuando body.dark/html.dark */
+.contact-bg-fixed svg.scene-dark { display: none; }
+body.dark .contact-bg-fixed svg.scene-light,
+html.dark .contact-bg-fixed svg.scene-light { display: none; }
+body.dark .contact-bg-fixed svg.scene-dark,
+html.dark .contact-bg-fixed svg.scene-dark  { display: block; }
+
+/* ─── Animations ─── */
+@keyframes lampSwing {
+  0%,100% { transform: rotate(-1.2deg); }
+  50%     { transform: rotate(1.2deg); }
+}
+@keyframes steamRise {
+  0%   { opacity: 0; transform: translate(0,0) scale(0.8); }
+  20%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translate(-6px, -40px) scale(1.4); }
+}
+@keyframes plantSway {
+  0%,100% { transform: rotate(-0.8deg); }
+  50%     { transform: rotate(0.8deg); }
+}
+@keyframes dustFloat {
+  0%,100% { transform: translate(0,0); opacity: 0.4; }
+  50%     { transform: translate(20px, -30px); opacity: 0.8; }
+}
+@keyframes windowShimmer {
+  0%,100% { opacity: 0.95; }
+  50%     { opacity: 1; }
+}
+@keyframes lampFlicker {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.97; }
+}
+@keyframes carHeadlight {
+  0%, 100% { opacity: 0; transform: translateX(0); }
+  10%      { opacity: 1; }
+  90%      { opacity: 1; }
+  100%     { opacity: 0; transform: translateX(180px); }
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+@keyframes papersRustle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-1px); }
+}
+
+/* plant-leaves sway removido — quedaba raro porque transform-origin no se anclaba bien
+   a la base de las hojas, dando la sensación de que la planta saltaba.
+   .plant-leaves { transform-origin: 50% 100%; animation: plantSway 9s ease-in-out infinite; } */
+.window-shimmer { animation: windowShimmer 6s ease-in-out infinite; }
+.lamp-glow      { animation: lampFlicker 4s ease-in-out infinite; }
+
+.steam-1 { animation: steamRise 4s ease-in-out infinite; }
+.steam-2 { animation: steamRise 4s ease-in-out -1.3s infinite; }
+.steam-3 { animation: steamRise 4s ease-in-out -2.6s infinite; }
+
+.dust-1  { animation: dustFloat 12s ease-in-out infinite; }
+.dust-2  { animation: dustFloat 14s ease-in-out -3s infinite; }
+.dust-3  { animation: dustFloat 16s ease-in-out -7s infinite; }
+.dust-4  { animation: dustFloat 13s ease-in-out -2s infinite; }
+.dust-5  { animation: dustFloat 15s ease-in-out -9s infinite; }
+.dust-6  { animation: dustFloat 18s ease-in-out -5s infinite; }
+.dust-7  { animation: dustFloat 11s ease-in-out -10s infinite; }
+.dust-8  { animation: dustFloat 17s ease-in-out -6s infinite; }
+.dust-9  { animation: dustFloat 14s ease-in-out -12s infinite; }
+.dust-10 { animation: dustFloat 16s ease-in-out -8s infinite; }
+
+.car-1 { animation: carHeadlight 11s linear infinite; }
+.car-2 { animation: carHeadlight 14s linear -5s infinite; }
+.car-3 { animation: carHeadlight 17s linear -10s infinite; }
+
+.star-1 { animation: starTwinkle 4s ease-in-out infinite; }
+.star-2 { animation: starTwinkle 5s ease-in-out -1s infinite; }
+.star-3 { animation: starTwinkle 4.5s ease-in-out -2s infinite; }
+.star-4 { animation: starTwinkle 6s ease-in-out -3s infinite; }
+.star-5 { animation: starTwinkle 5.5s ease-in-out -1.5s infinite; }
+
+.papers { animation: papersRustle 7s ease-in-out infinite; }
+
+/* Content above */
+.contact-bg-fixed ~ nav,
+.contact-bg-fixed ~ main,
+.contact-bg-fixed ~ footer { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .plant-leaves, .steam-1, .steam-2, .steam-3,
+  .dust-1, .dust-2, .dust-3, .dust-4, .dust-5, .dust-6, .dust-7, .dust-8, .dust-9, .dust-10,
+  .car-1, .car-2, .car-3, .star-1, .star-2, .star-3, .star-4, .star-5,
+  .lamp-glow, .window-shimmer, .papers { animation: none; }
+}
+</style>

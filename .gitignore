@@ -5,3 +5,10 @@ dist/
 .aidesigner/
 .aidesigner/*
 !.aidesigner/.gitkeep
+
+# Audit / debugging screenshots dumped in repo root
+/*.png
+/.audit-archive/
+/.playwright-mcp/
+/screenshots/
+/snap-comparison.mjs

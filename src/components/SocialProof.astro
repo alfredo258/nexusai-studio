@@ -1,0 +1,281 @@
+---
+// SocialProof — Variante B del handoff de Claude Design
+// Reemplaza Clients + Stats con una sola seccion dark + marquee + stats con contexto.
+
+const logos = [
+  { src: '/assets/images/gallery01/aosenuma_logo.jpg', alt: 'Aosenuma' },
+  { src: '/assets/images/gallery01/meddia_logo.jpg', alt: 'Meddia' },
+  { src: '/assets/images/gallery01/trivium_ai_logo.jpg', alt: 'Trivium AI' },
+  { src: '/assets/images/gallery01/vca_consultores_srl_logo.jpg', alt: 'VCA Consultores' },
+  { src: '/assets/images/gallery01/tyrsyn_logo.png', alt: 'Tyrsyn' },
+  { src: '/assets/images/gallery01/squadra_labs_logo.jpg', alt: 'Squadra Labs' },
+  { src: '/assets/images/gallery01/paku_logo.jpg', alt: 'Paku' },
+  { src: '/assets/images/gallery01/the_talent_system___tht_logo.jpg', alt: 'The Talent System' },
+  { src: '/assets/images/gallery01/icenter_logo.jpg', alt: 'iCenter' },
+  { src: '/assets/images/gallery01/industrial_logo.jpg', alt: 'Industrial' },
+  { src: '/assets/images/gallery01/fullstack_logo.jpg', alt: 'FullstackAI' },
+  { src: '/assets/images/gallery01/talentup_new.png', alt: 'TalentUp' },
+  { src: '/assets/images/gallery01/sisu_technologies_logo.jpg', alt: 'Sisu' },
+  { src: '/assets/images/gallery01/lyncros_logo.jpg', alt: 'Lyncros' },
+  { src: '/assets/images/gallery01/isologo_tht.png', alt: 'THT' },
+];
+
+const loopLogos = [...logos, ...logos];
+---
+
+<section class="social-proof" aria-labelledby="sp-title">
+  <div class="sp-inner">
+    <div class="sp-left">
+      <div class="sp-eyebrow">Confían en nosotros</div>
+      <h2 id="sp-title" class="sp-title">+30 empresas eligieron The Outbound Force.</h2>
+      <div class="sp-stats">
+        <div class="sp-stat">
+          <span class="sp-stat-num">+500</span>
+          <span class="sp-stat-label">
+            Reuniones agendadas
+            <small>Acumulado 2024–2025</small>
+          </span>
+        </div>
+        <div class="sp-stat">
+          <span class="sp-stat-num">×10</span>
+          <span class="sp-stat-label">
+            Leads calificados
+            <small>Promedio mensual</small>
+          </span>
+        </div>
+        <div class="sp-stat">
+          <span class="sp-stat-num">+8</span>
+          <span class="sp-stat-label">
+            Mercados LATAM
+            <small>AR · MX · CO · CL · UY · PE · BR · EC</small>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sp-marquee" aria-hidden="true">
+      <div class="sp-track">
+        {loopLogos.map((l) => (
+          <div class="sp-logo">
+            <img src={l.src} alt={l.alt} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* Fondo transparente siempre: el body pinta el fondo continuo global */
+  .social-proof {
+    background: transparent;
+    color: #0f0a1f;
+    /* Padding vertical escala lineal con viewport — mismo look físico
+       en zoom 100% (1920) que en 125% (1536). 6.25vw = 96px en 1536, 120 en 1920. */
+    padding: max(48px, 6.25vw) 0;
+    position: relative;
+    width: 100%;
+  }
+  .sp-inner {
+    position: relative;
+    z-index: 2;
+    /* 83.33vw = 1280 en 1536, 1600 en 1920 — proporción idéntica al viewport */
+    max-width: max(900px, 83.33vw);
+    margin: 0 auto;
+    padding: 0 max(20px, 4.17vw);
+    display: grid;
+    grid-template-columns: minmax(380px, 1fr) 1.4fr;
+    gap: max(32px, 4.17vw);
+    align-items: center;
+  }
+
+  /* ---------- Left column ---------- */
+  .sp-eyebrow {
+    font-family: 'Space Mono', ui-monospace, monospace;
+    /* 0.85vw = 13px en 1536, 16.3 en 1920 — escala con viewport */
+    font-size: max(11px, 0.85vw);
+    color: #6d28d9;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: max(14px, 1.17vw);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sp-eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6d28d9;
+    box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.18);
+    animation: sp-dot-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes sp-dot-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.18); }
+    50%      { box-shadow: 0 0 0 8px rgba(109, 40, 217, 0); }
+  }
+
+  .sp-title {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 800;
+    /* 2.6vw = 40px en 1536, 50px en 1920 — proporción 1:1 con zoom */
+    font-size: max(1.75rem, 2.6vw);
+    letter-spacing: -1.2px;
+    line-height: 1.08;
+    color: #0f0a1f;
+    margin: 0 0 max(24px, 2.08vw);
+    text-wrap: balance;
+  }
+
+  .sp-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .sp-stat {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: max(14px, 1.17vw);
+    padding: max(16px, 1.3vw) 0;
+    border-top: 1px solid rgba(15, 10, 31, 0.1);
+  }
+  .sp-stat:last-child {
+    border-bottom: 1px solid rgba(15, 10, 31, 0.1);
+  }
+  .sp-stat-num {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 800;
+    /* 3vw = 46px en 1536, 57.6px en 1920 — escala lineal */
+    font-size: max(2rem, 3vw);
+    letter-spacing: -1.5px;
+    color: #6d28d9;
+    line-height: 1;
+  }
+  .sp-stat-label {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    /* 0.98vw = 15px en 1536, 18.8px en 1920 */
+    font-size: max(13px, 0.98vw);
+    color: rgba(15, 10, 31, 0.78);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .sp-stat-label small {
+    display: block;
+    color: rgba(15, 10, 31, 0.5);
+    font-size: max(11px, 0.78vw);
+    margin-top: 4px;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------- Marquee ---------- */
+  .sp-marquee {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    overflow: hidden;
+    position: relative;
+    /* Espacio vertical para que el ring y el lift del hover no sean recortados */
+    padding: 8px 0;
+    margin: -8px 0;
+  }
+  .sp-track {
+    display: flex;
+    gap: 12px;
+    animation: sp-scroll 40s linear infinite;
+    width: max-content;
+  }
+  .sp-marquee:hover .sp-track {
+    animation-play-state: paused;
+  }
+  @keyframes sp-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .sp-logo {
+    flex-shrink: 0;
+    /* 9.77vw = 150 en 1536, 187.5 en 1920 — logos escalan 1.25x con zoom */
+    width: max(110px, 9.77vw);
+    height: max(56px, 4.95vw);
+    background: #ffffff;
+    border: 1px solid rgba(15, 10, 31, 0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.25s;
+  }
+  .sp-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.9;
+    transition: opacity 0.25s;
+  }
+  .sp-logo:hover {
+    border-color: #6d28d9;
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.55);
+  }
+  .sp-logo:hover img { opacity: 1; }
+
+  /* ═══════════════════ DARK MODE ═══════════════════ */
+  body.dark .social-proof {
+    color: #fff;
+  }
+  body.dark .sp-eyebrow { color: #a78bfa; }
+  body.dark .sp-eyebrow::before {
+    background: #a78bfa;
+    box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.18);
+    animation: sp-dot-pulse-dark 2.4s ease-in-out infinite;
+  }
+  body.dark .sp-title { color: #fff; }
+  body.dark .sp-stat { border-top-color: rgba(255, 255, 255, 0.1); }
+  body.dark .sp-stat:last-child { border-bottom-color: rgba(255, 255, 255, 0.1); }
+  body.dark .sp-stat-num { color: #a78bfa; }
+  body.dark .sp-stat-label { color: rgba(255, 255, 255, 0.7); }
+  body.dark .sp-stat-label small { color: rgba(255, 255, 255, 0.4); }
+  body.dark .sp-logo {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+  body.dark .sp-logo:hover {
+    background: #fff;
+    border-color: #c4b5fd;
+    box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.65);
+  }
+  @keyframes sp-dot-pulse-dark {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.18); }
+    50%      { box-shadow: 0 0 0 8px rgba(167, 139, 250, 0); }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .social-proof { padding: 48px 0; }
+    .sp-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 0 20px;
+    }
+    .sp-title { font-size: 20px; }
+    .sp-logo { width: 110px; height: 56px; }
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .sp-track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .sp-eyebrow::before { animation: none; }
+  }
+</style>

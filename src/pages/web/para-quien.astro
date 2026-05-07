@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GridBackground from '../../components/GridBackground.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import Footer from '../../components/Footer.astro';
+import AudienceSelector from '../../components/AudienceSelector.astro';
+---
+<Layout title="¿Es para mí? — Descubrí por qué necesitás una web | TOF" description="Hacé clic en cada perfil y conocé cómo una web puede transformar tu proyecto. Emprendedores, PyMES, profesionales, comercios y servicios.">
+
+<GridBackground />
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/web/" class="nav-logo">The Outbound <span>Force</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="/web/">Inicio</a>
+      <a href="/web/outbound">Outbound</a>
+      <a href="/web/desarrollo-web">Desarrollo Web</a>
+      <a href="/web/para-quien" class="nav-active">¿Es para mí?</a>
+      <a href="/web/faq">FAQ</a>
+      <a href="/web/contacto">Contacto</a>
+      <ThemeToggle />
+      <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="nav-cta magnetic-btn" rel="noopener" target="_blank">Agendar Reunión</a>
+    </div>
+    <button aria-label="Menú" class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main id="main-content" tabindex="-1">
+  <div style="height: 4.5rem;"></div>
+
+  <section class="pq-back-row">
+    <div class="container">
+      <a href="/web/desarrollo-web" class="pq-back">← Volver a Desarrollo Web</a>
+    </div>
+  </section>
+
+  <AudienceSelector />
+
+  <Footer />
+</main>
+
+<script>
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+    });
+  }
+
+  // Magnetic buttons
+  document.querySelectorAll('.magnetic-btn').forEach((btn) => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.2}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // Scroll-aware navbar
+  let lastScroll = 0;
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    const cur = window.scrollY;
+    if (navbar) {
+      navbar.classList.toggle('scrolled', cur > 20);
+    }
+    lastScroll = cur;
+  });
+</script>
+
+<style>
+  .pq-back-row {
+    padding: clamp(20px, 3vw, 40px) 0 0;
+  }
+  .pq-back-row .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 3vw, 40px);
+  }
+  .pq-back {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text2);
+    text-decoration: none;
+    margin-bottom: 22px;
+    transition: color 200ms ease;
+  }
+  .pq-back:hover { color: var(--accent); }
+  .pq-kicker {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(109, 40, 217, 0.08);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .pq-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -1.4px;
+    line-height: 1.05;
+    color: var(--text);
+    margin: 0 0 18px;
+  }
+  .pq-title em {
+    font-style: normal;
+    background: linear-gradient(180deg, #c4b5fd 0%, #8b5cf6 60%, #6d28d9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .pq-desc {
+    font-size: clamp(15px, 1.1vw, 17px);
+    line-height: 1.65;
+    color: var(--text2);
+    margin: 0 auto;
+    max-width: 640px;
+  }
+
+  body.dark .pq-kicker {
+    color: #a78bfa;
+    background: rgba(167, 139, 250, 0.12);
+  }
+  body.dark .pq-title { color: #fafafc; }
+  body.dark .pq-desc { color: rgba(255, 255, 255, 0.72); }
+  body.dark .pq-back { color: rgba(255, 255, 255, 0.6); }
+  body.dark .pq-back:hover { color: #c4b5fd; }
+</style>
+
+</Layout>

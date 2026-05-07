@@ -1,0 +1,865 @@
+---
+// Showcase scroll animation component (Fluss-style)
+// mode: "outbound" (default) or "asesoria" — adapts copy for each context
+interface Props {
+  mode?: 'outbound' | 'asesoria';
+}
+const { mode = 'outbound' } = Astro.props;
+
+const copy = mode === 'asesoria' ? [
+  {
+    kicker: 'LinkedIn Outreach',
+    title: 'Aprendés a generar conexiones que terminan en reunión',
+    desc: 'Te enseñamos a usar Sales Navigator: filtrar listas por cargo + industria + señales, scrapear con seguridad y escribir mensajes que sí responden. Salís con tu primera campaña corriendo.'
+  },
+  {
+    kicker: 'Email Marketing',
+    title: 'Dominás las secuencias que llegan al inbox correcto',
+    desc: 'Aprendés a montar tu propia infraestructura: dominios secundarios, warm-up, SPF/DKIM y secuencias personalizadas. Te vas con deliverability real, no con teoría de cold email.'
+  },
+  {
+    kicker: 'Meta Ads',
+    title: 'Configurás anuncios que atraen tomadores de decisión',
+    desc: 'Te mostramos cómo estructurar campañas en Facebook e Instagram para B2B: segmentación por cargo + intención, formularios cortos y retargeting multi-touch. Sí, es posible — y rinde.'
+  },
+  {
+    kicker: 'Google Ads',
+    title: 'Capturás demanda activa cuando te buscan',
+    desc: 'Aprendés a construir campañas de búsqueda + display + remarketing por audiencias B2B. Aparecés justo cuando tu prospecto resuelve un problema que vos sabés resolver.'
+  },
+  {
+    kicker: 'Landing Pages',
+    title: 'Sabés pedir (o construir) páginas que convierten',
+    desc: 'Te enseñamos qué pedirle a un dev — o cómo armarla vos — para que tu landing convierta tráfico en reuniones. UX, copy, tracking y testing aplicados a tu caso.'
+  }
+] : [
+  {
+    kicker: 'LinkedIn Outreach',
+    title: 'Conexiones que terminan en reunión',
+    desc: 'Prospección 1-a-1 con Sales Navigator sobre listas filtradas por cargo + industria + señales. Copy editado a mano sobre un draft IA — respuesta rate 3x promedio.'
+  },
+  {
+    kicker: 'Email Marketing',
+    title: 'Secuencias que llegan al inbox correcto',
+    desc: 'Cold email con infraestructura propia (dominios secundarios, warm-up, SPF/DKIM) y copy personalizado por cuenta. Entregabilidad certificada, no spam masivo.'
+  },
+  {
+    kicker: 'Meta Ads',
+    title: 'Anuncios que atraen tomadores de decisión',
+    desc: 'Campañas en Facebook e Instagram con segmentación por cargo, industria y señales de intención. Formularios cortos + retargeting multi-touch.'
+  },
+  {
+    kicker: 'Google Ads',
+    title: 'Capturamos demanda cuando te buscan',
+    desc: 'Campañas de búsqueda + display + remarketing por audiencias B2B. Aparecés en el momento exacto en que tu prospecto resuelve un problema que vos sabés resolver.'
+  },
+  {
+    kicker: 'Landing Pages',
+    title: 'Páginas que convierten visitantes en reuniones',
+    desc: 'Diseñamos y desarrollamos landing pages a medida, optimizadas para conversión. Cada elemento está pensado para que tu prospecto agende.'
+  }
+];
+---
+
+  <!-- ═══ SHOWCASE SECTION ═══ -->
+  <section id="showcase">
+    <div class="container">
+
+      <!-- Track: scroll height = 4 slides * 100vh -->
+      <div class="showcase-track" style="--total-slides: 5;" data-showcase-track>
+
+        <div class="showcase-sticky-row">
+
+          <!-- LEFT: Text stack -->
+          <div class="showcase-text-stack">
+
+            <div class="showcase-text active" data-showcase-text="0" style="--fill: 0;">
+              <div class="step-counter">
+                <span class="counter-current">01</span>
+                <span class="counter-sep">/</span>
+                <span class="counter-total">05</span>
+              </div>
+              <span class="step-kicker">{copy[0].kicker}</span>
+              <h3 class="step-title" data-showcase-title="0" style="--fill: 0;">{copy[0].title}</h3>
+              <p class="step-desc">{copy[0].desc}</p>
+            </div>
+
+            <div class="showcase-text" data-showcase-text="1" style="--fill: 0;">
+              <div class="step-counter">
+                <span class="counter-current">02</span>
+                <span class="counter-sep">/</span>
+                <span class="counter-total">05</span>
+              </div>
+              <span class="step-kicker">{copy[1].kicker}</span>
+              <h3 class="step-title" data-showcase-title="1" style="--fill: 0;">{copy[1].title}</h3>
+              <p class="step-desc">{copy[1].desc}</p>
+            </div>
+
+            <div class="showcase-text" data-showcase-text="2" style="--fill: 0;">
+              <div class="step-counter">
+                <span class="counter-current">03</span>
+                <span class="counter-sep">/</span>
+                <span class="counter-total">05</span>
+              </div>
+              <span class="step-kicker">{copy[2].kicker}</span>
+              <h3 class="step-title" data-showcase-title="2" style="--fill: 0;">{copy[2].title}</h3>
+              <p class="step-desc">{copy[2].desc}</p>
+            </div>
+
+            <div class="showcase-text" data-showcase-text="3" style="--fill: 0;">
+              <div class="step-counter">
+                <span class="counter-current">04</span>
+                <span class="counter-sep">/</span>
+                <span class="counter-total">05</span>
+              </div>
+              <span class="step-kicker">{copy[3].kicker}</span>
+              <h3 class="step-title" data-showcase-title="3" style="--fill: 0;">{copy[3].title}</h3>
+              <p class="step-desc">{copy[3].desc}</p>
+            </div>
+
+            <div class="showcase-text" data-showcase-text="4" style="--fill: 0;">
+              <div class="step-counter">
+                <span class="counter-current">05</span>
+                <span class="counter-sep">/</span>
+                <span class="counter-total">05</span>
+              </div>
+              <span class="step-kicker">{copy[4].kicker}</span>
+              <h3 class="step-title" data-showcase-title="4" style="--fill: 0;">{copy[4].title}</h3>
+              <p class="step-desc">{copy[4].desc}</p>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: Mockup stack -->
+          <div class="showcase-mockup-stack">
+
+            <!-- ═══ DEVICE MOCKUPS ═══ -->
+
+            <!-- Device 0: LinkedIn — Sales Navigator dashboard -->
+            <div class="showcase-device active" data-showcase-device="0">
+              <div class="browser-mockup">
+                <div class="browser-chrome"><div class="browser-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div><div class="browser-url-bar"><svg class="lock-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3.5 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><rect x="2.5" y="5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg><span class="url-text">linkedin.com/sales-navigator</span></div></div>
+                <div class="browser-viewport">
+                  <img src="/assets/images/showcase/linkedin-dashboard.webp" alt="LinkedIn Sales Navigator - Dashboard de prospección B2B" loading="lazy" class="showcase-img" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Device 1: Email — Campaign dashboard with sequences -->
+            <div class="showcase-device" data-showcase-device="1">
+              <div class="browser-mockup">
+                <div class="browser-chrome"><div class="browser-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div><div class="browser-url-bar"><svg class="lock-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3.5 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><rect x="2.5" y="5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg><span class="url-text">app.instantly.ai/campaigns</span></div></div>
+                <div class="browser-viewport">
+                  <img src="/assets/images/showcase/email-campaign.webp" alt="Email Marketing - Campañas de cold email con métricas" loading="lazy" class="showcase-img" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Device 2: Meta Ads — Ads Manager with creative preview -->
+            <div class="showcase-device" data-showcase-device="2">
+              <div class="browser-mockup">
+                <div class="browser-chrome"><div class="browser-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div><div class="browser-url-bar"><svg class="lock-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3.5 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><rect x="2.5" y="5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg><span class="url-text">business.facebook.com/ads-manager</span></div></div>
+                <div class="browser-viewport">
+                  <img src="/assets/images/showcase/meta-ads.webp" alt="Meta Ads Manager - Campañas B2B en Facebook e Instagram" loading="lazy" class="showcase-img" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Device 3: Google Ads — Search campaign dashboard -->
+            <div class="showcase-device" data-showcase-device="3">
+              <div class="browser-mockup">
+                <div class="browser-chrome"><div class="browser-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div><div class="browser-url-bar"><svg class="lock-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3.5 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><rect x="2.5" y="5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg><span class="url-text">ads.google.com/campaigns</span></div></div>
+                <div class="browser-viewport">
+                  <img src="/assets/images/showcase/google-ads.webp" alt="Google Ads - Campañas de búsqueda y display B2B" loading="lazy" class="showcase-img" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Device 4: Landing Pages — Page builder with live preview -->
+            <div class="showcase-device" data-showcase-device="4">
+              <div class="browser-mockup">
+                <div class="browser-chrome"><div class="browser-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div><div class="browser-url-bar"><svg class="lock-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3.5 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><rect x="2.5" y="5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg><span class="url-text">tuempresa.com/agendar</span></div></div>
+                <div class="browser-viewport">
+                  <img src="/assets/images/showcase/landing-pages.webp" alt="Landing Pages - Páginas optimizadas para conversión B2B" loading="lazy" class="showcase-img" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation dots -->
+            <div class="showcase-dots">
+              <div class="info-dot active" data-dot="0"></div>
+              <div class="info-dot" data-dot="1"></div>
+              <div class="info-dot" data-dot="2"></div>
+              <div class="info-dot" data-dot="3"></div>
+              <div class="info-dot" data-dot="4"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+<style is:global>
+html, body { overflow-x: clip !important; }
+    /* ═══════════════════════════════════════
+       SHOWCASE — Scroll-driven showcase
+       Adapted from Fluss.mx for TOF
+    ═══════════════════════════════════════ */
+    #showcase {
+      padding: 5rem 0 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Section heading */
+    .section-heading {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .kicker {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid rgba(109, 40, 217, 0.1);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-title .text-gradient {
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 55ch;
+      margin: 0 auto;
+    }
+
+    /* ═══ SHOWCASE TRACK — scroll height drives animation ═══ */
+    .showcase-track {
+      height: calc(var(--total-slides) * 100vh);
+      position: relative;
+    }
+
+    /* Sticky row: text left + mockup right */
+    .showcase-sticky-row {
+      position: sticky;
+      top: 10vh;
+      height: 80vh;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    /* ═══ TEXT STACK — stacked cards, only active visible ═══ */
+    .showcase-text-stack {
+      position: relative;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 0;
+    }
+
+    .showcase-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.35s cubic-bezier(0.4, 0, 1, 1),
+                  transform 0.35s cubic-bezier(0.4, 0, 1, 1);
+    }
+    .showcase-text.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: opacity 0.55s cubic-bezier(0, 0, 0.2, 1) 0.1s,
+                  transform 0.55s cubic-bezier(0, 0, 0.2, 1) 0.1s;
+    }
+
+    /* Progress bar on left */
+    .showcase-text::before {
+      content: '';
+      position: absolute;
+      top: 20%; left: -1.75rem;
+      width: 3px; height: 60%;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 2px;
+    }
+    .showcase-text::after {
+      content: '';
+      position: absolute;
+      top: 20%; left: -1.75rem;
+      width: 3px; height: 60%;
+      background: var(--accent);
+      border-radius: 2px;
+      transform-origin: top;
+      transform: scaleY(var(--fill, 0));
+      transition: transform 0.15s ease-out;
+    }
+
+    /* Step counter: 01 / 04 */
+    .step-counter {
+      display: flex;
+      align-items: baseline;
+      gap: 0.15em;
+      margin-bottom: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .counter-current {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .counter-sep {
+      color: rgba(0, 0, 0, 0.15);
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 0 0.1em;
+    }
+    .counter-total {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Kicker label per step */
+    .step-kicker {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    /* Title with gradient fill */
+    .step-title {
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      /* Gradient text reveal based on --fill */
+      background: linear-gradient(90deg,
+        var(--text) calc(var(--fill, 0) * 100%),
+        rgba(26, 22, 37, 0.25) calc(var(--fill, 0) * 100%)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .step-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 45ch;
+      opacity: 0.85;
+      transform: translateY(8px);
+      transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s,
+                  transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s;
+    }
+    .showcase-text.active .step-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══ MOCKUP STACK — browser frame with slides ═══ */
+    .showcase-mockup-stack {
+      position: relative;
+      height: 65vh;
+      max-height: 520px;
+      perspective: 1200px;
+    }
+
+    .showcase-device {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.92);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .showcase-device.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    /* Browser frame */
+    .browser-mockup {
+      width: 100%;
+      max-width: 580px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04),
+                  0 16px 48px -8px rgba(0,0,0,0.12),
+                  0 0 0 1px rgba(0,0,0,0.06);
+      transform: rotateY(-2deg) rotateX(1deg);
+      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .browser-chrome {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem 1rem;
+      background: #f4f4f5;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .browser-dots span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    .browser-url-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 1;
+      max-width: 400px;
+      padding: 0.3rem 0.75rem;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      color: #6b7280;
+      font-size: 0.78rem;
+    }
+    .lock-icon { color: #9ca3af; flex-shrink: 0; }
+    .url-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .browser-viewport {
+      background: #fafafa;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    /* Slides inside the browser */
+    .showcase-slides {
+      aspect-ratio: 16 / 10;
+      position: relative;
+      overflow: hidden;
+    }
+    .showcase-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .showcase-slide.active { opacity: 1; }
+
+    /* Placeholder mockup screens */
+    .sc-app {
+      width: 100%;
+      height: 100%;
+      font-family: var(--font);
+      overflow: hidden;
+    }
+    .mock-screen {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      background: #fff;
+    }
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 1rem;
+    }
+    .mock-logo {
+      width: 80px; height: 10px;
+      background: var(--accent);
+      border-radius: 4px;
+      opacity: 0.3;
+    }
+    .mock-nav {
+      display: flex; gap: 0.75rem;
+    }
+    .mock-nav span {
+      width: 40px; height: 8px;
+      background: #e5e5e5;
+      border-radius: 3px;
+    }
+
+    .mock-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .mock-metric-card {
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+    }
+    .mock-metric-label {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .mock-metric-value {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .mock-metric-change {
+      font-size: 0.55rem;
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    .mock-chart {
+      flex: 1;
+      background: linear-gradient(180deg, var(--accent-light) 0%, transparent 100%);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      min-height: 80px;
+    }
+    .mock-chart-line {
+      position: absolute;
+      bottom: 20%;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0.4;
+      clip-path: polygon(0% 80%, 15% 60%, 30% 70%, 45% 30%, 60% 40%, 75% 10%, 85% 25%, 100% 5%, 100% 100%, 0% 100%);
+    }
+    .mock-chart-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 60%;
+      background: linear-gradient(180deg, rgba(109, 40, 217, 0.15) 0%, rgba(109, 40, 217, 0.02) 100%);
+      clip-path: polygon(0% 80%, 15% 60%, 30% 70%, 45% 30%, 60% 40%, 75% 10%, 85% 25%, 100% 5%, 100% 100%, 0% 100%);
+    }
+
+    /* Mock variations */
+    .mock-inbox { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+    .mock-email-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #f0f0f0;
+    }
+    .mock-email-row:nth-child(1) { background: var(--accent-light); border-color: var(--border); }
+    .mock-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      flex-shrink: 0;
+    }
+    .mock-email-lines {
+      flex: 1;
+    }
+    .mock-email-lines .line1 {
+      height: 8px; width: 60%;
+      background: #d4d4d4;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+    .mock-email-lines .line2 {
+      height: 6px; width: 85%;
+      background: #e5e5e5;
+      border-radius: 3px;
+    }
+    .mock-tag {
+      font-size: 0.5rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .mock-pipeline {
+      display: flex;
+      gap: 0.5rem;
+      flex: 1;
+    }
+    .mock-pipe-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .mock-pipe-header {
+      font-size: 0.55rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid var(--border);
+      letter-spacing: 0.04em;
+    }
+    .mock-pipe-header.accent { border-color: var(--accent); color: var(--accent); }
+    .mock-pipe-card {
+      background: #fafafa;
+      border: 1px solid #f0f0f0;
+      border-radius: 6px;
+      padding: 0.4rem;
+      height: 36px;
+    }
+    .mock-pipe-card.highlighted {
+      background: var(--accent-light);
+      border-color: var(--border);
+    }
+
+    .mock-calendar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.4rem;
+      flex: 1;
+    }
+    .mock-cal-day {
+      border-radius: 8px;
+      border: 1px solid #f0f0f0;
+      padding: 0.3rem;
+      font-size: 0.5rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .mock-cal-day.has-event::after {
+      content: '';
+      display: block;
+      margin-top: 0.2rem;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 3px;
+      opacity: 0.7;
+    }
+    .mock-cal-day.has-event-green::after {
+      content: '';
+      display: block;
+      margin-top: 0.2rem;
+      height: 12px;
+      background: #16a34a;
+      border-radius: 3px;
+      opacity: 0.5;
+    }
+
+    /* Navigation dots */
+    .showcase-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      position: absolute;
+      bottom: -2rem;
+      left: 0; right: 0;
+    }
+    .info-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: all 0.3s ease;
+    }
+    .info-dot.active {
+      background: var(--accent);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .showcase-track { height: calc(var(--total-slides) * 80vh); }
+      .showcase-sticky-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        height: 85vh;
+        padding: 0 0.5rem;
+        top: 8vh;
+      }
+      .showcase-text-stack {
+        width: 100%;
+        min-height: 160px;
+        height: 160px;
+      }
+      .showcase-mockup-stack {
+        width: 100%;
+        height: 50vh;
+        max-height: 360px;
+      }
+      .browser-mockup { max-width: 100%; }
+      .showcase-text::before,
+      .showcase-text::after { display: none; }
+      .step-title { font-size: 1.3rem; }
+      .step-desc { font-size: 0.9rem; }
+    }
+
+    /* ═══ BOTTOM SPACER ═══ */
+    .spacer-bottom {
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Demo label */
+    .demo-label {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      z-index: 100;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+  </style>
+
+<script is:inline>
+    function initShowcase() {
+      const track = document.querySelector('[data-showcase-track]');
+      const texts = document.querySelectorAll('[data-showcase-text]');
+      const devices = document.querySelectorAll('[data-showcase-device]');
+      const titles = document.querySelectorAll('[data-showcase-title]');
+      const dots = document.querySelectorAll('[data-dot]');
+
+      if (!track || !texts.length || !devices.length) return;
+
+      const totalSlides = 5;
+      let currentSlide = -1;
+      let ticking = false;
+
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(() => {
+            ticking = false;
+            update();
+          });
+        }
+      }
+
+      function update() {
+        const rect = track.getBoundingClientRect();
+        const viewH = window.innerHeight;
+        const offset = viewH * 0.1;
+        const scrolled = -(rect.top - offset);
+        const totalH = rect.height - viewH + offset;
+        const progress = Math.max(0, Math.min(1, scrolled / totalH));
+
+        // Which slide are we on?
+        const slideProgress = progress * totalSlides;
+        const slide = Math.min(Math.floor(slideProgress), totalSlides - 1);
+        const fillWithinSlide = slideProgress - slide;
+
+        // Update fill on titles
+        titles.forEach((t, i) => {
+          t.style.setProperty('--fill', i === slide ? String(Math.min(fillWithinSlide, 1)) : '0');
+        });
+        texts.forEach((t, i) => {
+          t.style.setProperty('--fill', i === slide ? String(Math.min(fillWithinSlide, 1)) : '0');
+        });
+
+        // Switch active slide
+        if (slide !== currentSlide) {
+          currentSlide = slide;
+          texts.forEach((t, i) => t.classList.toggle('active', i === slide));
+          devices.forEach((d, i) => d.classList.toggle('active', i === slide));
+          dots.forEach((d, i) => d.classList.toggle('active', i === slide));
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(update, 150);
+      });
+
+      // Initial state
+      currentSlide = 0;
+      update();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initShowcase);
+    } else {
+      initShowcase();
+    }
+</script>

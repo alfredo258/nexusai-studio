@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Comparison from '../components/Comparison.astro';
+---
+
+<Layout title="Preview — Comparación TOF" description="Preview aislado del cuadro comparativo">
+  <main style="padding-top: 3rem; min-height: 100vh;">
+    <Comparison />
+  </main>
+  <style is:global>
+    .reveal, .reveal-left, .reveal-right, .reveal-scale {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  </style>
+</Layout>

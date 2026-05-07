@@ -1,0 +1,278 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FleetBackground from '../../components/FleetBackground.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import FAQ from '../../components/FAQ.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout
+  title="Preguntas frecuentes — Outbound B2B | The Outbound Force"
+  description="Respondemos las 8 preguntas más comunes sobre prospección outbound B2B: tiempos, precios, garantías, industrias y proceso. Sin vueltas."
+  canonical="/web/faq"
+>
+
+<FleetBackground />
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/web/" class="nav-logo">The Outbound <span>Force</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="/web/">Inicio</a>
+      <a href="/web/outbound">Outbound</a>
+      <a href="/web/desarrollo-web">Desarrollo Web</a>
+      <a href="/web/faq" class="nav-active">FAQ</a>
+      <a href="/web/contacto">Contacto</a>
+      <ThemeToggle />
+      <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="nav-cta magnetic-btn" rel="noopener" target="_blank">Agendar Reunión</a>
+    </div>
+    <button aria-label="Menú" class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main id="main-content" tabindex="-1">
+  <header class="faqp-hero">
+    <div class="container">
+      <span class="section-label">Preguntas Frecuentes</span>
+      <h1 class="faqp-h1">Lo que todos preguntan<br/><em>antes de empezar.</em></h1>
+      <p class="faqp-lead">
+        Tiempos, precios, garantías, industrias y proceso. Sin letra chica. Si tu duda no está acá, agendá una llamada y te la respondemos en 30 minutos.
+      </p>
+    </div>
+  </header>
+
+  <FAQ hideHeader={true} />
+
+  <section class="faqp-cta">
+    <div class="container">
+      <div class="faqp-cta-card">
+        <h2>¿Tu duda no está acá?</h2>
+        <p>30 minutos sin compromiso. Te respondemos lo que sea sobre tu caso específico.</p>
+        <a href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" class="btn btn-primary" rel="noopener" target="_blank">
+          Agendar llamada gratis
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<Footer />
+</Layout>
+
+<style is:global>
+  /* ═══ FAQ page — DARK ONLY (Outbound Fleet bg) ═══
+     Per design handoff: la metáfora "outbound = naves saliendo hacia afuera"
+     se rompe en light mode. Light mode forzado a dark en esta página. */
+  html, body { background: #04030a !important; }
+  body { color: #fafafc; }
+  footer { border-top: none !important; background: transparent !important; }
+
+  /* Hero — h1 en gradient violeta como el prototipo */
+  .faqp-hero { padding: 7rem 0 3rem; text-align: center; }
+  .faqp-hero .section-label {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 12px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: rgba(255,255,255,0.55) !important;
+    margin-bottom: 22px !important;
+  }
+  .faqp-h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(40px, 5.6vw, 76px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: #fafafc;
+    margin: 0.5rem 0 1.5rem;
+    max-width: 920px;
+    margin-left: auto; margin-right: auto;
+  }
+  .faqp-h1 em {
+    font-style: normal;
+    background: linear-gradient(180deg, #c4b5fd 0%, #a78bfa 60%, #6d28d9 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .faqp-lead {
+    font-size: 16px;
+    color: rgba(255,255,255,0.74);
+    line-height: 1.6;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* FAQ items — glassy dark con backdrop-filter (prototipo) */
+  .faq-section { padding: 2rem 0 5rem; background: transparent !important; }
+  .faq-item {
+    background: rgba(20,18,28,0.62) !important;
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgba(167,139,250,0.20) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    transition: border-color 240ms ease, background 240ms ease !important;
+  }
+  .faq-item:hover { border-color: rgba(167,139,250,0.32) !important; }
+  .faq-item[open] {
+    border-color: rgba(167,139,250,0.40) !important;
+    background: rgba(28,24,42,0.72) !important;
+  }
+  .faq-question {
+    color: #fafafc !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    padding: 22px 26px !important;
+  }
+  .faq-answer {
+    color: rgba(255,255,255,0.74) !important;
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+    padding: 0 26px 22px !important;
+  }
+  .faq-chevron { color: #a78bfa !important; }
+
+  /* CTA box — usa el pill style del prototipo */
+  .faqp-cta { padding: 3rem 0 6rem; }
+  .faqp-cta-card {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: rgba(20,18,28,0.55);
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgba(167,139,250,0.20);
+    border-radius: 24px;
+  }
+  .faqp-cta-card h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: #fafafc;
+    margin: 0 0 0.75rem;
+  }
+  .faqp-cta-card p {
+    color: rgba(255,255,255,0.55);
+    font-size: 14px;
+    margin: 0 0 1.75rem;
+  }
+  .faqp-cta-card .btn-primary {
+    background: linear-gradient(180deg, #8b5cf6, #6d28d9) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 14px 26px !important;
+    border-radius: 999px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    box-shadow: 0 8px 32px -8px rgba(124,58,237,0.7),
+                inset 0 1px 0 rgba(255,255,255,0.18) !important;
+    transition: transform 240ms ease, box-shadow 240ms ease !important;
+  }
+  .faqp-cta-card .btn-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 40px -8px rgba(124,58,237,0.85),
+                inset 0 1px 0 rgba(255,255,255,0.22) !important;
+  }
+
+  /* Nav forzado dark también */
+  nav#navbar {
+    background: rgba(4, 3, 10, 0.6) !important;
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border-bottom-color: rgba(167,139,250,0.12) !important;
+  }
+  nav#navbar.scrolled {
+    background: rgba(4, 3, 10, 0.85) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+  }
+  .nav-logo { color: #fafafc !important; }
+  .nav-links a { color: rgba(255,255,255,0.55) !important; }
+  .nav-links a:hover, .nav-links a.nav-active { color: #fafafc !important; }
+
+  /* ═══════════════════════════════════════════════════════════
+     LIGHT MODE TWILIGHT — solo cuando body.faq-light está presente.
+     Dark default queda intocado por completo.
+     ═══════════════════════════════════════════════════════════ */
+  body.faq-light, html:has(body.faq-light) {
+    background: #fafafc !important;
+    color: #1a1625;
+  }
+  body.faq-light .faqp-h1 { color: #1a1625; }
+  body.faq-light .faqp-hero .section-label { color: rgba(74,68,88,0.65) !important; }
+  body.faq-light .faqp-lead { color: rgba(74,68,88,0.85); }
+  body.faq-light .faq-item {
+    background: rgba(255,255,255,0.55) !important;
+    border: 1px solid rgba(167,139,250,0.30) !important;
+  }
+  body.faq-light .faq-item:hover { border-color: rgba(109,40,217,0.45) !important; }
+  body.faq-light .faq-item[open] {
+    border-color: rgba(109,40,217,0.55) !important;
+    background: rgba(255,255,255,0.78) !important;
+  }
+  body.faq-light .faq-question { color: #1a1625 !important; }
+  body.faq-light .faq-answer { color: rgba(74,68,88,0.85) !important; }
+  body.faq-light .faq-chevron { color: #6d28d9 !important; }
+  body.faq-light .faqp-cta-card {
+    background: rgba(255,255,255,0.55) !important;
+    border: 1px solid rgba(167,139,250,0.30) !important;
+  }
+  body.faq-light .faqp-cta-card h2 { color: #1a1625 !important; }
+  body.faq-light .faqp-cta-card p { color: rgba(74,68,88,0.75) !important; }
+  body.faq-light nav#navbar {
+    background: rgba(255,255,255,0.55) !important;
+    border-bottom-color: rgba(167,139,250,0.20) !important;
+  }
+  body.faq-light nav#navbar.scrolled {
+    background: rgba(255,255,255,0.85) !important;
+    box-shadow: 0 1px 3px rgba(109,40,217,0.10) !important;
+  }
+  body.faq-light .nav-logo { color: #1a1625 !important; }
+  body.faq-light .nav-links a { color: rgba(74,68,88,0.65) !important; }
+  body.faq-light .nav-links a:hover,
+  body.faq-light .nav-links a.nav-active { color: #1a1625 !important; }
+  /* Icono toggle: invertido cuando estamos en faq-light */
+  body.faq-light .theme-sun { display: none !important; }
+  body.faq-light .theme-moon { display: block !important; stroke: #6d28d9 !important; }
+</style>
+
+<script is:inline>
+  // Nav scroll
+  window.addEventListener("scroll", function() {
+    document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 50);
+  });
+  // Mobile menu
+  document.getElementById("menuToggle").addEventListener("click", function() {
+    document.getElementById("navLinks").classList.toggle("open");
+  });
+  // Reveal failsafe
+  document.documentElement.classList.add("has-js");
+  var allR = document.querySelectorAll(".reveal,.reveal-left,.reveal-right");
+  var rObs = new IntersectionObserver(function(e) {
+    e.forEach(function(e) { e.isIntersecting && e.target.classList.add("active"); });
+  }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+  allR.forEach(function(e) { rObs.observe(e); });
+  setTimeout(function() { allR.forEach(function(e) { e.classList.add("active"); }); }, 1500);
+
+  // ═══ Hijack del ThemeToggle SOLO en /faq ═══
+  // Reemplaza el listener default (que toggle-a body.dark) por uno que
+  // toggle-a body.faq-light. Así el dark mode global queda intocado y
+  // este toggle solo cambia entre deep-space (default) y twilight light.
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    // Cloná el botón para descartar el listener default del ThemeToggle component
+    var clean = btn.cloneNode(true);
+    btn.parentNode.replaceChild(clean, btn);
+    // Estado inicial guardado en sessionStorage (no afecta theme global)
+    if (sessionStorage.getItem('faq-light') === '1') {
+      document.body.classList.add('faq-light');
+    }
+    clean.addEventListener('click', function() {
+      var isLight = document.body.classList.toggle('faq-light');
+      sessionStorage.setItem('faq-light', isLight ? '1' : '0');
+    });
+  })();
+</script>

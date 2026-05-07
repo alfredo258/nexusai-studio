@@ -1,0 +1,264 @@
+---
+// TOPOGRAPHIC BACKGROUND — Variant A
+// Recipe taken from GridBackground (which works), shape replaced:
+//   - Static atmosphere: 18 concentric organic curves (3 "hill" systems)
+//   - 6 pulse-paths that trace along curves (same stroke-dashoffset technique)
+//   - 14 pulsing nodes at curve crossings
+//   - 6 halos at select nodes
+// Visual feel: topographic map of knowledge — fits FAQ ("layers of understanding")
+---
+
+<div class="topo-bg-fixed" aria-hidden="true">
+  <svg viewBox="0 0 1200 2400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+
+    <defs>
+      <radialGradient id="hillGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(109,40,217,0.10)"/>
+        <stop offset="100%" stop-color="rgba(109,40,217,0)"/>
+      </radialGradient>
+    </defs>
+
+    <!-- ═══ HILL CORE GLOWS — soft violet radial under each hill ═══ -->
+    <ellipse class="hg" cx="280" cy="480" rx="260" ry="220" fill="url(#hillGlow)"/>
+    <ellipse class="hg" cx="880" cy="1080" rx="320" ry="270" fill="url(#hillGlow)"/>
+    <ellipse class="hg" cx="380" cy="1820" rx="290" ry="250" fill="url(#hillGlow)"/>
+
+    <!-- ═══ STATIC ATMOSPHERE — 3 "hill" systems with 6 nested contours each ═══ -->
+    <!-- Hill 1: upper-left around (280, 480) -->
+    <ellipse class="tl" cx="280" cy="480" rx="60" ry="50"/>
+    <ellipse class="tl" cx="280" cy="480" rx="120" ry="100"/>
+    <ellipse class="tl" cx="280" cy="480" rx="190" ry="160"/>
+    <ellipse class="tl" cx="280" cy="480" rx="270" ry="225"/>
+    <ellipse class="tl" cx="280" cy="480" rx="370" ry="305"/>
+    <ellipse class="tl" cx="280" cy="480" rx="490" ry="395"/>
+
+    <!-- Hill 2: center-right around (880, 1080) -->
+    <ellipse class="tl" cx="880" cy="1080" rx="70" ry="60"/>
+    <ellipse class="tl" cx="880" cy="1080" rx="140" ry="120"/>
+    <ellipse class="tl" cx="880" cy="1080" rx="220" ry="190"/>
+    <ellipse class="tl" cx="880" cy="1080" rx="320" ry="270"/>
+    <ellipse class="tl" cx="880" cy="1080" rx="440" ry="370"/>
+    <ellipse class="tl" cx="880" cy="1080" rx="580" ry="490"/>
+
+    <!-- Hill 3: lower-left around (380, 1820) -->
+    <ellipse class="tl" cx="380" cy="1820" rx="60" ry="55"/>
+    <ellipse class="tl" cx="380" cy="1820" rx="130" ry="115"/>
+    <ellipse class="tl" cx="380" cy="1820" rx="220" ry="195"/>
+    <ellipse class="tl" cx="380" cy="1820" rx="330" ry="290"/>
+    <ellipse class="tl" cx="380" cy="1820" rx="460" ry="400"/>
+    <ellipse class="tl" cx="380" cy="1820" rx="610" ry="525"/>
+
+    <!-- ═══ 8 PULSE-PATHS — bright traces flowing along/across hills ═══ -->
+    <path class="pp pp1" d="M 50 780 Q 280 200 600 480 T 1100 1080" fill="none"/>
+    <path class="pp pp2" d="M 1180 800 Q 700 900 600 1080 Q 500 1260 880 1380 Q 1180 1280 1180 1080" fill="none"/>
+    <path class="pp pp3" d="M 280 50 Q 100 700 380 1380 T 380 2200" fill="none"/>
+    <path class="pp pp4" d="M 50 200 Q 400 700 700 1080 Q 1000 1500 380 1820 T 50 2200" fill="none"/>
+    <path class="pp pp5" d="M 1180 200 Q 800 600 480 480 Q 200 360 50 600" fill="none"/>
+    <path class="pp pp6" d="M 1180 1500 Q 700 1700 380 1820 Q 100 1940 50 2300" fill="none"/>
+    <!-- Path 7: diagonal across hill 1 -->
+    <path class="pp pp7" d="M 50 380 Q 280 480 280 720 Q 280 950 600 880 Q 880 820 1180 1000" fill="none"/>
+    <!-- Path 8: lower diagonal across hill 3 -->
+    <path class="pp pp8" d="M 1180 1700 Q 880 1820 600 1900 Q 380 1980 380 2200 Q 380 2350 50 2400" fill="none"/>
+
+    <!-- ═══ 4 SHORT FAST PULSES — fill gaps + rhythmic feel ═══ -->
+    <!-- Short arcs around each hill, faster cycle -->
+    <path class="sp sp1" d="M 100 550 Q 280 380 460 550 Q 460 600 280 600" fill="none"/>
+    <path class="sp sp2" d="M 700 1180 Q 880 980 1060 1180 Q 1060 1220 880 1220" fill="none"/>
+    <path class="sp sp3" d="M 200 1880 Q 380 1700 560 1880 Q 560 1920 380 1920" fill="none"/>
+    <path class="sp sp4" d="M 800 380 Q 950 280 1100 380 Q 1100 420 950 420" fill="none"/>
+
+    <!-- ═══ NODES at curve intersections / hill peaks ═══ -->
+    <circle class="tn n1"  cx="280" cy="480"  r="3"/>
+    <circle class="tn n2"  cx="880" cy="1080" r="3"/>
+    <circle class="tn n3"  cx="380" cy="1820" r="3"/>
+    <circle class="tn n4"  cx="600" cy="780"  r="3"/>
+    <circle class="tn n5"  cx="700" cy="600"  r="3"/>
+    <circle class="tn n6"  cx="500" cy="1380" r="3"/>
+    <circle class="tn n7"  cx="950" cy="1380" r="3"/>
+    <circle class="tn n8"  cx="180" cy="1100" r="3"/>
+    <circle class="tn n9"  cx="1000" cy="600" r="3"/>
+    <circle class="tn n10" cx="200" cy="250"  r="3"/>
+    <circle class="tn n11" cx="1080" cy="1700" r="3"/>
+    <circle class="tn n12" cx="600" cy="2100" r="3"/>
+    <circle class="tn n13" cx="850" cy="280"  r="3"/>
+    <circle class="tn n14" cx="120" cy="1620" r="3"/>
+
+    <!-- ═══ HALOS — expanding rings around 6 select nodes ═══ -->
+    <circle class="th h1" cx="280" cy="480"  r="4"/>
+    <circle class="th h2" cx="880" cy="1080" r="4"/>
+    <circle class="th h3" cx="380" cy="1820" r="4"/>
+    <circle class="th h4" cx="700" cy="600"  r="4"/>
+    <circle class="th h5" cx="500" cy="1380" r="4"/>
+    <circle class="th h6" cx="950" cy="1380" r="4"/>
+
+    <!-- ═══ DRIFTING PARTICLES — subtle floating dots between hills ═══ -->
+    <circle class="dp dp1" cx="500" cy="700"  r="1.5"/>
+    <circle class="dp dp2" cx="780" cy="900"  r="1.5"/>
+    <circle class="dp dp3" cx="350" cy="1150" r="1.5"/>
+    <circle class="dp dp4" cx="900" cy="1500" r="1.5"/>
+    <circle class="dp dp5" cx="600" cy="1700" r="1.5"/>
+    <circle class="dp dp6" cx="200" cy="850"  r="1.5"/>
+    <circle class="dp dp7" cx="1050" cy="1900" r="1.5"/>
+    <circle class="dp dp8" cx="650" cy="300"  r="1.5"/>
+
+    <!-- ═══ STARS — small twinkling dots scattered between hills ═══ -->
+    <circle class="ts ts1" cx="80"   cy="200"  r="1"/>
+    <circle class="ts ts2" cx="1080" cy="380"  r="1"/>
+    <circle class="ts ts3" cx="600"  cy="180"  r="1"/>
+    <circle class="ts ts4" cx="980"  cy="780"  r="1"/>
+    <circle class="ts ts5" cx="180"  cy="900"  r="1"/>
+    <circle class="ts ts6" cx="1100" cy="1300" r="1"/>
+    <circle class="ts ts7" cx="540"  cy="1480" r="1"/>
+    <circle class="ts ts8" cx="80"   cy="1500" r="1"/>
+    <circle class="ts ts9" cx="800"  cy="1620" r="1"/>
+    <circle class="ts ts10" cx="60"  cy="2000" r="1"/>
+    <circle class="ts ts11" cx="1130" cy="2080" r="1"/>
+    <circle class="ts ts12" cx="700" cy="2080" r="1"/>
+    <circle class="ts ts13" cx="160" cy="350"  r="1"/>
+    <circle class="ts ts14" cx="900" cy="220"  r="1"/>
+    <circle class="ts ts15" cx="440" cy="630"  r="1"/>
+    <circle class="ts ts16" cx="730" cy="1340" r="1"/>
+  </svg>
+</div>
+
+<style is:global>
+/* ═══ TOPOGRAPHIC BACKGROUND ═══ */
+.topo-bg-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.topo-bg-fixed svg { width: 100%; height: 100%; display: block; }
+
+/* ─── Static contour lines (atmosphere) ─── */
+.tl {
+  stroke: rgba(109, 40, 217, 0.13);
+  stroke-width: 0.7;
+  fill: none;
+}
+
+/* ─── Pulse-paths — same trace technique as GridBackground ─── */
+.pp {
+  stroke: var(--accent, #6d28d9);
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(109, 40, 217, 0.5));
+  stroke-linecap: round;
+}
+.pp1 { stroke-dasharray: 240; stroke-dashoffset: 800; animation: ppTravel1 9s ease-in-out infinite; }
+.pp2 { stroke-dasharray: 200; stroke-dashoffset: 700; animation: ppTravel2 11s ease-in-out -3.5s infinite; }
+.pp3 { stroke-dasharray: 220; stroke-dashoffset: 850; animation: ppTravel3 10s ease-in-out -1s infinite; }
+.pp4 { stroke-dasharray: 260; stroke-dashoffset: 1000; animation: ppTravel4 12s ease-in-out -7s infinite; }
+.pp5 { stroke-dasharray: 190; stroke-dashoffset: 650; animation: ppTravel5 8s ease-in-out -2s infinite; }
+.pp6 { stroke-dasharray: 210; stroke-dashoffset: 720; animation: ppTravel6 10s ease-in-out -5.5s infinite; }
+.pp7 { stroke-dasharray: 220; stroke-dashoffset: 800; animation: ppTravel7 11s ease-in-out -8s infinite; }
+.pp8 { stroke-dasharray: 200; stroke-dashoffset: 750; animation: ppTravel8 9s ease-in-out -4.5s infinite; }
+
+@keyframes ppTravel1 { 0%{stroke-dashoffset:800;opacity:0}10%{opacity:.7}50%{opacity:.7}90%{opacity:0}100%{stroke-dashoffset:-240;opacity:0} }
+@keyframes ppTravel2 { 0%{stroke-dashoffset:700;opacity:0}10%{opacity:.6}50%{opacity:.6}90%{opacity:0}100%{stroke-dashoffset:-200;opacity:0} }
+@keyframes ppTravel3 { 0%{stroke-dashoffset:850;opacity:0}10%{opacity:.65}50%{opacity:.65}90%{opacity:0}100%{stroke-dashoffset:-220;opacity:0} }
+@keyframes ppTravel4 { 0%{stroke-dashoffset:1000;opacity:0}15%{opacity:.6}50%{opacity:.6}85%{opacity:0}100%{stroke-dashoffset:-260;opacity:0} }
+@keyframes ppTravel5 { 0%{stroke-dashoffset:650;opacity:0}10%{opacity:.7}50%{opacity:.7}90%{opacity:0}100%{stroke-dashoffset:-190;opacity:0} }
+@keyframes ppTravel6 { 0%{stroke-dashoffset:720;opacity:0}10%{opacity:.55}50%{opacity:.55}90%{opacity:0}100%{stroke-dashoffset:-210;opacity:0} }
+@keyframes ppTravel7 { 0%{stroke-dashoffset:800;opacity:0}10%{opacity:.6}50%{opacity:.6}90%{opacity:0}100%{stroke-dashoffset:-220;opacity:0} }
+@keyframes ppTravel8 { 0%{stroke-dashoffset:750;opacity:0}10%{opacity:.65}50%{opacity:.65}90%{opacity:0}100%{stroke-dashoffset:-200;opacity:0} }
+
+/* ─── Short fast pulses ─── */
+.sp {
+  stroke: var(--accent, #6d28d9);
+  stroke-width: 1.2;
+  fill: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(109, 40, 217, 0.55));
+  stroke-linecap: round;
+}
+.sp1 { stroke-dasharray: 80; stroke-dashoffset: 280; animation: spFast1 5s ease-in-out -1.5s infinite; }
+.sp2 { stroke-dasharray: 80; stroke-dashoffset: 280; animation: spFast2 4.5s ease-in-out -3s infinite; }
+.sp3 { stroke-dasharray: 80; stroke-dashoffset: 280; animation: spFast3 5.5s ease-in-out -0.5s infinite; }
+.sp4 { stroke-dasharray: 80; stroke-dashoffset: 280; animation: spFast4 4s ease-in-out -2.5s infinite; }
+@keyframes spFast1 { 0%{stroke-dashoffset:280;opacity:0}15%{opacity:.7}50%{opacity:.7}85%{opacity:0}100%{stroke-dashoffset:-80;opacity:0} }
+@keyframes spFast2 { 0%{stroke-dashoffset:280;opacity:0}15%{opacity:.7}50%{opacity:.7}85%{opacity:0}100%{stroke-dashoffset:-80;opacity:0} }
+@keyframes spFast3 { 0%{stroke-dashoffset:280;opacity:0}15%{opacity:.65}50%{opacity:.65}85%{opacity:0}100%{stroke-dashoffset:-80;opacity:0} }
+@keyframes spFast4 { 0%{stroke-dashoffset:280;opacity:0}15%{opacity:.7}50%{opacity:.7}85%{opacity:0}100%{stroke-dashoffset:-80;opacity:0} }
+
+html.dark .sp, body.dark .sp { stroke: #a78bfa; filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.7)); }
+
+/* ─── Nodes pulsing ─── */
+.tn { fill: var(--accent, #6d28d9); opacity: 0; animation: tnPulse 4s ease-in-out infinite; }
+.tn.n1{animation-delay:0s}.tn.n2{animation-delay:1.5s}.tn.n3{animation-delay:3s}
+.tn.n4{animation-delay:.8s}.tn.n5{animation-delay:2.2s}.tn.n6{animation-delay:.3s}
+.tn.n7{animation-delay:1s}.tn.n8{animation-delay:3.5s}.tn.n9{animation-delay:2.8s}
+.tn.n10{animation-delay:.5s}.tn.n11{animation-delay:1.8s}.tn.n12{animation-delay:3.3s}
+.tn.n13{animation-delay:2.5s}.tn.n14{animation-delay:1.2s}
+@keyframes tnPulse { 0%,100%{opacity:0;r:2}50%{opacity:.65;r:4.5} }
+
+/* ─── Halos expanding ─── */
+.th { fill: none; stroke: var(--accent, #6d28d9); stroke-width: 0.7; opacity: 0; animation: thHalo 4s ease-out infinite; }
+.th.h1{animation-delay:0s}.th.h2{animation-delay:1.5s}.th.h3{animation-delay:3s}
+.th.h4{animation-delay:.8s}.th.h5{animation-delay:2.2s}.th.h6{animation-delay:4s}
+@keyframes thHalo { 0%,100%{opacity:0;r:4}30%{opacity:.45}70%{opacity:0;r:22} }
+
+/* ─── Drifting particles — slow organic motion between hills ─── */
+.dp {
+  fill: var(--accent, #6d28d9);
+  opacity: 0.35;
+  filter: drop-shadow(0 0 3px rgba(109, 40, 217, 0.5));
+}
+.dp1 { animation: drift1 18s ease-in-out infinite; }
+.dp2 { animation: drift2 22s ease-in-out -3s infinite; }
+.dp3 { animation: drift3 20s ease-in-out -6s infinite; }
+.dp4 { animation: drift4 24s ease-in-out -2s infinite; }
+.dp5 { animation: drift5 19s ease-in-out -10s infinite; }
+.dp6 { animation: drift6 21s ease-in-out -4s infinite; }
+.dp7 { animation: drift7 23s ease-in-out -7s infinite; }
+.dp8 { animation: drift8 17s ease-in-out -12s infinite; }
+@keyframes drift1 { 0%,100%{transform:translate(0,0);opacity:0.35}50%{transform:translate(60px,-40px);opacity:0.55} }
+@keyframes drift2 { 0%,100%{transform:translate(0,0);opacity:0.30}50%{transform:translate(-50px,50px);opacity:0.50} }
+@keyframes drift3 { 0%,100%{transform:translate(0,0);opacity:0.30}50%{transform:translate(45px,60px);opacity:0.55} }
+@keyframes drift4 { 0%,100%{transform:translate(0,0);opacity:0.35}50%{transform:translate(-55px,-50px);opacity:0.55} }
+@keyframes drift5 { 0%,100%{transform:translate(0,0);opacity:0.30}50%{transform:translate(70px,-45px);opacity:0.55} }
+@keyframes drift6 { 0%,100%{transform:translate(0,0);opacity:0.30}50%{transform:translate(50px,55px);opacity:0.50} }
+@keyframes drift7 { 0%,100%{transform:translate(0,0);opacity:0.30}50%{transform:translate(-60px,-40px);opacity:0.50} }
+@keyframes drift8 { 0%,100%{transform:translate(0,0);opacity:0.35}50%{transform:translate(40px,50px);opacity:0.55} }
+html.dark .dp, body.dark .dp { fill: #a78bfa; filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.65)); }
+
+/* ─── Stars — twinkling dots between hills ─── */
+.ts {
+  fill: rgba(109, 40, 217, 0.5);
+  animation: tsTwinkle 5s ease-in-out infinite;
+}
+.ts1{animation-delay:0s}.ts2{animation-delay:0.4s}.ts3{animation-delay:0.8s}
+.ts4{animation-delay:1.2s}.ts5{animation-delay:1.6s}.ts6{animation-delay:2.0s}
+.ts7{animation-delay:2.4s}.ts8{animation-delay:2.8s}.ts9{animation-delay:3.2s}
+.ts10{animation-delay:3.6s}.ts11{animation-delay:4.0s}.ts12{animation-delay:4.4s}
+.ts13{animation-delay:0.6s}.ts14{animation-delay:1.4s}.ts15{animation-delay:2.6s}.ts16{animation-delay:3.4s}
+@keyframes tsTwinkle {
+  0%, 100% { opacity: 0.3; r: 0.8; }
+  50%      { opacity: 0.85; r: 1.5; }
+}
+html.dark .ts, body.dark .ts { fill: rgba(167, 139, 250, 0.6); }
+
+/* ─── Hill glows ─── */
+.hg { opacity: 1; }
+html.dark .hg, body.dark .hg { opacity: 1.4; mix-blend-mode: screen; }
+
+/* ─── Dark mode ─── */
+html.dark .tl, body.dark .tl { stroke: rgba(167, 139, 250, 0.10); }
+html.dark .pp, body.dark .pp { stroke: #a78bfa; filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.7)); }
+html.dark .tn, body.dark .tn { fill: #a78bfa; }
+html.dark .th, body.dark .th { stroke: #a78bfa; }
+
+/* ─── Content above ─── */
+.topo-bg-fixed ~ nav,
+.topo-bg-fixed ~ main,
+.topo-bg-fixed ~ footer { position: relative; z-index: 1; }
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .pp, .tn, .th, .sp, .dp { animation: none; }
+  .tn { opacity: 0.4; }
+  .dp { opacity: 0.35; }
+}
+</style>

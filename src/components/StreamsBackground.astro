@@ -1,0 +1,189 @@
+---
+// STREAMS BACKGROUND — for /web/proceso
+// Vertical streams flowing top-to-bottom (data-pipeline / timeline feel).
+// Same density recipe: atmosphere + 8 pulse-paths + 14 nodes + 6 halos + drifting particles.
+// Distinct from Grid (mostly horizontal/diagonal) and Topo (concentric).
+---
+
+<div class="streams-bg-fixed" aria-hidden="true">
+  <svg viewBox="0 0 1200 2400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- ═══ STATIC ATMOSPHERE — 12 vertical "rails" with subtle horizontal connectors ═══ -->
+    <!-- Vertical rails (low opacity) -->
+    <line class="sl" x1="100" y1="0" x2="100" y2="2400"/>
+    <line class="sl" x1="200" y1="0" x2="200" y2="2400"/>
+    <line class="sl" x1="320" y1="0" x2="320" y2="2400"/>
+    <line class="sl" x1="450" y1="0" x2="450" y2="2400"/>
+    <line class="sl" x1="600" y1="0" x2="600" y2="2400"/>
+    <line class="sl" x1="750" y1="0" x2="750" y2="2400"/>
+    <line class="sl" x1="880" y1="0" x2="880" y2="2400"/>
+    <line class="sl" x1="1000" y1="0" x2="1000" y2="2400"/>
+    <line class="sl" x1="1100" y1="0" x2="1100" y2="2400"/>
+
+    <!-- Subtle horizontal "ties" between streams at varying heights -->
+    <line class="sl sl-tie" x1="100" y1="200" x2="320" y2="220"/>
+    <line class="sl sl-tie" x1="450" y1="380" x2="600" y2="360"/>
+    <line class="sl sl-tie" x1="750" y1="500" x2="1000" y2="520"/>
+    <line class="sl sl-tie" x1="200" y1="700" x2="450" y2="720"/>
+    <line class="sl sl-tie" x1="600" y1="900" x2="880" y2="880"/>
+    <line class="sl sl-tie" x1="100" y1="1100" x2="320" y2="1120"/>
+    <line class="sl sl-tie" x1="750" y1="1280" x2="1100" y2="1300"/>
+    <line class="sl sl-tie" x1="450" y1="1450" x2="750" y2="1430"/>
+    <line class="sl sl-tie" x1="200" y1="1620" x2="600" y2="1640"/>
+    <line class="sl sl-tie" x1="880" y1="1800" x2="1100" y2="1780"/>
+    <line class="sl sl-tie" x1="100" y1="1980" x2="450" y2="2000"/>
+    <line class="sl sl-tie" x1="600" y1="2180" x2="880" y2="2160"/>
+
+    <!-- ═══ 8 PULSE-PATHS — bright traces flowing DOWN streams ═══ -->
+    <!-- Each path follows a vertical rail with occasional jumps -->
+    <path class="sp sp1" d="M 100 0 L 100 600 L 320 700 L 320 1300 L 600 1400 L 600 2400" fill="none"/>
+    <path class="sp sp2" d="M 200 0 L 200 400 L 450 500 L 450 1100 L 200 1200 L 200 2000" fill="none"/>
+    <path class="sp sp3" d="M 600 0 L 600 700 L 880 800 L 880 1500 L 1100 1600 L 1100 2300" fill="none"/>
+    <path class="sp sp4" d="M 750 0 L 750 500 L 1000 600 L 1000 1200 L 750 1300 L 750 2200" fill="none"/>
+    <path class="sp sp5" d="M 320 100 L 320 600 L 600 700 L 600 1300 L 880 1400 L 880 2200" fill="none"/>
+    <path class="sp sp6" d="M 1000 0 L 1000 800 L 750 900 L 750 1500 L 600 1600 L 600 2400" fill="none"/>
+    <path class="sp sp7" d="M 100 200 L 450 280 L 450 900 L 750 1000 L 750 1700 L 1100 1800" fill="none"/>
+    <path class="sp sp8" d="M 880 0 L 880 700 L 600 800 L 320 900 L 320 1500 L 100 1600 L 100 2300" fill="none"/>
+
+    <!-- ═══ NODES at stream junction points ═══ -->
+    <circle class="sn n1"  cx="320" cy="700" r="3"/>
+    <circle class="sn n2"  cx="450" cy="500" r="3"/>
+    <circle class="sn n3"  cx="600" cy="700" r="3"/>
+    <circle class="sn n4"  cx="880" cy="800" r="3"/>
+    <circle class="sn n5"  cx="1000" cy="600" r="3"/>
+    <circle class="sn n6"  cx="320" cy="1300" r="3"/>
+    <circle class="sn n7"  cx="450" cy="1100" r="3"/>
+    <circle class="sn n8"  cx="600" cy="1300" r="3"/>
+    <circle class="sn n9"  cx="750" cy="1500" r="3"/>
+    <circle class="sn n10" cx="880" cy="1500" r="3"/>
+    <circle class="sn n11" cx="100" cy="1600" r="3"/>
+    <circle class="sn n12" cx="600" cy="1600" r="3"/>
+    <circle class="sn n13" cx="1100" cy="1600" r="3"/>
+    <circle class="sn n14" cx="450" cy="900" r="3"/>
+
+    <!-- ═══ HALOS — expanding rings around 6 select junctions ═══ -->
+    <circle class="sh h1" cx="450" cy="500" r="6"/>
+    <circle class="sh h2" cx="600" cy="700" r="6"/>
+    <circle class="sh h3" cx="880" cy="800" r="6"/>
+    <circle class="sh h4" cx="320" cy="1300" r="6"/>
+    <circle class="sh h5" cx="750" cy="1500" r="6"/>
+    <circle class="sh h6" cx="600" cy="1600" r="6"/>
+
+    <!-- ═══ DRIFTING PARTICLES — small dots moving down streams ═══ -->
+    <circle class="ds ds1" cx="100"  cy="300" r="1.5"/>
+    <circle class="ds ds2" cx="320"  cy="500" r="1.5"/>
+    <circle class="ds ds3" cx="600"  cy="200" r="1.5"/>
+    <circle class="ds ds4" cx="750"  cy="900" r="1.5"/>
+    <circle class="ds ds5" cx="1000" cy="400" r="1.5"/>
+    <circle class="ds ds6" cx="200"  cy="1500" r="1.5"/>
+    <circle class="ds ds7" cx="450"  cy="1700" r="1.5"/>
+    <circle class="ds ds8" cx="880"  cy="1100" r="1.5"/>
+  </svg>
+</div>
+
+<style is:global>
+/* ═══ STREAMS BACKGROUND ═══ */
+.streams-bg-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.streams-bg-fixed svg { width: 100%; height: 100%; display: block; }
+
+/* ─── Atmosphere — vertical rails + ties ─── */
+.sl {
+  stroke: rgba(109, 40, 217, 0.10);
+  stroke-width: 0.6;
+  fill: none;
+}
+.sl-tie {
+  stroke: rgba(109, 40, 217, 0.07);
+  stroke-width: 0.5;
+}
+
+/* ─── Pulse-paths flowing down streams ─── */
+.sp {
+  stroke: var(--accent, #6d28d9);
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(109, 40, 217, 0.5));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sp1 { stroke-dasharray: 220; stroke-dashoffset: 800; animation: spFlow1 9s linear infinite; }
+.sp2 { stroke-dasharray: 200; stroke-dashoffset: 700; animation: spFlow2 11s linear -3s infinite; }
+.sp3 { stroke-dasharray: 240; stroke-dashoffset: 850; animation: spFlow3 10s linear -1s infinite; }
+.sp4 { stroke-dasharray: 220; stroke-dashoffset: 800; animation: spFlow4 12s linear -7s infinite; }
+.sp5 { stroke-dasharray: 200; stroke-dashoffset: 720; animation: spFlow5 8s linear -2s infinite; }
+.sp6 { stroke-dasharray: 240; stroke-dashoffset: 870; animation: spFlow6 11s linear -5s infinite; }
+.sp7 { stroke-dasharray: 220; stroke-dashoffset: 800; animation: spFlow7 10s linear -8s infinite; }
+.sp8 { stroke-dasharray: 240; stroke-dashoffset: 900; animation: spFlow8 12s linear -4s infinite; }
+
+@keyframes spFlow1 { 0%{stroke-dashoffset:800;opacity:0}10%{opacity:.65}50%{opacity:.65}90%{opacity:0}100%{stroke-dashoffset:-220;opacity:0} }
+@keyframes spFlow2 { 0%{stroke-dashoffset:700;opacity:0}10%{opacity:.6}50%{opacity:.6}90%{opacity:0}100%{stroke-dashoffset:-200;opacity:0} }
+@keyframes spFlow3 { 0%{stroke-dashoffset:850;opacity:0}10%{opacity:.6}50%{opacity:.6}90%{opacity:0}100%{stroke-dashoffset:-240;opacity:0} }
+@keyframes spFlow4 { 0%{stroke-dashoffset:800;opacity:0}10%{opacity:.65}50%{opacity:.65}90%{opacity:0}100%{stroke-dashoffset:-220;opacity:0} }
+@keyframes spFlow5 { 0%{stroke-dashoffset:720;opacity:0}10%{opacity:.6}50%{opacity:.6}90%{opacity:0}100%{stroke-dashoffset:-200;opacity:0} }
+@keyframes spFlow6 { 0%{stroke-dashoffset:870;opacity:0}10%{opacity:.65}50%{opacity:.65}90%{opacity:0}100%{stroke-dashoffset:-240;opacity:0} }
+@keyframes spFlow7 { 0%{stroke-dashoffset:800;opacity:0}10%{opacity:.6}50%{opacity:.6}90%{opacity:0}100%{stroke-dashoffset:-220;opacity:0} }
+@keyframes spFlow8 { 0%{stroke-dashoffset:900;opacity:0}10%{opacity:.65}50%{opacity:.65}90%{opacity:0}100%{stroke-dashoffset:-240;opacity:0} }
+
+/* ─── Nodes ─── */
+.sn { fill: var(--accent, #6d28d9); opacity: 0; animation: snPulse 4s ease-in-out infinite; }
+.sn.n1{animation-delay:0s}.sn.n2{animation-delay:.5s}.sn.n3{animation-delay:1s}
+.sn.n4{animation-delay:1.5s}.sn.n5{animation-delay:2s}.sn.n6{animation-delay:2.5s}
+.sn.n7{animation-delay:3s}.sn.n8{animation-delay:3.5s}.sn.n9{animation-delay:.3s}
+.sn.n10{animation-delay:1.3s}.sn.n11{animation-delay:2.3s}.sn.n12{animation-delay:3.3s}
+.sn.n13{animation-delay:.8s}.sn.n14{animation-delay:1.8s}
+@keyframes snPulse { 0%,100%{opacity:0;r:2}50%{opacity:.7;r:4.5} }
+
+/* ─── Halos ─── */
+.sh { fill: none; stroke: var(--accent, #6d28d9); stroke-width: 0.7; opacity: 0; animation: shExpand 4.5s ease-out infinite; }
+.sh.h1{animation-delay:0s}.sh.h2{animation-delay:.7s}.sh.h3{animation-delay:1.4s}
+.sh.h4{animation-delay:2.1s}.sh.h5{animation-delay:2.8s}.sh.h6{animation-delay:3.5s}
+@keyframes shExpand { 0%,100%{opacity:0;r:4}30%{opacity:.4}70%{opacity:0;r:24} }
+
+/* ─── Drifting particles — flow downward ─── */
+.ds {
+  fill: var(--accent, #6d28d9);
+  opacity: 0;
+  filter: drop-shadow(0 0 3px rgba(109, 40, 217, 0.5));
+}
+.ds1 { animation: dsDown1 12s linear infinite; }
+.ds2 { animation: dsDown2 14s linear -3s infinite; }
+.ds3 { animation: dsDown3 11s linear -6s infinite; }
+.ds4 { animation: dsDown4 13s linear -1s infinite; }
+.ds5 { animation: dsDown5 15s linear -8s infinite; }
+.ds6 { animation: dsDown6 12s linear -4s infinite; }
+.ds7 { animation: dsDown7 14s linear -10s infinite; }
+.ds8 { animation: dsDown8 13s linear -7s infinite; }
+@keyframes dsDown1 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.7}80%{opacity:.7}100%{transform:translateY(2300px);opacity:0} }
+@keyframes dsDown2 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.65}80%{opacity:.65}100%{transform:translateY(2200px);opacity:0} }
+@keyframes dsDown3 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.7}80%{opacity:.7}100%{transform:translateY(2400px);opacity:0} }
+@keyframes dsDown4 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.6}80%{opacity:.6}100%{transform:translateY(2200px);opacity:0} }
+@keyframes dsDown5 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.65}80%{opacity:.65}100%{transform:translateY(2300px);opacity:0} }
+@keyframes dsDown6 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.7}80%{opacity:.7}100%{transform:translateY(2200px);opacity:0} }
+@keyframes dsDown7 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.6}80%{opacity:.6}100%{transform:translateY(2300px);opacity:0} }
+@keyframes dsDown8 { 0%{transform:translateY(-200px);opacity:0}10%{opacity:.65}80%{opacity:.65}100%{transform:translateY(2200px);opacity:0} }
+
+/* ─── Dark mode ─── */
+html.dark .sl, body.dark .sl { stroke: rgba(167, 139, 250, 0.13); }
+html.dark .sl-tie, body.dark .sl-tie { stroke: rgba(167, 139, 250, 0.10); }
+html.dark .sp, body.dark .sp { stroke: #a78bfa; filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.7)); }
+html.dark .sn, body.dark .sn { fill: #a78bfa; }
+html.dark .sh, body.dark .sh { stroke: #a78bfa; }
+html.dark .ds, body.dark .ds { fill: #a78bfa; filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.65)); }
+
+/* ─── Content above ─── */
+.streams-bg-fixed ~ nav,
+.streams-bg-fixed ~ main,
+.streams-bg-fixed ~ footer { position: relative; z-index: 1; }
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .sp, .sn, .sh, .ds { animation: none; }
+  .sn { opacity: 0.4; }
+}
+</style>

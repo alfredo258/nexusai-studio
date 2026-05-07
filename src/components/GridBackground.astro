@@ -1,0 +1,83 @@
+---
+// Animated grid background — Fluss-style pulse lines across entire page
+---
+<div class="grid-bg-fixed" aria-hidden="true">
+  <svg viewBox="0 0 1200 2400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- Horizontal lines -->
+    <line class="gl" x1="0" y1="100" x2="1200" y2="100"/><line class="gl" x1="0" y1="250" x2="1200" y2="250"/>
+    <line class="gl" x1="0" y1="400" x2="1200" y2="400"/><line class="gl" x1="0" y1="550" x2="1200" y2="550"/>
+    <line class="gl" x1="0" y1="700" x2="1200" y2="700"/><line class="gl" x1="0" y1="850" x2="1200" y2="850"/>
+    <line class="gl" x1="0" y1="1000" x2="1200" y2="1000"/><line class="gl" x1="0" y1="1150" x2="1200" y2="1150"/>
+    <line class="gl" x1="0" y1="1300" x2="1200" y2="1300"/><line class="gl" x1="0" y1="1450" x2="1200" y2="1450"/>
+    <line class="gl" x1="0" y1="1600" x2="1200" y2="1600"/><line class="gl" x1="0" y1="1750" x2="1200" y2="1750"/>
+    <line class="gl" x1="0" y1="1900" x2="1200" y2="1900"/><line class="gl" x1="0" y1="2050" x2="1200" y2="2050"/>
+    <line class="gl" x1="0" y1="2200" x2="1200" y2="2200"/>
+    <!-- Vertical lines -->
+    <line class="gl" x1="150" y1="0" x2="150" y2="2400"/><line class="gl" x1="300" y1="0" x2="300" y2="2400"/>
+    <line class="gl" x1="450" y1="0" x2="450" y2="2400"/><line class="gl" x1="600" y1="0" x2="600" y2="2400"/>
+    <line class="gl" x1="750" y1="0" x2="750" y2="2400"/><line class="gl" x1="900" y1="0" x2="900" y2="2400"/>
+    <line class="gl" x1="1050" y1="0" x2="1050" y2="2400"/>
+    <!-- Diagonal connections -->
+    <line class="gl" x1="150" y1="100" x2="450" y2="400"/><line class="gl" x1="450" y1="250" x2="750" y2="100"/>
+    <line class="gl" x1="750" y1="400" x2="1050" y2="250"/><line class="gl" x1="300" y1="700" x2="600" y2="550"/>
+    <line class="gl" x1="600" y1="850" x2="900" y2="700"/><line class="gl" x1="150" y1="1000" x2="450" y2="850"/>
+    <line class="gl" x1="750" y1="1150" x2="1050" y2="1000"/><line class="gl" x1="300" y1="1300" x2="600" y2="1150"/>
+    <line class="gl" x1="900" y1="1450" x2="1050" y2="1300"/><line class="gl" x1="150" y1="1600" x2="450" y2="1450"/>
+    <line class="gl" x1="600" y1="1750" x2="900" y2="1600"/><line class="gl" x1="300" y1="1900" x2="750" y2="2050"/>
+    <line class="gl" x1="450" y1="2200" x2="900" y2="1900"/>
+    <!-- Pulse lines -->
+    <path class="pl p1" d="M 0 250 L 150 250 L 300 250 L 450 400 L 600 550 L 750 400 L 900 250 L 1050 400 L 1200 400"/>
+    <path class="pl p2" d="M 0 850 L 150 1000 L 300 850 L 450 850 L 600 700 L 750 850 L 900 1000 L 1050 1000 L 1200 1000"/>
+    <path class="pl p3" d="M 300 0 L 300 250 L 450 400 L 450 700 L 600 550 L 750 700 L 750 1000 L 600 1150 L 600 1450"/>
+    <path class="pl p4" d="M 900 0 L 900 400 L 1050 550 L 1050 850 L 900 1000 L 750 1150 L 750 1450 L 900 1600 L 900 1900"/>
+    <path class="pl p5" d="M 0 1600 L 150 1450 L 300 1300 L 450 1300 L 600 1150 L 750 1000 L 900 850 L 1050 700 L 1200 700"/>
+    <path class="pl p6" d="M 600 2400 L 600 2050 L 450 1900 L 450 1750 L 300 1600 L 150 1450 L 150 1300 L 300 1150 L 300 1000"/>
+    <!-- Nodes -->
+    <circle class="gn n1" cx="450" cy="400" r="3"/><circle class="gn n2" cx="750" cy="400" r="3"/>
+    <circle class="gn n3" cx="600" cy="550" r="3"/><circle class="gn n4" cx="300" cy="700" r="3"/>
+    <circle class="gn n5" cx="900" cy="700" r="3"/><circle class="gn n6" cx="600" cy="850" r="3"/>
+    <circle class="gn n7" cx="150" cy="1000" r="3"/><circle class="gn n8" cx="750" cy="1150" r="3"/>
+    <circle class="gn n9" cx="450" cy="1300" r="3"/><circle class="gn n10" cx="900" cy="1450" r="3"/>
+    <circle class="gn n11" cx="300" cy="1600" r="3"/><circle class="gn n12" cx="600" cy="1750" r="3"/>
+    <circle class="gn n1" cx="1050" cy="1000" r="3"/><circle class="gn n4" cx="150" cy="1450" r="3"/>
+    <!-- Halos -->
+    <circle class="nh h1" cx="450" cy="400" r="4"/><circle class="nh h2" cx="600" cy="550" r="4"/>
+    <circle class="nh h3" cx="900" cy="700" r="4"/><circle class="nh h4" cx="750" cy="1150" r="4"/>
+    <circle class="nh h5" cx="300" cy="1600" r="4"/><circle class="nh h6" cx="600" cy="1750" r="4"/>
+  </svg>
+</div>
+
+<style is:global>
+/* ═══ ANIMATED GRID BACKGROUND ═══ */
+.grid-bg-fixed { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.grid-bg-fixed svg { width: 100%; height: 100%; }
+.gl { stroke: rgba(109, 40, 217, 0.06); stroke-width: 0.5; fill: none; }
+.pl { stroke: var(--accent, #6d28d9); stroke-width: 1.5; fill: none; opacity: 0; filter: drop-shadow(0 0 6px rgba(109, 40, 217, 0.4)); }
+.pl.p1 { stroke-dasharray: 200; stroke-dashoffset: 600; animation: gTravel1 8s ease-in-out infinite; }
+.pl.p2 { stroke-dasharray: 150; stroke-dashoffset: 500; animation: gTravel2 10s ease-in-out 2s infinite; }
+.pl.p3 { stroke-dasharray: 180; stroke-dashoffset: 550; animation: gTravel3 9s ease-in-out 4s infinite; }
+.pl.p4 { stroke-dasharray: 160; stroke-dashoffset: 480; animation: gTravel4 11s ease-in-out 1s infinite; }
+.pl.p5 { stroke-dasharray: 140; stroke-dashoffset: 520; animation: gTravel5 7s ease-in-out 3s infinite; }
+.pl.p6 { stroke-dasharray: 170; stroke-dashoffset: 540; animation: gTravel6 12s ease-in-out 5s infinite; }
+@keyframes gTravel1 { 0%{stroke-dashoffset:600;opacity:0}10%{opacity:.6}50%{opacity:.6}90%{opacity:0}100%{stroke-dashoffset:-200;opacity:0} }
+@keyframes gTravel2 { 0%{stroke-dashoffset:500;opacity:0}10%{opacity:.45}50%{opacity:.45}90%{opacity:0}100%{stroke-dashoffset:-150;opacity:0} }
+@keyframes gTravel3 { 0%{stroke-dashoffset:550;opacity:0}10%{opacity:.5}50%{opacity:.5}90%{opacity:0}100%{stroke-dashoffset:-180;opacity:0} }
+@keyframes gTravel4 { 0%{stroke-dashoffset:480;opacity:0}15%{opacity:.45}50%{opacity:.45}85%{opacity:0}100%{stroke-dashoffset:-160;opacity:0} }
+@keyframes gTravel5 { 0%{stroke-dashoffset:520;opacity:0}10%{opacity:.55}50%{opacity:.55}90%{opacity:0}100%{stroke-dashoffset:-140;opacity:0} }
+@keyframes gTravel6 { 0%{stroke-dashoffset:540;opacity:0}10%{opacity:.4}50%{opacity:.4}90%{opacity:0}100%{stroke-dashoffset:-170;opacity:0} }
+.gn { fill: var(--accent, #6d28d9); opacity: 0; animation: gNodeGlow 4s ease-in-out infinite; }
+.gn.n1{animation-delay:0s}.gn.n2{animation-delay:1.5s}.gn.n3{animation-delay:3s}
+.gn.n4{animation-delay:.8s}.gn.n5{animation-delay:2.2s}.gn.n6{animation-delay:4s}
+.gn.n7{animation-delay:1s}.gn.n8{animation-delay:3.5s}.gn.n9{animation-delay:2.8s}
+.gn.n10{animation-delay:.5s}.gn.n11{animation-delay:1.8s}.gn.n12{animation-delay:3.3s}
+@keyframes gNodeGlow { 0%,100%{opacity:0;r:2}50%{opacity:.5;r:4} }
+.nh { fill: none; stroke: var(--accent, #6d28d9); stroke-width: 0.5; opacity: 0; animation: gHalo 4s ease-out infinite; }
+.nh.h1{animation-delay:0s}.nh.h2{animation-delay:1.5s}.nh.h3{animation-delay:3s}
+.nh.h4{animation-delay:.8s}.nh.h5{animation-delay:2.2s}.nh.h6{animation-delay:4s}
+@keyframes gHalo { 0%,100%{opacity:0;r:4}30%{opacity:.25}70%{opacity:0;r:16} }
+
+/* Content above the grid */
+.grid-bg-fixed ~ nav,
+.grid-bg-fixed ~ main,
+.grid-bg-fixed ~ footer { position: relative; z-index: 1; }
+</style>

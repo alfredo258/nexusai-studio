@@ -1,37 +1,58 @@
 ---
 import JsonLd from './JsonLd.astro';
 
-const faqs = [
+interface Props {
+  /** Show only top N questions; default = all. Use on home as teaser. */
+  limit?: number;
+  /** Hide the section header (when used inside a dedicated FAQ page) */
+  hideHeader?: boolean;
+  /** Show "Ver todas las preguntas" link to /web/faq (when limited) */
+  showSeeAllLink?: boolean;
+}
+const { limit, hideHeader = false, showSeeAllLink = false } = Astro.props;
+
+// Order: top 4 = highest-converting objections shown on home (limit=4)
+const allFaqs = [
   {
-    question: "¿Cuánto tiempo tarda en verse resultados?",
-    answer: "La mayoría de nuestros clientes empiezan a ver respuestas en la primera semana de campaña. Las reuniones calificadas generalmente comienzan a agendarse entre la semana 2 y 3, a medida que las secuencias se calientan y optimizamos la mensajería."
+    question: "¿Cuándo voy a ver las primeras reuniones?",
+    answer: "Primeras respuestas entre el día 5 y 7. Primera reunión agendada entre el día 10 y 14 (depende del tamaño de tu ICP y qué tan saturado esté tu mercado). A partir del mes 2 vemos 2–3x más volumen porque ya optimizamos copy, horarios y targeting con data real de tu cuenta."
   },
   {
-    question: "¿Qué incluye el servicio de prospección?",
-    answer: "Incluimos todo: investigación de mercado, construcción de bases de datos, redacción de mensajes con IA, configuración de infraestructura técnica (dominios, casillas, CRM), lanzamiento de campañas multicanal (email + LinkedIn), optimización continua y reportes semanales."
+    question: "¿Cuántas reuniones calificadas voy a agendar por mes?",
+    answer: "Nuestros clientes promedian entre 10 y 30 reuniones calificadas/mes. Mercados amplios con buena oferta llegan a 40+. 'Calificada' significa: tomador de decisión, empresa dentro de tu ICP, y con interés real — no demos de curiosos. En 24 meses llevamos +500 reuniones agendadas para clientes."
   },
   {
-    question: "¿Trabajan con empresas de mi industria?",
-    answer: "Trabajamos con empresas B2B de cualquier industria: SaaS, consultoría, servicios profesionales, tecnología, manufactura y más. Si vendés a otras empresas, podemos llenar tu pipeline."
+    question: "¿Qué pasa si no consigo reuniones?",
+    answer: "En los primeros 60 días revisamos la campaña semanalmente. Si en 30 días no hay reuniones agendadas (habiendo cumplido tu parte: feedback, disponibilidad de agenda, producto definido), reajustamos ICP/copy sin costo adicional. No trabajamos con clientes cuyo producto no valida mercado — hacemos screening previo para evitar ese problema."
   },
   {
-    question: "¿Cuántas reuniones puedo esperar por mes?",
-    answer: "Depende de tu mercado y oferta, pero nuestros clientes típicamente consiguen entre 10 y 30 reuniones calificadas por mes. Algunas empresas con mercados amplios superan las 40 reuniones mensuales."
+    question: "¿Cuánto cuesta?",
+    answer: "Fee fijo mensual desde USD 1.500 según volumen, canales y tamaño de mercado. Sin costos por lead, sin % de revenue. Contrato inicial de 3 meses (el tiempo mínimo real para ver data significativa) y después mes a mes. Primer llamada gratis para cotizar tu caso específico."
   },
   {
-    question: "¿Qué diferencia a The Outbound Force de otras agencias?",
-    answer: "Combinamos IA para personalización a escala con frameworks de prospección probados. Cada mensaje suena como si un humano investigó al prospecto — porque nuestra IA realmente lo hizo. Además, no cobramos por lead, sino por sistema implementado y funcionando."
+    question: "¿Qué incluye exactamente el servicio?",
+    answer: "Investigación de ICP y mercado, construcción de base de datos (500–2.000 contactos/mes según plan), redacción de copy con IA + revisión humana, infraestructura técnica (dominios secundarios, warm-up de casillas, DNS/SPF/DKIM, CRM), lanzamiento multicanal (LinkedIn + cold email + opcional Meta/Google Ads), optimización semanal y reportes cada lunes con reuniones agendadas, respuesta rate y pipeline generado."
   },
   {
-    question: "¿Necesito tener un equipo de ventas?",
-    answer: "No necesariamente. Solo necesitás a alguien que pueda tomar las reuniones que agendamos. Puede ser el founder, un vendedor, o incluso nosotros podemos ayudarte a estructurar ese proceso."
+    question: "¿En qué industrias tienen más experiencia?",
+    answer: "SaaS B2B, consultoría, servicios profesionales (legales, contables, marketing), agencias, tecnología y manufactura que venden a empresas. Ya trabajamos con +30 empresas en 8 mercados (Argentina, México, Colombia, Chile, España, EE.UU., Brasil, Uruguay). Si vendés a otras empresas con ticket promedio > USD 3.000, podemos ayudarte."
+  },
+  {
+    question: "¿En qué se diferencia TOF de otras agencias outbound?",
+    answer: "Tres cosas: (1) No cobramos por lead, cobramos por sistema implementado y corriendo — alineamos incentivos. (2) Combinamos 4 canales en paralelo (LinkedIn + email + Meta + Google) cuando la mayoría hace solo 1. (3) Personalización real con IA por ICP + verificación humana — no plantillas masivas que terminan en spam. Entregabilidad certificada."
+  },
+  {
+    question: "¿Necesito tener equipo de ventas para que funcione?",
+    answer: "No. Solo necesitás alguien que pueda tomar las reuniones que agendamos — puede ser el founder, un comercial o un closer part-time. Si no tenés a nadie, te ayudamos a definir el proceso de cierre, playbook de discovery y dashboards. La idea es que llegues a la reunión listo para vender."
   }
 ];
+
+const faqs = limit ? allFaqs.slice(0, limit) : allFaqs;
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(f => ({
+  "mainEntity": allFaqs.map(f => ({
     "@type": "Question",
     "name": f.question,
     "acceptedAnswer": {
@@ -45,12 +66,14 @@ const faqSchema = {
 <section class="faq-section" id="faq">
   <JsonLd data={faqSchema} />
   <div class="container">
-    <div class="reveal faq-header">
-      <div class="section-label">Preguntas Frecuentes</div>
-      <h2 class="section-title">
-        Todo lo que necesitás saber<br />antes de empezar.
-      </h2>
-    </div>
+    {!hideHeader && (
+      <div class="reveal faq-header">
+        <div class="section-label">Preguntas Frecuentes</div>
+        <h2 class="section-title">
+          Todo lo que necesitás saber<br />antes de empezar.
+        </h2>
+      </div>
+    )}
     <div class="faq-grid">
       {faqs.map((faq, i) => (
         <details class={`reveal faq-item st${i + 1}`}>
@@ -62,5 +85,37 @@ const faqSchema = {
         </details>
       ))}
     </div>
+    {showSeeAllLink && (
+      <div class="faq-seeall reveal">
+        <a href="/web/faq" class="faq-seeall-link">
+          Ver las {allFaqs.length} preguntas
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    )}
   </div>
 </section>
+
+<style>
+  .faq-seeall { text-align: center; margin-top: 2rem; }
+  .faq-seeall-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    color: #6d28d9;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid rgba(109,40,217,0.25);
+    border-radius: 999px;
+    background: rgba(109,40,217,0.04);
+    transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+  }
+  .faq-seeall-link:hover {
+    background: #6d28d9;
+    color: #fff;
+    border-color: #6d28d9;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(109,40,217,0.25);
+  }
+</style>

@@ -1,0 +1,381 @@
+---
+// SPACE BACKGROUND — night sky with constellations + UFOs
+// CSS-only animation, light/dark adaptive, mobile responsive.
+// Concept: violet starfield with 3 recognizable constellations,
+// 40+ twinkling background stars, 2 nebula gradients,
+// and 3 UFO spacecrafts traveling on curved paths with light trails.
+
+// 40 background stars with pseudo-random positions
+const bgStars = [
+  { x:  60, y:  80, d: 0.0 }, { x: 230, y: 130, d: 0.4 }, { x: 410, y:  90, d: 0.8 },
+  { x: 580, y: 170, d: 1.2 }, { x: 720, y:  60, d: 1.6 }, { x: 920, y: 200, d: 2.0 },
+  { x: 1100, y: 110, d: 2.4 }, { x: 130, y: 320, d: 2.8 }, { x: 360, y: 380, d: 3.2 },
+  { x: 530, y: 290, d: 3.6 }, { x: 800, y: 380, d: 4.0 }, { x: 1050, y: 320, d: 4.4 },
+  { x: 200, y: 550, d: 0.2 }, { x: 460, y: 510, d: 0.6 }, { x: 680, y: 590, d: 1.0 },
+  { x: 880, y: 540, d: 1.4 }, { x: 1080, y: 620, d: 1.8 }, {  x:  90, y: 700, d: 2.2 },
+  { x: 290, y: 760, d: 2.6 }, { x: 540, y: 700, d: 3.0 }, { x: 760, y: 770, d: 3.4 },
+  { x: 990, y: 730, d: 3.8 }, { x: 170, y: 880, d: 4.2 }, { x: 410, y: 920, d: 4.6 },
+  { x: 640, y: 870, d: 0.5 }, { x: 870, y: 940, d: 0.9 }, { x: 1130, y: 880, d: 1.3 },
+  { x: 110, y: 1080, d: 1.7 }, { x: 350, y: 1140, d: 2.1 }, { x: 590, y: 1080, d: 2.5 },
+  { x: 800, y: 1170, d: 2.9 }, { x: 1020, y: 1110, d: 3.3 }, { x: 200, y: 1280, d: 3.7 },
+  { x: 460, y: 1340, d: 4.1 }, { x: 700, y: 1290, d: 4.5 }, { x: 920, y: 1370, d: 0.3 },
+  { x: 1140, y: 1310, d: 0.7 }, { x:  80, y: 1490, d: 1.1 }, { x: 320, y: 1530, d: 1.5 },
+  { x: 560, y: 1470, d: 1.9 }, { x: 790, y: 1550, d: 2.3 }, { x: 1010, y: 1500, d: 2.7 },
+  { x: 230, y: 1700, d: 3.1 }, { x: 480, y: 1740, d: 3.5 }, { x: 720, y: 1690, d: 3.9 },
+  { x: 950, y: 1770, d: 4.3 }, { x: 130, y: 1900, d: 0.1 }, { x: 380, y: 1960, d: 0.5 },
+  { x: 620, y: 1900, d: 0.9 }, { x: 850, y: 1980, d: 1.3 }, { x: 1080, y: 1920, d: 1.7 },
+  { x: 280, y: 2150, d: 2.1 }, { x: 530, y: 2210, d: 2.5 }, { x: 770, y: 2150, d: 2.9 },
+  { x: 1000, y: 2230, d: 3.3 }, { x: 100, y: 2300, d: 3.7 },
+];
+---
+
+<div class="space-bg-fixed" aria-hidden="true">
+  <svg viewBox="0 0 1200 2400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+
+    <defs>
+      <!-- Nebula gradient -->
+      <radialGradient id="nebulaGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(167, 139, 250, 0.25)"/>
+        <stop offset="40%" stop-color="rgba(109, 40, 217, 0.10)"/>
+        <stop offset="100%" stop-color="rgba(109, 40, 217, 0)"/>
+      </radialGradient>
+
+      <!-- UFO body gradient -->
+      <linearGradient id="ufoBody" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#c4b5fd"/>
+        <stop offset="50%" stop-color="#8b5cf6"/>
+        <stop offset="100%" stop-color="#5b21b6"/>
+      </linearGradient>
+
+      <!-- UFO trail gradient (fades to transparent) -->
+      <linearGradient id="ufoTrail" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="rgba(167, 139, 250, 0)"/>
+        <stop offset="80%" stop-color="rgba(167, 139, 250, 0.5)"/>
+        <stop offset="100%" stop-color="rgba(167, 139, 250, 0.85)"/>
+      </linearGradient>
+
+      <!-- UFO scale group (instantiated per UFO) -->
+      <g id="ufoShape">
+        <!-- Light trail -->
+        <ellipse cx="-32" cy="0" rx="34" ry="2.2" fill="url(#ufoTrail)" opacity="0.85"/>
+        <!-- Inner glow halo -->
+        <ellipse cx="0" cy="0" rx="16" ry="6" fill="rgba(167,139,250,0.18)"/>
+        <!-- Main saucer body -->
+        <ellipse cx="0" cy="0.5" rx="11" ry="3.2" fill="url(#ufoBody)"/>
+        <!-- Bottom rim shadow -->
+        <ellipse cx="0" cy="2.2" rx="11" ry="1.2" fill="rgba(59,7,100,0.65)"/>
+        <!-- Dome -->
+        <ellipse cx="0" cy="-1.6" rx="4.5" ry="2.4" fill="rgba(196,181,253,0.95)"/>
+        <ellipse cx="-1" cy="-2.2" rx="1.8" ry="0.9" fill="rgba(255,255,255,0.7)"/>
+        <!-- Bottom lights -->
+        <circle class="ufo-light" cx="-7" cy="2.4" r="0.9"/>
+        <circle class="ufo-light ufo-light-2" cx="0" cy="2.4" r="0.9"/>
+        <circle class="ufo-light ufo-light-3" cx="7" cy="2.4" r="0.9"/>
+      </g>
+    </defs>
+
+    <!-- ═══ NEBULA CLOUDS — soft atmospheric color ═══ -->
+    <ellipse class="nebula" cx="280" cy="380" rx="380" ry="280" fill="url(#nebulaGlow)"/>
+    <ellipse class="nebula" cx="900" cy="1100" rx="420" ry="320" fill="url(#nebulaGlow)"/>
+    <ellipse class="nebula" cx="380" cy="1900" rx="360" ry="280" fill="url(#nebulaGlow)"/>
+
+    <!-- ═══ BACKGROUND STARS — 56 twinkling dots ═══ -->
+    {bgStars.map((s) => (
+      <circle class="bgstar" cx={s.x} cy={s.y} r="1" style={`animation-delay:${s.d}s`} />
+    ))}
+
+    <!-- ═══ CONSTELLATION 1 — Orion-like (upper-left) ═══ -->
+    <g class="constellation con-1">
+      <line class="con-link" x1="120" y1="200" x2="220" y2="280"/>
+      <line class="con-link" x1="220" y1="280" x2="320" y2="220"/>
+      <line class="con-link" x1="220" y1="280" x2="280" y2="380"/>
+      <line class="con-link" x1="280" y1="380" x2="200" y2="440"/>
+      <line class="con-link" x1="280" y1="380" x2="360" y2="440"/>
+      <line class="con-link" x1="220" y1="280" x2="160" y2="380"/>
+      <circle class="con-star" cx="120" cy="200" r="2.5"/>
+      <circle class="con-star" cx="220" cy="280" r="3"/>
+      <circle class="con-star" cx="320" cy="220" r="2.5"/>
+      <circle class="con-star" cx="280" cy="380" r="2.8"/>
+      <circle class="con-star" cx="200" cy="440" r="2.3"/>
+      <circle class="con-star" cx="360" cy="440" r="2.3"/>
+      <circle class="con-star" cx="160" cy="380" r="2.3"/>
+    </g>
+
+    <!-- ═══ CONSTELLATION 2 — Big Dipper-like (right-mid) ═══ -->
+    <g class="constellation con-2">
+      <line class="con-link" x1="780" y1="600" x2="880" y2="640"/>
+      <line class="con-link" x1="880" y1="640" x2="980" y2="620"/>
+      <line class="con-link" x1="980" y1="620" x2="1080" y2="660"/>
+      <line class="con-link" x1="1080" y1="660" x2="1100" y2="780"/>
+      <line class="con-link" x1="1100" y1="780" x2="1000" y2="820"/>
+      <line class="con-link" x1="1000" y1="820" x2="980" y2="700"/>
+      <circle class="con-star" cx="780" cy="600" r="2.5"/>
+      <circle class="con-star" cx="880" cy="640" r="3"/>
+      <circle class="con-star" cx="980" cy="620" r="2.7"/>
+      <circle class="con-star" cx="1080" cy="660" r="2.5"/>
+      <circle class="con-star" cx="1100" cy="780" r="2.8"/>
+      <circle class="con-star" cx="1000" cy="820" r="2.5"/>
+      <circle class="con-star" cx="980" cy="700" r="2.3"/>
+    </g>
+
+    <!-- ═══ CONSTELLATION 3 — Cassiopeia-like (lower-left, W-shape) ═══ -->
+    <g class="constellation con-3">
+      <line class="con-link" x1="100" y1="1500" x2="200" y2="1600"/>
+      <line class="con-link" x1="200" y1="1600" x2="300" y2="1500"/>
+      <line class="con-link" x1="300" y1="1500" x2="400" y2="1620"/>
+      <line class="con-link" x1="400" y1="1620" x2="500" y2="1520"/>
+      <circle class="con-star" cx="100" cy="1500" r="2.6"/>
+      <circle class="con-star" cx="200" cy="1600" r="3"/>
+      <circle class="con-star" cx="300" cy="1500" r="2.5"/>
+      <circle class="con-star" cx="400" cy="1620" r="2.8"/>
+      <circle class="con-star" cx="500" cy="1520" r="2.5"/>
+    </g>
+
+    <!-- ═══ CONSTELLATION 4 — Triangle (mid-right, lower) ═══ -->
+    <g class="constellation con-4">
+      <line class="con-link" x1="700" y1="1700" x2="900" y2="1750"/>
+      <line class="con-link" x1="900" y1="1750" x2="820" y2="1900"/>
+      <line class="con-link" x1="820" y1="1900" x2="700" y2="1700"/>
+      <line class="con-link" x1="900" y1="1750" x2="1050" y2="1820"/>
+      <circle class="con-star" cx="700" cy="1700" r="2.6"/>
+      <circle class="con-star" cx="900" cy="1750" r="3"/>
+      <circle class="con-star" cx="820" cy="1900" r="2.5"/>
+      <circle class="con-star" cx="1050" cy="1820" r="2.5"/>
+    </g>
+
+  </svg>
+
+  <!-- ═══ UFOs as HTML elements layered over SVG (offset-path works in viewport px) ═══ -->
+  <div class="ufo ufo-1">
+    <svg viewBox="-40 -8 80 16" width="120" height="24">
+      <ellipse cx="-22" cy="0" rx="24" ry="2.4" fill="url(#ufoTrailG)" opacity="0.85"/>
+      <ellipse cx="0" cy="0" rx="18" ry="7" fill="rgba(167,139,250,0.18)"/>
+      <ellipse cx="0" cy="0.6" rx="12" ry="3.5" fill="url(#ufoBodyG)"/>
+      <ellipse cx="0" cy="2.4" rx="12" ry="1.3" fill="rgba(59,7,100,0.7)"/>
+      <ellipse cx="0" cy="-1.7" rx="5" ry="2.6" fill="rgba(196,181,253,0.95)"/>
+      <ellipse cx="-1.2" cy="-2.4" rx="2" ry="1" fill="rgba(255,255,255,0.75)"/>
+      <circle class="ufo-light" cx="-7.5" cy="2.6" r="1"/>
+      <circle class="ufo-light ufo-light-2" cx="0" cy="2.6" r="1"/>
+      <circle class="ufo-light ufo-light-3" cx="7.5" cy="2.6" r="1"/>
+      <defs>
+        <linearGradient id="ufoBodyG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c4b5fd"/>
+          <stop offset="50%" stop-color="#8b5cf6"/>
+          <stop offset="100%" stop-color="#5b21b6"/>
+        </linearGradient>
+        <linearGradient id="ufoTrailG" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(167, 139, 250, 0)"/>
+          <stop offset="80%" stop-color="rgba(167, 139, 250, 0.5)"/>
+          <stop offset="100%" stop-color="rgba(167, 139, 250, 0.95)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="ufo ufo-2">
+    <svg viewBox="-40 -8 80 16" width="120" height="24">
+      <ellipse cx="-22" cy="0" rx="24" ry="2.4" fill="url(#ufoTrailG2)" opacity="0.85"/>
+      <ellipse cx="0" cy="0" rx="18" ry="7" fill="rgba(167,139,250,0.18)"/>
+      <ellipse cx="0" cy="0.6" rx="12" ry="3.5" fill="url(#ufoBodyG2)"/>
+      <ellipse cx="0" cy="2.4" rx="12" ry="1.3" fill="rgba(59,7,100,0.7)"/>
+      <ellipse cx="0" cy="-1.7" rx="5" ry="2.6" fill="rgba(196,181,253,0.95)"/>
+      <ellipse cx="-1.2" cy="-2.4" rx="2" ry="1" fill="rgba(255,255,255,0.75)"/>
+      <circle class="ufo-light" cx="-7.5" cy="2.6" r="1"/>
+      <circle class="ufo-light ufo-light-2" cx="0" cy="2.6" r="1"/>
+      <circle class="ufo-light ufo-light-3" cx="7.5" cy="2.6" r="1"/>
+      <defs>
+        <linearGradient id="ufoBodyG2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c4b5fd"/>
+          <stop offset="50%" stop-color="#8b5cf6"/>
+          <stop offset="100%" stop-color="#5b21b6"/>
+        </linearGradient>
+        <linearGradient id="ufoTrailG2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(167, 139, 250, 0)"/>
+          <stop offset="80%" stop-color="rgba(167, 139, 250, 0.5)"/>
+          <stop offset="100%" stop-color="rgba(167, 139, 250, 0.95)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="ufo ufo-3">
+    <svg viewBox="-40 -8 80 16" width="120" height="24">
+      <ellipse cx="-22" cy="0" rx="24" ry="2.4" fill="url(#ufoTrailG3)" opacity="0.85"/>
+      <ellipse cx="0" cy="0" rx="18" ry="7" fill="rgba(167,139,250,0.18)"/>
+      <ellipse cx="0" cy="0.6" rx="12" ry="3.5" fill="url(#ufoBodyG3)"/>
+      <ellipse cx="0" cy="2.4" rx="12" ry="1.3" fill="rgba(59,7,100,0.7)"/>
+      <ellipse cx="0" cy="-1.7" rx="5" ry="2.6" fill="rgba(196,181,253,0.95)"/>
+      <ellipse cx="-1.2" cy="-2.4" rx="2" ry="1" fill="rgba(255,255,255,0.75)"/>
+      <circle class="ufo-light" cx="-7.5" cy="2.6" r="1"/>
+      <circle class="ufo-light ufo-light-2" cx="0" cy="2.6" r="1"/>
+      <circle class="ufo-light ufo-light-3" cx="7.5" cy="2.6" r="1"/>
+      <defs>
+        <linearGradient id="ufoBodyG3" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c4b5fd"/>
+          <stop offset="50%" stop-color="#8b5cf6"/>
+          <stop offset="100%" stop-color="#5b21b6"/>
+        </linearGradient>
+        <linearGradient id="ufoTrailG3" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(167, 139, 250, 0)"/>
+          <stop offset="80%" stop-color="rgba(167, 139, 250, 0.5)"/>
+          <stop offset="100%" stop-color="rgba(167, 139, 250, 0.95)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<style is:global>
+/* ═══ SPACE BACKGROUND ═══ */
+.space-bg-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.space-bg-fixed svg { width: 100%; height: 100%; display: block; }
+
+/* ─── Nebulae ─── */
+.nebula { opacity: 0.6; animation: nebulaPulse 14s ease-in-out infinite; }
+.nebula:nth-child(2) { animation-delay: -5s; }
+.nebula:nth-child(3) { animation-delay: -9s; }
+@keyframes nebulaPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.75; transform: scale(1.08); }
+}
+
+/* ─── Background stars (twinkle) ─── */
+.bgstar {
+  fill: rgba(109, 40, 217, 0.65);
+  filter: drop-shadow(0 0 2px rgba(167, 139, 250, 0.4));
+  animation: bgTwinkle 4s ease-in-out infinite;
+}
+@keyframes bgTwinkle {
+  0%, 100% { opacity: 0.5; r: 0.9; }
+  50%      { opacity: 1;   r: 1.8; }
+}
+
+/* ─── Constellation links (lines connecting stars) ─── */
+.con-link {
+  stroke: rgba(109, 40, 217, 0.45);
+  stroke-width: 1.2;
+  fill: none;
+  animation: linkBreath 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(167, 139, 250, 0.3));
+}
+.constellation:nth-child(odd) .con-link { animation-delay: -2s; }
+@keyframes linkBreath {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 0.9; }
+}
+
+/* ─── Constellation stars (brighter than bg) ─── */
+.con-star {
+  fill: rgba(109, 40, 217, 1);
+  filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.85));
+  animation: conStarPulse 3.5s ease-in-out infinite;
+}
+.con-1 .con-star:nth-child(1) { animation-delay: 0s; }
+.con-1 .con-star:nth-child(2) { animation-delay: 0.4s; }
+.con-1 .con-star:nth-child(3) { animation-delay: 0.8s; }
+.con-1 .con-star:nth-child(4) { animation-delay: 1.2s; }
+.con-2 .con-star { animation-delay: 1.5s; }
+.con-3 .con-star { animation-delay: 2.5s; }
+.con-4 .con-star { animation-delay: 0.7s; }
+@keyframes conStarPulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+/* ─── UFO shape elements ─── */
+.ufo-light {
+  fill: #fbbf24;
+  animation: ufoLight 1.4s ease-in-out infinite;
+}
+.ufo-light-2 { animation-delay: 0.4s; }
+.ufo-light-3 { animation-delay: 0.8s; }
+@keyframes ufoLight {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+/* ─── UFOs as HTML divs floating over the SVG ─── */
+.ufo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 24px;
+  pointer-events: none;
+  filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.7));
+  opacity: 0;
+}
+.ufo svg { display: block; overflow: visible; }
+
+/* UFO 1: gentle wave near top, left → right (26s) */
+.ufo-1 { animation: ufo1Travel 26s linear infinite; }
+@keyframes ufo1Travel {
+  0%   { transform: translate(-120px, 14vh) rotate(2deg);  opacity: 0; }
+  3%   { opacity: 1; }
+  25%  { transform: translate(25vw, 8vh) rotate(-3deg); }
+  50%  { transform: translate(50vw, 22vh) rotate(4deg); }
+  75%  { transform: translate(75vw, 10vh) rotate(-2deg); }
+  97%  { opacity: 1; }
+  100% { transform: translate(calc(100vw + 120px), 16vh) rotate(2deg); opacity: 0; }
+}
+
+/* UFO 2: mid-area, right → left, slower (32s) */
+.ufo-2 { animation: ufo2Travel 32s linear -8s infinite; }
+@keyframes ufo2Travel {
+  0%   { transform: translate(calc(100vw + 120px), 50vh) rotate(180deg); opacity: 0; }
+  3%   { opacity: 1; }
+  25%  { transform: translate(75vw, 60vh) rotate(178deg); }
+  50%  { transform: translate(50vw, 38vh) rotate(184deg); }
+  75%  { transform: translate(25vw, 55vh) rotate(177deg); }
+  97%  { opacity: 1; }
+  100% { transform: translate(-120px, 45vh) rotate(180deg); opacity: 0; }
+}
+
+/* UFO 3: lower area, fast (21s) */
+.ufo-3 { animation: ufo3Travel 21s linear -14s infinite; }
+@keyframes ufo3Travel {
+  0%   { transform: translate(-120px, 80vh) rotate(-3deg); opacity: 0; }
+  3%   { opacity: 1; }
+  25%  { transform: translate(25vw, 70vh) rotate(4deg); }
+  50%  { transform: translate(50vw, 88vh) rotate(-3deg); }
+  75%  { transform: translate(75vw, 72vh) rotate(3deg); }
+  97%  { opacity: 1; }
+  100% { transform: translate(calc(100vw + 120px), 82vh) rotate(-2deg); opacity: 0; }
+}
+
+/* ─── Light/dark adaptive ─── */
+html.dark .bgstar, body.dark .bgstar { fill: rgba(196, 181, 253, 0.7); }
+html.dark .con-link, body.dark .con-link { stroke: rgba(167, 139, 250, 0.45); }
+html.dark .con-star, body.dark .con-star {
+  fill: #c4b5fd;
+  filter: drop-shadow(0 0 6px rgba(196, 181, 253, 0.85));
+}
+
+/* ─── Content above background ─── */
+.space-bg-fixed ~ nav,
+.space-bg-fixed ~ main,
+.space-bg-fixed ~ footer { position: relative; z-index: 1; }
+
+/* ─── Mobile adjustments — fewer elements ─── */
+@media (max-width: 640px) {
+  /* Hide some bg stars on mobile */
+  .bgstar:nth-child(odd) { display: none; }
+  /* Slow UFOs slightly so motion is gentler on small screens */
+  .ufo-1 { animation-duration: 36s; }
+  .ufo-2 { animation-duration: 42s; }
+  .ufo-3 { animation-duration: 30s; }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .nebula, .bgstar, .con-link, .con-star, .ufo, .ufo-light { animation: none; }
+  .ufo { display: none; }
+  .bgstar { opacity: 0.5; }
+  .con-star { opacity: 0.8; }
+}
+</style>

@@ -1,0 +1,694 @@
+---
+// AudienceSelector — grafo interactivo D3 con expansión radial.
+// Nodo central → click expande 5 padres → click padre expande sus hijos →
+// click hijo abre panel con descripción. Drag, animaciones, reset.
+// Inspirado en tuweben72hs.com (mismo flujo, copy propio).
+
+const data = {
+  main: { id: 'main', name: '¿Es para mí?', type: 'main' },
+  parents: [
+    { id: 'p1', dbId: 1, name: 'Emprendedores', type: 'parent', desc: 'Validá tu idea y mostrate pro desde el día 1.' },
+    { id: 'p2', dbId: 2, name: 'PyMES', type: 'parent', desc: 'Digitalizá procesos y ampliá tu mercado.' },
+    { id: 'p3', dbId: 3, name: 'Profesionales', type: 'parent', desc: 'Tu marca personal necesita una base sólida.' },
+    { id: 'p4', dbId: 4, name: 'Comercios', type: 'parent', desc: 'Vendé 24/7 sin depender de horarios.' },
+    { id: 'p5', dbId: 5, name: 'Servicios', type: 'parent', desc: 'Automatizá tus citas y mostrá tu portfolio.' },
+  ],
+  children: [
+    // Emprendedores
+    { id: 'c10', parentId: 1, name: 'Startups Tech', desc: 'Tu MVP necesita una landing que convierta inversores. Las redes no alcanzan para explicar innovación compleja — una web propia te da credibilidad instantánea y te ayuda a captar capital.' },
+    { id: 'c11', parentId: 1, name: 'Creadores', desc: 'Sos dueño de tu contenido, no del algoritmo. Centralizá tus cursos, ebooks y comunidad en un lugar que nadie te puede borrar y monetizá tu audiencia sin intermediarios.' },
+    { id: 'c12', parentId: 1, name: 'Dropshipping', desc: 'Automatizá ventas sin stock físico. Una tienda propia te ahorra comisiones de marketplaces, te deja hacer retargeting y construir tu base de clientes fieles.' },
+    { id: 'c13', parentId: 1, name: 'Apps Móviles', desc: 'Antes de la descarga, está la venta. Una landing atractiva con capturas, testimonios y enlaces a las stores convence al usuario de instalar.' },
+    { id: 'c14', parentId: 1, name: 'Crypto/Web3', desc: 'En un mercado volátil, la confianza es todo. Tu web es el centro de operaciones donde tu comunidad encuentra el whitepaper, el roadmap y tu visión a largo plazo.' },
+    { id: 'c15', parentId: 1, name: 'Blogging', desc: 'El contenido es rey, pero el SEO es la reina. Un blog optimizado te trae tráfico orgánico que las redes no pueden igualar y te posiciona como experto.' },
+    { id: 'c16', parentId: 1, name: 'Coaching', desc: 'Vendé transformaciones, no solo horas. Tu web explica tu metodología, muestra testimonios y agenda sesiones automáticamente — vos te enfocás en tus clientes.' },
+    { id: 'c17', parentId: 1, name: 'Artesanos', desc: 'Tu historia vale tanto como tu producto. Contala en detalle y vendé piezas únicas a todo el país sin intermediarios, conectando emocionalmente con tu comprador.' },
+    // PyMES
+    { id: 'c20', parentId: 2, name: 'Industria', desc: 'Mostrá tu capacidad productiva. Un catálogo técnico detallado filtra clientes calificados y acelera el ciclo de venta con compradores B2B que ya saben lo que buscan.' },
+    { id: 'c21', parentId: 2, name: 'Logística', desc: 'Rastreos, cotizaciones y confianza. Tus clientes corporativos necesitan saber que sos un socio tecnológico fiable — herramientas online te ayudan a ganar licitaciones.' },
+    { id: 'c22', parentId: 2, name: 'RRHH', desc: 'Captá el mejor talento. Una sección de "Trabajá con nosotros" atractiva refleja tu cultura y valores, y atrae a los perfiles correctos antes incluso de la entrevista.' },
+    { id: 'c23', parentId: 2, name: 'Finanzas', desc: 'Seguridad ante todo. Una web institucional impecable es la mejor carta de presentación para demostrar solvencia y seriedad en un sector donde la imagen lo es todo.' },
+    { id: 'c24', parentId: 2, name: 'Exportadores', desc: 'El mundo es tu cliente. Una web multi-idioma es tu pasaporte digital para ferias internacionales y te abre nuevos mercados sin barreras geográficas.' },
+    { id: 'c25', parentId: 2, name: 'Franquicias', desc: 'Estandarizá tu éxito. Un portal centralizado para franquiciados y una cara unificada al consumidor fortalecen la marca y facilitan la expansión de tu red.' },
+    { id: 'c26', parentId: 2, name: 'Agro', desc: 'Del campo al mundo. Mostrá tecnología, procesos y certificaciones de calidad que te diferencian. El agro moderno es tecnológico — tu web debe reflejar innovación y trazabilidad.' },
+    { id: 'c27', parentId: 2, name: 'Limpieza Corp', desc: 'Cotizaciones rápidas. Permití que empresas soliciten presupuestos detallados directamente desde tu sitio y agilizá la captación de clientes corporativos.' },
+    // Profesionales
+    { id: 'c30', parentId: 3, name: 'Abogados', desc: 'Autoridad y especialización. Publicá artículos sobre casos de éxito y explicá tus áreas de práctica — un cliente busca seguridad y experiencia, demostrá la tuya.' },
+    { id: 'c31', parentId: 3, name: 'Médicos', desc: 'Facilitá la vida del paciente. Turnos online, prepagas y ubicación clara reducen ausentismo y llamadas, y liberan a tu secretaria de tareas repetitivas.' },
+    { id: 'c32', parentId: 3, name: 'Arquitectos', desc: 'Tu obra habla por vos. Una galería de alta resolución sin compresión de Instagram muestra la verdadera calidad de tus acabados — tu portafolio es tu mejor venta.' },
+    { id: 'c33', parentId: 3, name: 'Contadores', desc: 'Consultoría digital. Ofrecé recursos descargables sobre impuestos y posicionate como el experto indispensable para tus clientes — generá leads con guías o calculadoras.' },
+    { id: 'c34', parentId: 3, name: 'Diseñadores', desc: 'Pixel perfect. Tu web es tu mejor pieza de diseño. Demostrá tu estilo y atención al detalle en tu propia casa digital, sin depender de plataformas de terceros.' },
+    { id: 'c35', parentId: 3, name: 'Psicólogos', desc: 'Cercanía y privacidad. Explicá tu enfoque terapéutico y permití agendar la primera sesión en un entorno seguro — un espacio de confianza desde el primer clic.' },
+    { id: 'c36', parentId: 3, name: 'Traductores', desc: 'Alcance global. Mostrá tus pares de idiomas y especializaciones técnicas para captar agencias y clientes directos del exterior, con certificaciones claras y visibles.' },
+    { id: 'c37', parentId: 3, name: 'Ingenieros', desc: 'Soluciones complejas, explicadas simple. Diagramas y procesos de tus proyectos en tu web convierten especificaciones técnicas en beneficios claros para tus clientes.' },
+    // Comercios
+    { id: 'c40', parentId: 4, name: 'Moda', desc: 'Lookbook interactivo. Más allá de la foto, mostrá colecciones, talles y permití la compra impulsiva 24/7. Vendé mientras dormís y llegá a todo el país.' },
+    { id: 'c41', parentId: 4, name: 'Tecnología', desc: 'Fichas técnicas completas. Comparaciones, specs y accesorios sugeridos aumentan el ticket promedio y reducen devoluciones — el cliente llega informado.' },
+    { id: 'c42', parentId: 4, name: 'Deco & Hogar', desc: 'Inspiración visual. Creá ambientes shoppable donde el cliente compre todo lo que ve en la foto, replicando ese estilo en su casa con un solo clic.' },
+    { id: 'c43', parentId: 4, name: 'Alimentos', desc: 'Tentación visual. Menús actualizados, fotos de alta calidad y pedidos directos sin las comisiones de las apps de delivery — recuperás márgenes y datos.' },
+    { id: 'c44', parentId: 4, name: 'Petshop', desc: 'Compras recurrentes. Implementá suscripciones para alimento balanceado y fidelizá a los dueños de mascotas — ingresos mensuales recurrentes asegurados.' },
+    { id: 'c45', parentId: 4, name: 'Deportes', desc: 'Comunidad activa. No solo vendas equipo, vendé estilo de vida con un blog de entrenamiento y nutrición — convertite en referente para tus clientes.' },
+    { id: 'c46', parentId: 4, name: 'Juguetería', desc: 'Filtros inteligentes. Ayudá a padres y tíos a encontrar el regalo perfecto por edad, precio y tipo de juego — clave en fechas como Navidad o Día del Niño.' },
+    { id: 'c47', parentId: 4, name: 'Ferretería', desc: 'Catálogo infinito. Tenés miles de items pequeños — un buscador eficiente en tu web es mejor que cualquier mostrador físico para encontrar el repuesto correcto.' },
+    // Servicios
+    { id: 'c50', parentId: 5, name: 'Turismo', desc: 'Experiencias, no solo viajes. Mostrá itinerarios, guías locales y permití reservas directas sin depender de OTAs — aumentá márgenes evitando comisiones.' },
+    { id: 'c51', parentId: 5, name: 'Inmobiliaria', desc: 'Tours virtuales. Filtrá curiosos y atraé compradores reales con recorridos 360 y mapas interactivos — ahorrás visitas innecesarias y mejorás la experiencia.' },
+    { id: 'c52', parentId: 5, name: 'Educación', desc: 'Aula virtual propia. Vendé cursos, gestioná alumnos y entregá certificados sin pagar comisiones a plataformas externas — escalá tu academia online.' },
+    { id: 'c53', parentId: 5, name: 'Eventos', desc: 'El sueño hecho realidad. Galerías de bodas y fiestas anteriores venden tu servicio mejor que cualquier promesa — fotos y videos de alta calidad cierran reservas.' },
+    { id: 'c54', parentId: 5, name: 'Salud/Belleza', desc: 'Menú de tratamientos. Explicá cada procedimiento, mostrá antes/después reales y llená tu agenda online dándole confianza al cliente para reservar.' },
+    { id: 'c55', parentId: 5, name: 'Reparaciones', desc: 'Urgencias SEO. Cuando se rompe algo, la gente busca en Google. Estar ahí con un botón de "Llamar ahora" es clave — captás clientes en el momento exacto.' },
+    { id: 'c56', parentId: 5, name: 'Limpieza', desc: 'Confianza y packs. Ofrecé suscripciones mensuales para oficinas y hogares con pago automático — flujo de ingresos constante y servicios recurrentes simples.' },
+    { id: 'c57', parentId: 5, name: 'Gastronomía', desc: 'Reservas y delivery propio. Creá tu base de datos de clientes para enviar promos los días flojos — llená tus mesas en horarios valle con marketing dirigido.' },
+  ],
+};
+---
+
+<section class="aud-graph-section" id="audience-graph">
+  <div class="container">
+    <header class="aud-graph-header">
+      <span class="aud-graph-kicker">¿Es para mí?</span>
+      <h2 class="aud-graph-title">Descubrí por qué necesitás <em>una web</em>.</h2>
+      <p class="aud-graph-lede">Hacé clic en el círculo central y explorá rubro por rubro cómo una web puede transformar tu proyecto.</p>
+    </header>
+
+    <div id="aud-graph-container" class="aud-graph-container">
+      <button id="aud-reset-btn" class="aud-reset-btn" type="button" aria-label="Volver al inicio">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Volver al inicio
+      </button>
+
+      <svg id="aud-graph-svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet" aria-label="Mapa interactivo de audiencias">
+        <defs>
+          <radialGradient id="aud-grad-main" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#6d28d9"/>
+          </radialGradient>
+          <radialGradient id="aud-grad-parent" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#818cf8"/>
+            <stop offset="100%" stop-color="#4f46e5"/>
+          </radialGradient>
+          <radialGradient id="aud-grad-child" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#22d3ee"/>
+            <stop offset="100%" stop-color="#0891b2"/>
+          </radialGradient>
+          <filter id="aud-glow">
+            <feGaussianBlur stdDeviation="3" result="b"/>
+            <feMerge>
+              <feMergeNode in="b"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g class="aud-links"></g>
+        <g class="aud-nodes"></g>
+      </svg>
+
+      <div id="aud-info-panel" class="aud-info-panel" aria-hidden="true">
+        <button class="aud-panel-x" id="aud-panel-close" type="button" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
+        </button>
+        <div class="aud-panel-head">
+          <div class="aud-panel-dot" id="aud-panel-dot"></div>
+          <h3 class="aud-panel-title" id="aud-panel-title"></h3>
+        </div>
+        <p class="aud-panel-desc" id="aud-panel-desc"></p>
+        <a class="aud-panel-cta" href="https://calendar.app.google/Jxg7er6LkiL6tGEw6" target="_blank" rel="noopener">
+          Pedir presupuesto
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <p class="aud-graph-hint" id="aud-graph-hint">Tocá el círculo violeta para empezar →</p>
+  </div>
+</section>
+
+<script type="application/json" id="aud-graph-data" is:inline set:html={JSON.stringify(data)}></script>
+
+<style>
+  .aud-graph-section {
+    padding: clamp(50px, 6vw, 90px) 0 clamp(40px, 5vw, 80px);
+    position: relative;
+  }
+  .aud-graph-section .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 3vw, 40px);
+  }
+
+  .aud-graph-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 36px;
+  }
+  .aud-graph-kicker {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(109, 40, 217, 0.08);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .aud-graph-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    line-height: 1.1;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+  .aud-graph-title em {
+    font-style: normal;
+    background: linear-gradient(180deg, #c4b5fd 0%, #8b5cf6 60%, #6d28d9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .aud-graph-lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text2);
+    margin: 0;
+  }
+
+  .aud-graph-container {
+    position: relative;
+    width: 100%;
+    height: clamp(480px, 56vw, 640px);
+    background: linear-gradient(180deg, rgba(109, 40, 217, 0.025), rgba(109, 40, 217, 0.005));
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(109, 40, 217, 0.05);
+  }
+
+  #aud-graph-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+  }
+  #aud-graph-svg:active { cursor: grabbing; }
+
+  .aud-graph-hint {
+    text-align: center;
+    margin: 16px 0 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 12.5px;
+    color: var(--textm, var(--text2));
+    opacity: 0.75;
+    letter-spacing: 0.04em;
+  }
+
+  /* Reset button */
+  .aud-reset-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity 280ms ease, transform 280ms ease, background 200ms ease, color 200ms ease;
+  }
+  .aud-reset-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .aud-reset-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  /* Nodes */
+  .aud-node { cursor: pointer; }
+  .aud-node circle {
+    transition: stroke-width 220ms ease, filter 220ms ease;
+  }
+  .aud-node:hover circle {
+    filter: drop-shadow(0 0 16px rgba(167, 139, 250, 0.65));
+    stroke-width: 3;
+  }
+  .aud-node.is-active circle {
+    filter: drop-shadow(0 0 18px rgba(167, 139, 250, 0.8));
+  }
+  .aud-node text {
+    pointer-events: none;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    fill: #fff;
+    user-select: none;
+  }
+
+  /* Links */
+  .aud-link {
+    stroke: rgba(109, 40, 217, 0.28);
+    stroke-width: 1.4;
+    transition: stroke 240ms ease, stroke-width 240ms ease;
+  }
+  .aud-link.is-energy {
+    stroke: rgba(34, 211, 238, 0.85);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    animation: aud-link-flow 1.4s linear infinite;
+  }
+  @keyframes aud-link-flow {
+    from { stroke-dashoffset: 0; }
+    to   { stroke-dashoffset: -20; }
+  }
+
+  /* Info panel */
+  .aud-info-panel {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: clamp(280px, 32%, 380px);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 22px 22px 18px;
+    box-shadow: 0 16px 40px -8px rgba(109, 40, 217, 0.18),
+                0 4px 12px rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 320ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    z-index: 5;
+  }
+  .aud-info-panel.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .aud-panel-x {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    color: var(--text2);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 180ms ease, color 180ms ease;
+  }
+  .aud-panel-x:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .aud-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .aud-panel-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #22d3ee, #0891b2);
+    flex-shrink: 0;
+  }
+  .aud-panel-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .aud-panel-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text2);
+    margin: 0 0 16px;
+  }
+  .aud-panel-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    box-shadow: 0 6px 16px -6px rgba(109, 40, 217, 0.5);
+  }
+  .aud-panel-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px -6px rgba(109, 40, 217, 0.65);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .aud-graph-container { height: 540px; }
+    .aud-info-panel {
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      width: auto;
+    }
+  }
+
+  /* Dark mode */
+  body.dark .aud-graph-kicker {
+    color: #a78bfa;
+    background: rgba(167, 139, 250, 0.12);
+  }
+  body.dark .aud-graph-title { color: #fafafc; }
+  body.dark .aud-graph-lede { color: rgba(255, 255, 255, 0.65); }
+  body.dark .aud-graph-container {
+    background: linear-gradient(180deg, rgba(15, 12, 28, 0.55), rgba(15, 12, 28, 0.3));
+    border-color: rgba(167, 139, 250, 0.18);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+  body.dark .aud-link {
+    stroke: rgba(167, 139, 250, 0.35);
+  }
+  body.dark .aud-info-panel {
+    background: rgba(20, 18, 28, 0.85);
+    border-color: rgba(167, 139, 250, 0.18);
+    box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
+  }
+  body.dark .aud-panel-title { color: #fafafc; }
+  body.dark .aud-panel-desc { color: rgba(255, 255, 255, 0.78); }
+  body.dark .aud-panel-x {
+    background: rgba(20, 18, 28, 0.7);
+    border-color: rgba(167, 139, 250, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+  }
+  body.dark .aud-reset-btn {
+    background: rgba(20, 18, 28, 0.85);
+    border-color: rgba(167, 139, 250, 0.22);
+    color: rgba(255, 255, 255, 0.78);
+  }
+  body.dark .aud-graph-hint { color: rgba(255, 255, 255, 0.5); }
+</style>
+
+<script src="https://d3js.org/d3.v7.min.js" is:inline></script>
+<script is:inline>
+(function () {
+  function init() {
+    if (typeof d3 === 'undefined') { setTimeout(init, 100); return; }
+
+    var dataEl = document.getElementById('aud-graph-data');
+    if (!dataEl) return;
+    var DATA = JSON.parse(dataEl.textContent);
+
+    var container = document.getElementById('aud-graph-container');
+    if (!container) return;
+    var svgEl = document.getElementById('aud-graph-svg');
+    var resetBtn = document.getElementById('aud-reset-btn');
+    var panel = document.getElementById('aud-info-panel');
+    var panelTitle = document.getElementById('aud-panel-title');
+    var panelDesc = document.getElementById('aud-panel-desc');
+    var panelDot = document.getElementById('aud-panel-dot');
+    var panelClose = document.getElementById('aud-panel-close');
+    var hint = document.getElementById('aud-graph-hint');
+
+    var W = 1200, H = 600;
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    var svg = d3.select(svgEl);
+    var linkG = svg.select('.aud-links');
+    var nodeG = svg.select('.aud-nodes');
+
+    // Initial state: only main node
+    var nodes = [Object.assign({}, DATA.main, { fx: W / 2, fy: H / 2, x: W / 2, y: H / 2, r: isMobile ? 50 : 64 })];
+    var links = [];
+
+    var sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(function (d) { return d.id; }).distance(isMobile ? 110 : 170).strength(0.6))
+      .force('charge', d3.forceManyBody().strength(isMobile ? -260 : -460))
+      .force('center', d3.forceCenter(W / 2, H / 2).strength(0.05))
+      .force('collide', d3.forceCollide().radius(function (d) { return (d.r || 30) + 14; }).iterations(2))
+      .on('tick', tick);
+
+    function tick() {
+      linkG.selectAll('line')
+        .attr('x1', function (d) { return d.source.x; })
+        .attr('y1', function (d) { return d.source.y; })
+        .attr('x2', function (d) { return d.target.x; })
+        .attr('y2', function (d) { return d.target.y; });
+      nodeG.selectAll('g.aud-node')
+        .attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+    }
+
+    function nodeR(d) {
+      if (d.type === 'main') return isMobile ? 50 : 64;
+      if (d.type === 'parent') return isMobile ? 36 : 48;
+      return isMobile ? 26 : 34;
+    }
+    function nodeFill(d) {
+      if (d.type === 'main') return 'url(#aud-grad-main)';
+      if (d.type === 'parent') return 'url(#aud-grad-parent)';
+      return 'url(#aud-grad-child)';
+    }
+    function nodeStroke(d) {
+      if (d.type === 'main') return '#c4b5fd';
+      if (d.type === 'parent') return '#a5b4fc';
+      return '#67e8f9';
+    }
+
+    function update() {
+      // Links
+      var link = linkG.selectAll('line').data(links, function (d) {
+        return (d.source.id || d.source) + '__' + (d.target.id || d.target);
+      });
+      link.exit().transition().duration(280).style('opacity', 0).remove();
+      var linkEnter = link.enter().append('line')
+        .attr('class', function (d) { return 'aud-link' + (d.energy ? ' is-energy' : ''); })
+        .attr('stroke', 'rgba(109, 40, 217, 0.32)')
+        .attr('stroke-width', 1.6)
+        .style('opacity', 0);
+      linkEnter.transition().duration(420).style('opacity', 1);
+      linkEnter.merge(link).attr('class', function (d) { return 'aud-link' + (d.energy ? ' is-energy' : ''); });
+
+      // Nodes
+      var node = nodeG.selectAll('g.aud-node').data(nodes, function (d) { return d.id; });
+      node.exit().transition().duration(260).attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ') scale(0)'; }).remove();
+
+      var nodeEnter = node.enter().append('g')
+        .attr('class', function (d) { return 'aud-node aud-node--' + d.type; })
+        .attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ') scale(0)'; })
+        .call(d3.drag()
+          .on('start', dragStart)
+          .on('drag', dragging)
+          .on('end', dragEnd));
+
+      nodeEnter.append('circle')
+        .attr('r', function (d) { return nodeR(d); })
+        .attr('fill', function (d) { return nodeFill(d); })
+        .attr('stroke', function (d) { return nodeStroke(d); })
+        .attr('stroke-width', 2)
+        .style('filter', 'drop-shadow(0 0 12px rgba(109, 40, 217, 0.35))');
+
+      nodeEnter.each(function (d) {
+        var g = d3.select(this);
+        var fontSize = d.type === 'main' ? 13 : (d.type === 'parent' ? 12 : 10.5);
+        var t = g.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dominant-baseline', 'middle')
+          .attr('fill', '#fff')
+          .style('font-family', "'DM Sans', sans-serif")
+          .style('font-weight', '700')
+          .style('font-size', fontSize + 'px')
+          .style('pointer-events', 'none')
+          .style('user-select', 'none')
+          .style('opacity', 0);
+        var name = d.name;
+        var words = name.split(' ');
+        var maxLineLen = d.type === 'child' ? 8 : 10;
+        if (words.length > 1 && name.length > maxLineLen) {
+          var mid = Math.ceil(words.length / 2);
+          t.append('tspan').attr('x', 0).attr('dy', '-0.35em').text(words.slice(0, mid).join(' '));
+          t.append('tspan').attr('x', 0).attr('dy', '1.15em').text(words.slice(mid).join(' '));
+        } else {
+          t.text(name);
+        }
+        t.transition().delay(180).duration(280).style('opacity', 1);
+      });
+
+      nodeEnter.on('click', function (event, d) { event.stopPropagation(); onNodeClick(d); });
+      nodeEnter.on('mouseenter', function (event, d) {
+        if (d.type === 'parent') highlightLinks(d.id, true);
+      });
+      nodeEnter.on('mouseleave', function (event, d) {
+        if (d.type === 'parent') highlightLinks(d.id, false);
+      });
+
+      nodeEnter.transition().duration(540).ease(d3.easeBackOut.overshoot(1.4))
+        .attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ') scale(1)'; });
+
+      sim.nodes(nodes);
+      sim.force('link').links(links);
+      sim.alpha(0.85).restart();
+    }
+
+    function highlightLinks(parentId, on) {
+      linkG.selectAll('line').each(function (d) {
+        var src = d.source.id || d.source;
+        var tgt = d.target.id || d.target;
+        var match = src === parentId || tgt === parentId;
+        d3.select(this).classed('is-energy', !!(on && match));
+      });
+    }
+
+    function dragStart(event, d) {
+      if (!event.active) sim.alphaTarget(0.3).restart();
+      d.fx = d.x; d.fy = d.y;
+    }
+    function dragging(event, d) {
+      d.fx = event.x; d.fy = event.y;
+    }
+    function dragEnd(event, d) {
+      if (!event.active) sim.alphaTarget(0);
+      if (d.type !== 'main') { d.fx = null; d.fy = null; }
+    }
+
+    function onNodeClick(d) {
+      if (hint) hint.style.opacity = '0';
+
+      if (d.type === 'main') {
+        // Toggle: if parents already expanded, do nothing; else expand parents.
+        var hasParents = nodes.some(function (n) { return n.type === 'parent'; });
+        if (!hasParents) expandParents();
+        return;
+      }
+
+      if (d.type === 'parent') {
+        // Collapse other parents' children, expand this parent's children.
+        expandChildren(d);
+        return;
+      }
+
+      // child: open panel
+      openPanel(d);
+    }
+
+    function expandParents() {
+      var R = isMobile ? 150 : 220;
+      DATA.parents.forEach(function (p, i) {
+        var ang = (i / DATA.parents.length) * Math.PI * 2 - Math.PI / 2;
+        var n = Object.assign({}, p, {
+          x: W / 2 + R * Math.cos(ang),
+          y: H / 2 + R * Math.sin(ang),
+          r: nodeR({ type: 'parent' }),
+        });
+        nodes.push(n);
+        links.push({ source: 'main', target: p.id });
+      });
+      resetBtn.classList.add('visible');
+      update();
+    }
+
+    function expandChildren(parent) {
+      // Remove existing children + their links
+      var removeIds = nodes.filter(function (n) { return n.type === 'child'; }).map(function (n) { return n.id; });
+      nodes = nodes.filter(function (n) { return n.type !== 'child'; });
+      links = links.filter(function (l) {
+        var sid = l.source.id || l.source, tid = l.target.id || l.target;
+        return removeIds.indexOf(sid) === -1 && removeIds.indexOf(tid) === -1;
+      });
+      // Pin parent and unpin others
+      nodes.forEach(function (n) {
+        if (n.type === 'parent') {
+          if (n.id === parent.id) {
+            n.fx = n.x; n.fy = n.y;
+          } else {
+            n.fx = null; n.fy = null;
+          }
+        }
+      });
+      // Add children of this parent
+      var kids = DATA.children.filter(function (c) { return c.parentId === parent.dbId; });
+      var R = isMobile ? 95 : 130;
+      kids.forEach(function (c, i) {
+        var ang = (i / kids.length) * Math.PI * 2;
+        var n = Object.assign({}, c, {
+          type: 'child',
+          x: parent.x + R * Math.cos(ang),
+          y: parent.y + R * Math.sin(ang),
+          r: nodeR({ type: 'child' }),
+        });
+        nodes.push(n);
+        links.push({ source: parent.id, target: c.id, energy: true });
+      });
+      update();
+    }
+
+    function openPanel(d) {
+      panelTitle.textContent = d.name;
+      panelDesc.textContent = d.desc;
+      panel.classList.add('is-active');
+      panel.setAttribute('aria-hidden', 'false');
+    }
+    function closePanel() {
+      panel.classList.remove('is-active');
+      panel.setAttribute('aria-hidden', 'true');
+    }
+
+    function fullReset() {
+      nodes = [Object.assign({}, DATA.main, { fx: W / 2, fy: H / 2, x: W / 2, y: H / 2, r: nodeR({ type: 'main' }) })];
+      links = [];
+      resetBtn.classList.remove('visible');
+      closePanel();
+      if (hint) hint.style.opacity = '0.75';
+      update();
+    }
+
+    panelClose.addEventListener('click', closePanel);
+    resetBtn.addEventListener('click', fullReset);
+    svgEl.addEventListener('click', function (e) {
+      // Click on empty SVG closes the panel
+      if (e.target === svgEl) closePanel();
+    });
+
+    // Initial render
+    update();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

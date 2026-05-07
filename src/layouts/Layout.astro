@@ -46,6 +46,20 @@ const websiteSchema = {
     <meta charset="UTF-8" />
     <meta content="width=device-width,initial-scale=1" name="viewport" />
     <meta name="theme-color" content="#6d28d9" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Critical CSS + theme detection BEFORE paint (prevents FOUC) -->
+    <style>html,body{background:#fafafc;color-scheme:light}html.dark,html.dark body{background:#0b0a10;color-scheme:dark}</style>
+    <script is:inline>
+      (function(){
+        try {
+          var t = localStorage.getItem('tof-theme');
+          if (t === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.background = '#0b0a10';
+          }
+        } catch(e) {}
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content="prospección B2B, generación de leads, agencia outbound, reuniones calificadas, cold email, LinkedIn outreach, Meta Ads, Google Ads, landing pages, Argentina, LATAM" />
